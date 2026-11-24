@@ -330,12 +330,22 @@
     font-weight: 600;
     box-shadow: 0 6px 16px -12px rgba(0, 0, 0, 0.3);
   }
+  /* Phones: compact intro so the Start button fits on the first screen. */
   @media (max-width: 480px) {
-    .hero { padding-top: 40px; }
-    .hero-visual { margin-bottom: 32px; }
-    .pass.hero-pass { width: min(280px, 74vw); }
-    .perks { margin-top: 18px; gap: 6px; }
+    .hero:not(.done) { padding-top: 20px; padding-bottom: 32px; }
+    .hero-visual { margin-bottom: 22px; }
+    .pass.hero-pass { width: min(250px, 66vw); }
+    .hero-visual .pass-card { padding: 14px 16px 12px; border-radius: 16px; }
+    .hero .eyebrow { margin-bottom: 8px; font-size: 15px; }
+    .hero .hero-concept { font-size: 1.5rem; line-height: 1.13; }
+    .perks { margin-top: 14px; gap: 6px; }
     .perk { gap: 6px; padding: 6px 12px 6px 9px; font-size: 13px; }
+    .hero .hero-cta { margin-top: 22px; }
+    .hero .hero-cta .btn-lg { min-height: 52px; }
+    /* The supporting line moves below Start (it stays first in reading order). */
+    .hero .hero-meta { order: 1; }
+    .hero .hero-lede { order: 2; margin-top: 12px; font-size: 1rem; }
+    .hero .hero-privacy, .hero .preview-note { order: 3; }
   }
   .perk svg { width: 17px; height: 17px; fill: none; stroke: var(--accent); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -1046,6 +1056,7 @@
   }
   let state = loadState();
   let doneName = ''; // shown on the waitlist card; kept in memory only
+  let shareName = ''; // respondent's name, used as ?src= on the share link; memory only
 
   function save() {
     state.updatedAt = Date.now();
@@ -1527,6 +1538,7 @@
       waitlist: status === 'complete' && payload.waitlist_consent === 'Yes' && !!(payload.phone || payload.email),
     };
     doneName = trim(state.answers.name).split(/\s+/)[0].slice(0, 18);
+    shareName = trim(state.answers.name).replace(/\s+/g, ' ').slice(0, 40);
     state.answers = {}; // don't keep personal details on the device once sent
     goTo({ view: 'done' }, 1, 'replace');
   }
@@ -1664,7 +1676,8 @@
   window.addEventListener('resize', () => { if (confettiCanvas) sizeConfetti(); });
 
   async function share() {
-    const url = location.origin + location.pathname + '?src=share';
+    // The sharer's name becomes the new respondent's `source`, so referrals are traceable.
+    const url = location.origin + location.pathname + '?src=' + encodeURIComponent(shareName || 'share');
     const text = 'I just took a 2-minute survey about Coffee Pass, a coffee subscription for Bengaluru’s independent cafés. Take it too:';
     if (navigator.share) {
       try {
