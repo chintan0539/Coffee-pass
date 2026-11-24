@@ -28,8 +28,11 @@ Each row has `status`: `complete`, or `screened_out` for people who answered "I 
 
 ## Publish
 
-Any static host works. The quickest is to drag the `site` folder onto [Netlify Drop](https://app.netlify.com/drop).
-GitHub Pages, Vercel and Cloudflare Pages also work.
+**GitHub Pages (set up):** `.github/workflows/pages.yml` publishes the `site` folder on every push to `main`.
+One-time setup: in the repo, go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**.
+The site is then at `https://chintan0539.github.io/Coffee-pass/`.
+
+Any other static host also works, for example Netlify (`netlify.toml` points it at `survey/site`), Vercel or Cloudflare Pages.
 
 ## Track where people come from
 
