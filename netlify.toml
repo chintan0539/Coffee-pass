@@ -1,0 +1,3 @@
+# Netlify serves the survey website from this folder. There is no build step.
+[build]
+  publish = "survey/site"
