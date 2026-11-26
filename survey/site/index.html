@@ -1,898 +1,325 @@
-<!doctype html>
-<html lang="en-IN">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Coffee Pass · 2-minute survey</title>
-<meta name="description" content="A few quick questions to help us build something new for Bengaluru’s independent cafés.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Coffee Pass · 2-minute survey">
-<meta property="og:description" content="A few quick questions to help us build something new for Bengaluru’s independent cafés.">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236f4429'/%3E%3Cpath d='M8 13h13v4a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6z' fill='none' stroke='%23fff' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M21 14h1.5a2.8 2.8 0 0 1 0 5.6H21' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+<title>Coffee Pass survey</title>
+<meta name="description" content="A 2-minute survey about Coffee Pass: one monthly pass for your favourite independent cafés in Bengaluru.">
+<meta name="theme-color" content="#FFFFFF" id="theme-color">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #faf9f7;
-    --surface: #ffffff;
-    --text: #1d1d1f;
-    --text-2: #6b6b70;
-    --line: #e4e0da;
-    --line-strong: #8e8a85;
-    --track: #ebe6df;
-    --accent: #6f4429;          /* espresso */
-    --accent-strong: #5a361f;
-    --on-accent: #ffffff;
-    --accent-soft: rgba(111, 68, 41, 0.07);
-    --accent-ring: rgba(111, 68, 41, 0.22);
-    --accent-ring-0: rgba(111, 68, 41, 0);
-    --error: #b42318;
-    --bar-bg: rgba(250, 249, 247, 0.8);
-    --shadow-sel: 0 8px 24px -12px rgba(111, 68, 41, 0.55);
-    --glow-1: rgba(214, 150, 92, 0.34);
-    --glow-2: rgba(111, 68, 41, 0.16);
-    --shimmer: #d39a62;
-    --radius: 14px;
-    --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
-    --ease-in: cubic-bezier(0.4, 0, 1, 1);
-    --font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color-scheme: light dark;
-  }
+:root {
+  --blue: #2340D8;
+  --blue-dark: #1A30A8;
+  --ink: #0E1330;
+  --muted: #5A6180;
+  --line: #DCE1F5;
+  --radio: #B9C2EC;
+  --tint: #F3F5FE;
+  --white: #FFFFFF;
+  --error: #C4320A;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--white);
+  color: var(--ink);
+  font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color .35s ease;
+}
+body[data-theme="blue"] { background: var(--blue); }
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1:focus { outline: none; }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #000000;
-      --surface: #1c1c1e;
-      --text: #f5f5f7;
-      --text-2: #a1a1a6;
-      --line: #2c2c2e;
-      --line-strong: #76767c;
-      --track: #2c2c2e;
-      --accent: #d9a46c;        /* caramel */
-      --accent-strong: #e6b886;
-      --on-accent: #1d1d1f;
-      --accent-soft: rgba(217, 164, 108, 0.1);
-      --accent-ring: rgba(217, 164, 108, 0.3);
-      --accent-ring-0: rgba(217, 164, 108, 0);
-      --error: #ff7b72;
-      --bar-bg: rgba(0, 0, 0, 0.72);
-      --shadow-sel: 0 8px 28px -14px rgba(217, 164, 108, 0.6);
-      --glow-1: rgba(217, 164, 108, 0.2);
-      --glow-2: rgba(150, 95, 55, 0.22);
-      --shimmer: #f6e2c8;
-    }
-  }
+/* ---------- Screen shell ---------- */
+.screen {
+  /* Light theme tokens */
+  --fg: var(--ink);
+  --fg-muted: var(--muted);
+  --border: var(--line);
+  --opt-bg: var(--white);
+  --sel-bg: var(--blue);
+  --sel-fg: var(--white);
+  --sel-sub: rgba(255, 255, 255, .82);
+  --mark-off: var(--radio);
+  --btn-bg: var(--blue);
+  --btn-fg: var(--white);
+  --link: var(--blue);
+  --err: var(--error);
+  --bg: var(--white);
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  color: var(--fg);
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+.screen.blue {
+  --fg: var(--white);
+  --fg-muted: rgba(255, 255, 255, .82);
+  --border: rgba(255, 255, 255, .5);
+  --opt-bg: transparent;
+  --sel-bg: var(--white);
+  --sel-fg: var(--blue);
+  --sel-sub: var(--muted);
+  --mark-off: rgba(255, 255, 255, .65);
+  --btn-bg: var(--white);
+  --btn-fg: var(--blue);
+  --link: var(--white);
+  --err: #FFE1D6;
+  --bg: var(--blue);
+}
+.screen > .enter { display: contents; }
+.anim { animation: enter-fwd .42s var(--ease) both; }
+.anim.rev { animation-name: enter-back; }
+@keyframes enter-fwd { from { opacity: 0; transform: translateX(28px); } }
+@keyframes enter-back { from { opacity: 0; transform: translateX(-28px); } }
 
-  *, *::before, *::after { box-sizing: border-box; }
-  [hidden] { display: none !important; }
+.top { display: flex; align-items: center; gap: 14px; padding: 20px 20px 0; }
+.back {
+  width: 44px; height: 44px; flex: none; border-radius: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--border); background: transparent; color: var(--fg); padding: 0;
+  transition: transform .15s ease;
+}
+.back:active { transform: scale(.94); }
+.back svg { width: 18px; height: 18px; }
+.progress { flex: 1; display: block; height: 12px; min-width: 0; }
+.progress path { fill: none; stroke-linecap: round; }
+.progress .track { stroke: var(--line); stroke-width: 3; }
+.progress .fill { stroke: var(--blue); stroke-width: 3.4; transition: stroke-dasharray .6s var(--ease); }
+.blue .progress .track { stroke: rgba(255, 255, 255, .3); }
+.blue .progress .fill { stroke: var(--white); }
+.count, .top-note { font-size: 13px; font-weight: 600; color: var(--fg-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.top-note { margin-left: auto; }
 
-  html {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    background: var(--bg);
-    scroll-padding-top: 24px;
-    scroll-padding-bottom: 120px;
-  }
+.art-wrap { flex: none; margin: 10px 0 8px; overflow: hidden; }
+.art { display: block; width: 100%; max-width: 390px; height: auto; overflow: visible; }
 
-  body {
-    margin: 0;
-    min-height: 100vh;
-    min-height: 100svh;
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    font-size: 17px;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+.head { padding: 0 24px; }
+.eyebrow { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: var(--blue); }
+.blue .eyebrow { color: var(--white); }
+h1.title { margin: 0; font-size: var(--size, 30px); line-height: 1.12; font-weight: 600; letter-spacing: -0.025em; }
+.sub { margin: 10px 0 0; font-size: 15px; line-height: 1.4; color: var(--fg-muted); }
 
-  button, input { font: inherit; color: inherit; }
+/* ---------- Options ---------- */
+.opts { padding: 22px 24px 0; }
+.opts.list { display: flex; flex-direction: column; gap: 10px; }
+.opts.list.compact { gap: 8px; }
+.opt {
+  -webkit-appearance: none; appearance: none; margin: 0;
+  background: var(--opt-bg); border: 1.5px solid var(--border); color: var(--fg);
+  font-weight: 500; text-align: left;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease, transform .12s ease;
+}
+.opt:active { transform: scale(.985); }
+.opt[aria-checked="true"], .opt[aria-pressed="true"] { background: var(--sel-bg); border-color: var(--sel-bg); color: var(--sel-fg); }
+.list .opt {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; min-height: 54px; padding: 8px 16px 8px 18px; border-radius: 16px; font-size: 16px; line-height: 1.25;
+}
+.list.compact .opt { min-height: 50px; }
+.mark { flex: none; width: 24px; height: 24px; display: grid; }
+.mark svg { grid-area: 1 / 1; width: 24px; height: 24px; overflow: visible; }
+.mark .on { opacity: 0; transform: scale(.6); transition: opacity .18s ease, transform .25s var(--ease); }
+.mark .off path { stroke: var(--mark-off); }
+.mark .on .bg { fill: var(--sel-fg); stroke: var(--sel-fg); }
+.mark .on .tick { stroke: var(--sel-bg); }
+[aria-checked="true"] .mark .on, [aria-pressed="true"] .mark .on { opacity: 1; transform: none; }
+[aria-checked="true"] .mark .off, [aria-pressed="true"] .mark .off { opacity: 0; }
 
-  .sr-only {
-    position: absolute !important;
-    width: 1px; height: 1px;
-    padding: 0; margin: -1px;
-    overflow: hidden; clip: rect(0 0 0 0);
-    white-space: nowrap; border: 0;
-  }
+.opts.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips .opt {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 46px; padding: 6px 16px; border-radius: 999px; font-size: 15px; line-height: 1.2;
+}
+.chips .opt .tick { display: none; width: 16px; height: 16px; flex: none; }
+.chips .opt[aria-pressed="true"] .tick, .chips .opt[aria-checked="true"] .tick { display: block; }
 
-  /* ---------- Layout ---------- */
-  main {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    padding: 0 20px;
-  }
-  .column {
-    width: 100%;
-    max-width: 600px;
-    min-height: 100vh;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    padding-top: calc(env(safe-area-inset-top) + clamp(36px, 9vh, 104px));
-  }
-  body[data-view="intro"] .column,
-  body[data-view="done"] .column {
-    max-width: 760px;
-    padding-top: 0;
-  }
-  .stage { flex: 1 0 auto; }
-  @media (min-width: 640px) {
-    .stage { flex: 0 0 auto; }
-  }
+.opts.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.cards .opt {
+  height: 104px; border-radius: 18px; padding: 14px 16px;
+  display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start;
+}
+.cards .num { font-size: 34px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+.cards .lbl { font-size: 14px; font-weight: 500; color: var(--fg-muted); }
+.cards .opt[aria-checked="true"] .lbl { color: var(--sel-sub); }
+.opts.extra { padding-top: 10px; }
 
-  .actions {
-    position: sticky;
-    bottom: 0;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 28px;
-    padding: 16px 0 calc(16px + env(safe-area-inset-bottom));
-    background: linear-gradient(to top, var(--bg) 62%, transparent);
-  }
-  .kbd-hint { display: none; margin-left: auto; align-items: center; gap: 6px; font-size: 13px; color: var(--text-2); }
-  .kbd-hint kbd {
-    font: inherit;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 2px 7px;
-    border: 1px solid var(--line);
-    border-bottom-width: 2px;
-    border-radius: 6px;
-    background: var(--surface);
-    color: var(--text);
-  }
-  @media (hover: hover) and (min-width: 640px) { .kbd-hint { display: inline-flex; } }
-  @media (min-width: 640px) {
-    .actions { margin-top: 40px; padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
-  }
+.groups { display: flex; flex-direction: column; gap: 22px; padding-top: 24px; }
+.group { padding: 0 24px; }
+.group-label { margin: 0 0 10px; font-size: 13px; font-weight: 600; color: var(--fg-muted); }
+.group .opts { padding: 0; }
 
-  /* ---------- Buttons ---------- */
-  .btn {
-    appearance: none;
-    -webkit-appearance: none;
-    border: 0;
-    margin: 0;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: transform 0.15s var(--ease-out), background-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
-  }
-  .btn:active { transform: scale(0.97); }
-  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* ---------- Fields ---------- */
+.fields { padding: 16px 24px 0; display: flex; flex-direction: column; gap: 12px; }
+.fields[hidden] { display: none; }
+.field-label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--fg-muted); }
+.field {
+  display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 16px;
+  border-radius: 14px; border: 1.5px solid var(--line); background: var(--white);
+  transition: border-color .18s ease;
+}
+.field:focus-within { border-color: var(--blue); }
+.field input { flex: 1; min-width: 0; border: 0; outline: 0; font-size: 16px; color: var(--ink); background: transparent; padding: 0; }
+.field input::placeholder, textarea::placeholder { color: #8B91AC; }
+.field .prefix { font-size: 16px; font-weight: 500; color: var(--ink); padding-right: 10px; border-right: 1px solid var(--line); }
+.field-label textarea {
+  height: 120px; padding: 14px 16px; border-radius: 14px; border: 1.5px solid var(--line);
+  font-size: 16px; color: var(--ink); resize: none; outline: 0; background: var(--white); font-weight: 400;
+  transition: border-color .18s ease;
+}
+.field-label textarea:focus { border-color: var(--blue); }
+[aria-invalid="true"] { border-color: var(--error) !important; }
+.field:has(input[aria-invalid="true"]) { border-color: var(--error); }
+.or { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.or span { flex: 1; height: 1px; background: var(--line); }
+.fine { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
+.field-err { margin: 0; min-height: 0; font-size: 13px; font-weight: 500; color: var(--error); }
+.field-err:empty { display: none; }
+.other-field { padding: 16px 24px 0; }
+.other-field[hidden] { display: none; }
 
-  .btn-primary {
-    min-height: 50px;
-    min-width: 128px;
-    padding: 0 28px;
-    border-radius: 999px;
-    background: var(--accent);
-    color: var(--on-accent);
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-  .btn-lg { min-height: 56px; min-width: 168px; padding: 0 40px; font-size: 18px; }
+.hint {
+  margin: 14px 24px 0; padding: 14px 16px; border-radius: 16px; background: var(--tint);
+  display: flex; align-items: center; gap: 12px;
+}
+.hint[hidden] { display: none; }
+.hint svg { flex: none; width: 36px; height: 22px; overflow: visible; }
+.hint p { margin: 0; font-size: 15px; line-height: 1.35; color: var(--ink); }
+.hint strong { color: var(--blue); font-weight: 600; }
 
-  .btn-ghost {
-    min-height: 44px;
-    padding: 0 14px 0 8px;
-    border-radius: 999px;
-    background: transparent;
-    color: var(--text-2);
-    font-size: 17px;
-    font-weight: 500;
-  }
-  .btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.error { margin: 0; padding: 12px 24px 0; font-size: 14px; font-weight: 500; color: var(--err); }
+.error:empty { display: none; }
 
-  .btn-link {
-    min-height: 44px;
-    padding: 0 12px;
-    background: transparent;
-    color: var(--text-2);
-    font-size: 15px;
-    font-weight: 500;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 1px;
-  }
+/* ---------- Footer & buttons ---------- */
+.foot {
+  margin-top: auto; padding: 16px 24px max(30px, env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: 16px;
+}
+.foot.stack { display: block; padding-top: 14px; padding-bottom: max(26px, env(safe-area-inset-bottom)); }
+.btn {
+  -webkit-appearance: none; appearance: none;
+  flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+  height: 56px; border-radius: 999px; border: 0;
+  background: var(--btn-bg); color: var(--btn-fg);
+  font-size: 17px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none;
+  transition: transform .12s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.btn:active { transform: scale(.98); }
+.btn svg { width: 18px; height: 18px; flex: none; transition: transform .2s var(--ease); }
+.btn:hover svg.arrow { transform: translateX(3px); }
+.btn.outline { background: var(--white); color: var(--blue); border: 1.5px solid var(--blue); }
+.text-btn {
+  -webkit-appearance: none; appearance: none; background: none; border: 0;
+  color: var(--link); font-size: 16px; font-weight: 600; padding: 0 8px; height: 56px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.text-btn.block { width: 100%; height: auto; margin-top: 10px; padding: 10px 0; font-size: 15px; }
+.foot-note { margin: 14px 0 0; text-align: center; font-size: 13px; line-height: 1.4; color: var(--fg-muted); }
+.dots { display: flex; gap: 6px; justify-content: center; padding-top: 18px; }
+.dots span { width: 6px; height: 6px; border-radius: 3px; background: var(--line); transition: width .3s var(--ease); }
+.dots span.on { width: 20px; background: var(--blue); }
+.blue .dots span { background: rgba(255, 255, 255, .35); }
+.blue .dots span.on { background: var(--white); }
 
-  @media (hover: hover) {
-    .btn-primary:hover { background: var(--accent-strong); }
-    .btn-ghost:hover, .btn-link:hover { color: var(--text); }
-    .btn-ghost:hover { background: var(--accent-soft); }
-  }
+:focus-visible { outline: 3px solid #7C8CF0; outline-offset: 2px; }
+.blue :focus-visible { outline-color: #FFFFFF; }
 
-  /* ---------- Hero ---------- */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 64px 0 48px;
-  }
-  .glow-layer {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-    transition: opacity 0.4s var(--ease-out);
-  }
-  body[data-view="step"] .glow-layer { opacity: 0; }
+/* ---------- Intro ---------- */
+.hero > div { width: 100%; }
+.intro-copy { padding: 30px 24px 0; }
+.intro-copy .eyebrow { font-size: 14px; margin-bottom: 10px; }
+.intro-copy h1 { margin: 0; font-size: 36px; line-height: 1.08; font-weight: 600; letter-spacing: -0.03em; }
+.underlined { position: relative; display: inline-block; }
+.underlined .ul { position: absolute; left: 0; right: 0; bottom: -10px; }
+.underlined .ul svg { display: block; width: 100%; height: auto; overflow: visible; }
+.lede { margin: 20px 0 0; font-size: 17px; line-height: 1.45; color: var(--fg-muted); max-width: 290px; }
+.intro2-art { padding-top: 40px; overflow: hidden; }
+.intro2-copy { padding: 34px 24px 0; }
+.intro2-copy h1 { margin: 0; font-size: 40px; line-height: 1.05; font-weight: 600; letter-spacing: -0.03em; }
+.intro2-copy .lede { margin-top: 16px; max-width: none; }
+.facts { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.fact { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 500; }
+.fact span { width: 40px; height: 40px; flex: none; border-radius: 20px; background: rgba(255, 255, 255, .14); display: flex; align-items: center; justify-content: center; }
+.fact svg { width: 20px; height: 20px; }
+.preview-note { margin: 10px 0 0; font-size: 12px; text-align: center; color: var(--fg-muted); }
 
-  /* Drifting coffee beans behind the intro and thank-you screens */
-  .beans {
-    position: absolute;
-    inset: 0;
-    transform: translate(calc(var(--px, 0) * -28px), calc(var(--py, 0) * -28px));
-    transition: transform 0.8s var(--ease-out);
-  }
-  .bean {
-    position: absolute;
-    left: var(--x);
-    bottom: -60px;
-    width: var(--s);
-    height: calc(var(--s) * 1.4);
-    color: var(--accent);
-    opacity: var(--o);
-  }
-  .bean:nth-child(3n) { filter: blur(1.5px); }
-  .bean svg { display: block; width: 100%; height: 100%; }
-  .bean-crease { fill: none; stroke: var(--bg); stroke-width: 1.6; stroke-linecap: round; opacity: 0.6; }
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0 0 auto 0;
-    height: 60vh;
-    background: radial-gradient(70% 60% at 50% 0%, var(--accent-soft), transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .glow {
-    position: absolute;
-    left: 50%;
-    top: 46%;
-    width: min(980px, 150vw);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    background:
-      radial-gradient(38% 38% at 40% 44%, var(--glow-1), transparent 72%),
-      radial-gradient(34% 34% at 62% 58%, var(--glow-2), transparent 72%);
-    filter: blur(24px);
-  }
-  .hero .eyebrow { margin-bottom: 14px; font-size: 17px; }
-  .hero-concept {
-    margin: 0 auto;
-    max-width: 28ch;
-    font-size: clamp(1.625rem, 1.1rem + 2.4vw, 2.75rem);
-    line-height: 1.12;
-    letter-spacing: -0.03em;
-    font-weight: 700;
-    text-wrap: balance;
-  }
-  .hero-concept .accent { color: var(--accent); }
-  .hero-concept .wd { display: inline-block; }
-  .hero-concept .shimmer {
-    white-space: nowrap;
-    background: linear-gradient(100deg, var(--accent) 20%, var(--shimmer) 45%, var(--accent) 70%);
-    background-size: 250% 100%;
-    background-position: 100% 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+/* ---------- End screens ---------- */
+.confetti { position: absolute; top: 0; left: 50%; width: 390px; height: 400px; transform: translateX(-50%); pointer-events: none; overflow: visible; }
+.end-art { padding-top: 60px; overflow: hidden; position: relative; }
+.end-art .art { margin: 0 auto; }
+.end-copy { padding: 34px 32px 0; text-align: center; position: relative; }
+.end-copy h1 { margin: 0; font-size: 38px; line-height: 1.08; font-weight: 600; letter-spacing: -0.03em; }
+.end-copy p { margin: 14px 0 0; font-size: 17px; line-height: 1.45; color: var(--fg-muted); }
+.end-foot { margin-top: auto; padding: 24px 24px max(34px, env(safe-area-inset-bottom)); position: relative; }
+.end-foot .foot-note { font-size: 14px; }
+.pop { animation: pop .6s var(--ease) both .1s; }
+@keyframes pop { from { opacity: 0; transform: scale(.85) translateY(10px); } }
 
-  .hero-visual {
-    position: relative;
-    margin-bottom: 44px;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .hero-visual .sparkle { width: 16px; height: 16px; }
+/* ---------- Desktop: open on your phone ---------- */
+.desk { display: flex; min-height: 100vh; min-height: 100dvh; width: 100%; background: var(--white); color: var(--ink); }
+.desk-art { width: 44%; max-width: 560px; flex: none; background: var(--blue); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.desk-art svg { width: min(440px, 80%); height: auto; overflow: visible; }
+.desk-copy { flex: 1; padding: 48px 96px; display: flex; flex-direction: column; justify-content: center; }
+.desk-copy .eyebrow { font-size: 16px; margin-bottom: 14px; }
+.desk-copy h1 { margin: 0; font-size: clamp(48px, 5vw, 64px); line-height: 1.02; font-weight: 600; letter-spacing: -0.035em; }
+.desk-copy .underlined .ul { bottom: -12px; }
+.desk-copy .lede { margin-top: 28px; max-width: 440px; font-size: 19px; line-height: 1.5; color: var(--muted); }
+.desk-row { display: flex; align-items: center; gap: 32px; margin-top: 40px; }
+.qr { position: relative; width: 196px; height: 196px; flex: none; display: flex; align-items: center; justify-content: center; }
+.qr .frame { position: absolute; inset: 0; }
+.qr .frame svg { width: 196px; height: 196px; overflow: visible; }
+.qr .code { width: 150px; height: 150px; }
+.qr .code svg { display: block; width: 150px; height: 150px; }
+.qr[hidden] { display: none; }
+.desk-actions { display: flex; flex-direction: column; gap: 14px; width: 220px; }
+.desk-actions .btn { flex: none; }
+.desk-actions .text-btn { height: 44px; color: var(--blue); }
+body[data-view="desk"] { background: var(--white); }
 
-  .perks {
-    list-style: none;
-    margin: 24px auto 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    max-width: 34rem;
-  }
-  .perk {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 8px 14px 8px 11px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: var(--surface);
-    font-size: 14px;
-    font-weight: 600;
-    box-shadow: 0 6px 16px -12px rgba(0, 0, 0, 0.3);
-  }
-  /* Phones: compact intro so the Start button fits on the first screen. */
-  @media (max-width: 480px) {
-    .hero:not(.done) { padding-top: 20px; padding-bottom: 32px; }
-    .hero-visual { margin-bottom: 22px; }
-    .pass.hero-pass { width: min(250px, 66vw); }
-    .hero-visual .pass-card { padding: 14px 16px 12px; border-radius: 16px; }
-    .hero .eyebrow { margin-bottom: 8px; font-size: 15px; }
-    .hero .hero-concept { font-size: 1.5rem; line-height: 1.13; }
-    .perks { margin-top: 14px; gap: 6px; }
-    .perk { gap: 6px; padding: 6px 12px 6px 9px; font-size: 13px; }
-    .hero .hero-cta { margin-top: 22px; }
-    .hero .hero-cta .btn-lg { min-height: 52px; }
-    /* The supporting line moves below Start (it stays first in reading order). */
-    .hero .hero-meta { order: 1; }
-    .hero .hero-lede { order: 2; margin-top: 12px; font-size: 1rem; }
-    .hero .hero-privacy, .hero .preview-note { order: 3; }
-  }
-  .perk svg { width: 17px; height: 17px; fill: none; stroke: var(--accent); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+/* ---------- Small and short screens ---------- */
+@media (max-height: 760px) {
+  .foot { position: sticky; bottom: 0; z-index: 2; background: linear-gradient(to bottom, transparent, var(--bg) 18px); }
+  .art-wrap .art { height: 120px; width: auto; }
+  .hero > div { height: 320px !important; }
+}
+@media (max-height: 680px) {
+  .art-wrap .art { height: 96px; }
+  .hero > div { height: 280px !important; }
+  .intro2-art { padding-top: 16px; }
+  .end-art { padding-top: 24px; }
+}
+@media (max-width: 360px) {
+  h1.title { font-size: min(var(--size, 30px), 26px); }
+  .intro-copy h1 { font-size: 32px; }
+}
 
-  .btn-start { position: relative; overflow: hidden; isolation: isolate; }
-  .btn-shine {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
-    transform: translateX(-120%);
-    pointer-events: none;
-  }
-  .clock-hand { transform-box: view-box; transform-origin: 12px 12px; }
-  .hero-title {
-    margin: 0;
-    max-width: 18ch;
-    font-size: clamp(2.5rem, 1.6rem + 4vw, 4rem);
-    line-height: 1.04;
-    letter-spacing: -0.035em;
-    font-weight: 700;
-    text-wrap: balance;
-  }
-  .hero-lede {
-    margin: 20px auto 0;
-    max-width: 36ch;
-    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
-    line-height: 1.45;
-    color: var(--text-2);
-    text-wrap: pretty;
-  }
-  .hero-lede + .hero-lede { margin-top: 8px; }
-  .hero-cta {
-    margin-top: 36px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-  .hero-meta {
-    margin: 14px 0 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 15px;
-    color: var(--text-2);
-  }
-  .hero-meta svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
-  .hero-privacy {
-    margin: 40px auto 0;
-    max-width: 36ch;
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--text-2);
-  }
-  .preview-note {
-    margin: 12px auto 0;
-    max-width: 40ch;
-    font-size: 12px;
-    color: var(--text-2);
-    border: 1px dashed var(--line-strong);
-    border-radius: 10px;
-    padding: 6px 12px;
-  }
+.shake { animation: shake .4s ease; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
-  /* ---------- Questions ---------- */
-  .eyebrow {
-    margin: 0 0 12px;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: -0.005em;
-    color: var(--accent);
-  }
-  .q-title {
-    margin: 0;
-    font-size: clamp(2rem, 1.35rem + 2.6vw, 3rem);
-    line-height: 1.08;
-    letter-spacing: -0.028em;
-    font-weight: 700;
-    text-wrap: balance;
-  }
-  h1:focus { outline: none; }
-  .q-sub {
-    margin: 14px 0 0;
-    font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
-    line-height: 1.5;
-    color: var(--text-2);
-    text-wrap: pretty;
-  }
-  .q-hint {
-    margin: 12px 0 0;
-    font-size: 15px;
-    color: var(--text-2);
-  }
-
-  .options {
-    display: grid;
-    gap: 10px;
-    margin-top: 28px;
-  }
-  .option {
-    position: relative;
-    display: block;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .option input {
-    position: absolute;
-    opacity: 0;
-    width: 1px;
-    height: 1px;
-    margin: 0;
-    pointer-events: none;
-  }
-  .option-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    min-height: 58px;
-    padding: 14px 16px 14px 20px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--surface);
-    font-weight: 500;
-    line-height: 1.35;
-    transition:
-      background-color 0.22s var(--ease-out),
-      border-color 0.22s var(--ease-out),
-      color 0.22s var(--ease-out),
-      box-shadow 0.22s var(--ease-out),
-      transform 0.15s var(--ease-out);
-  }
-  @media (hover: hover) {
-    .option:hover .option-card {
-      border-color: var(--line-strong);
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px -14px rgba(0, 0, 0, 0.35);
-    }
-  }
-  .option:active .option-card { transform: scale(0.985); }
-  .option input:checked + .option-card {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--on-accent);
-    box-shadow: var(--shadow-sel);
-  }
-  .option input:focus-visible + .option-card {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  }
-
-  .indicator {
-    flex: none;
-    width: 24px;
-    height: 24px;
-    display: grid;
-    place-items: center;
-    border: 1.5px solid var(--line-strong);
-    border-radius: 50%;
-    transition: background-color 0.22s var(--ease-out), border-color 0.22s var(--ease-out);
-  }
-  .indicator.checkbox { border-radius: 7px; }
-  .indicator svg {
-    width: 16px; height: 16px;
-    opacity: 0;
-    transition: opacity 0.15s var(--ease-out);
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 2.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .indicator path {
-    stroke-dasharray: 18;
-    stroke-dashoffset: 18;
-    transition: stroke-dashoffset 0.3s var(--ease-out) 0.05s;
-  }
-  .option input:checked + .option-card .indicator {
-    background: var(--on-accent);
-    border-color: var(--on-accent);
-  }
-  .option input:checked + .option-card .indicator svg { opacity: 1; }
-  .option input:checked + .option-card .indicator path { stroke-dashoffset: 0; }
-
-  .other { margin-top: 10px; }
-
-  /* ---------- Text fields ---------- */
-  .fields { display: grid; gap: 20px; margin-top: 28px; }
-  /* Phone-or-email group */
-  .reach {
-    margin: 0;
-    min-width: 0;
-    padding: 18px 16px 18px;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: var(--accent-soft);
-  }
-  .reach legend {
-    float: left;
-    width: 100%;
-    padding: 0;
-    font-size: 15px;
-    font-weight: 600;
-  }
-  .reach-hint { clear: both; margin: 2px 0 16px; font-size: 14px; color: var(--text-2); }
-  .or {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 14px 0;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-2);
-  }
-  .or::before, .or::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-  .reach .field label { font-weight: 500; font-size: 14px; }
-  .field label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 15px;
-    font-weight: 600;
-  }
-  .input {
-    width: 100%;
-    min-height: 54px;
-    padding: 14px 16px;
-    font-size: 17px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    -webkit-appearance: none;
-    appearance: none;
-    transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
-  }
-  .input::placeholder { color: var(--text-2); opacity: 1; }
-  @media (hover: hover) { .input:hover { border-color: var(--line-strong); } }
-  .input:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 4px var(--accent-ring);
-  }
-  .input[aria-invalid="true"] { border-color: var(--error); }
-  .input[aria-invalid="true"]:focus { box-shadow: 0 0 0 4px color-mix(in srgb, var(--error) 22%, transparent); }
-
-  .phone { position: relative; }
-  .phone-prefix {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 17px;
-    font-weight: 500;
-    pointer-events: none;
-  }
-  .phone-prefix::after {
-    content: "";
-    position: absolute;
-    right: -12px;
-    top: 1px;
-    bottom: 1px;
-    width: 1px;
-    background: var(--line);
-  }
-  .phone .input { padding-left: 66px; }
-
-  .error {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1.4;
-    color: var(--error);
-  }
-  .error:not(:empty) { margin-top: 12px; }
-  .field .error:not(:empty) { margin-top: 8px; }
-
-  /* ---------- Coffee Pass card ---------- */
-  .pass { width: min(300px, 76vw); margin: 0 auto; perspective: 1000px; }
-
-  .pass-in { transform-style: preserve-3d; }
-  .pass-card {
-    --rx: 0deg;
-    --ry: 0deg;
-    position: relative;
-    aspect-ratio: 1.586;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 18px 20px 16px;
-    border-radius: 20px;
-    overflow: hidden;
-    color: #fbf3e8;
-    text-align: left;
-    background:
-      radial-gradient(120% 90% at 100% 0%, rgba(232, 178, 116, 0.55), transparent 55%),
-      radial-gradient(90% 80% at 0% 100%, rgba(30, 16, 8, 0.6), transparent 60%),
-      linear-gradient(135deg, #4a2c1a 0%, #6f4429 52%, #8d5a35 100%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.07),
-      0 30px 60px -24px rgba(60, 30, 10, 0.55),
-      0 12px 24px -14px rgba(60, 30, 10, 0.4);
-    transform: rotateX(var(--rx)) rotateY(var(--ry));
-    transition: transform 0.5s var(--ease-out);
-  }
-  @media (prefers-color-scheme: dark) {
-    .pass-card {
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.22),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-        0 30px 70px -20px rgba(217, 164, 108, 0.3);
-    }
-  }
-  .pass-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-  .pass-brand { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
-  .pass-chip {
-    padding: 3px 9px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    background: rgba(255, 255, 255, 0.14);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  .pass-cups { display: flex; gap: 5px; }
-  .pass-cup {
-    flex: 1 1 0;
-    max-width: 26px;
-    aspect-ratio: 1;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    color: rgba(255, 255, 255, 0.6);
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  .pass-cup svg { width: 58%; height: 58%; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-  .pass-cup.on { color: #4a2c1a; background: #f3dcc0; border-color: transparent; }
-  .pass-meta {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 12px;
-    font-size: 10.5px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: rgba(251, 243, 232, 0.72);
-  }
-  .pass-meta strong { display: block; margin-top: 2px; font-size: 15px; letter-spacing: -0.01em; text-transform: none; color: #fff; font-weight: 600; }
-  .pass-meta > :last-child { text-align: right; }
-  .pass-shine {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.22) 48%, transparent 60%);
-    transform: translateX(-120%);
-    pointer-events: none;
-  }
-
-  /* ---------- Thank-you ---------- */
-  .done { padding-top: 56px; }
-  .cup-stage {
-    position: relative;
-    width: 176px; height: 176px;
-    margin: 0 auto 16px;
-    display: grid;
-    place-items: center;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: none;
-    color: inherit;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .cup-stage:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-  .halo { position: absolute; inset: 6px; border-radius: 50%; background: radial-gradient(circle, var(--glow-1), transparent 68%); }
-  .ring { position: absolute; inset: 18px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0; }
-  .cup { position: relative; width: 132px; height: 124px; overflow: visible; }
-  .cup .saucer { fill: var(--track); }
-  .cup .cup-body { fill: var(--surface); }
-  .cup .cup-line { fill: none; stroke: var(--text); stroke-width: 3.5; stroke-linejoin: round; stroke-linecap: round; }
-  .cup .crema { fill: #c8935f; }
-  .cup .steam path { fill: none; stroke: var(--text-2); stroke-width: 3; stroke-linecap: round; opacity: 0.35; }
-  .badge {
-    position: absolute;
-    right: 14px; top: 22px;
-    width: 46px; height: 46px;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--accent);
-    color: var(--on-accent);
-    box-shadow: 0 0 0 5px var(--bg), 0 12px 22px -8px rgba(60, 30, 10, 0.5);
-  }
-  .badge svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
-  .sparkle { position: absolute; width: 14px; height: 14px; color: var(--accent); opacity: 0.6; }
-  .sparkle svg { width: 100%; height: 100%; fill: currentColor; }
-  .done-title {
-    margin: 0;
-    font-size: clamp(2.75rem, 1.8rem + 4.5vw, 4.5rem);
-    line-height: 1.02;
-    letter-spacing: -0.04em;
-    font-weight: 700;
-  }
-  .done-title .w { display: inline-block; white-space: nowrap; }
-  .done-title .ch { display: inline-block; }
-  .done .hero-lede { margin-top: 16px; }
-  .done-pass { margin: 36px auto 4px; }
-  .done-actions { margin-top: 32px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  .done-note { margin: 0; max-width: 30ch; font-size: 14px; color: var(--text-2); }
-  .confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30; }
-
-  noscript p { max-width: 32ch; margin: 30vh auto 0; text-align: center; color: var(--text-2); }
-
-  /* ---------- Motion (only when the user hasn't asked for less) ---------- */
-  @media (prefers-reduced-motion: no-preference) {
-    .hero:not(.done) > .eyebrow,
-    .hero:not(.done) > .hero-lede,
-    .hero:not(.done) > .hero-cta,
-    .hero:not(.done) > .hero-meta,
-    .hero:not(.done) > .hero-privacy,
-    .hero:not(.done) > .preview-note { animation: rise 0.7s var(--ease-out) both; }
-    .hero:not(.done) > .eyebrow { animation-delay: 0.35s; }
-    .hero:not(.done) > .hero-lede { animation-delay: 1.05s; }
-    .hero:not(.done) > .hero-cta { animation-delay: 1.2s; }
-    .hero:not(.done) > .hero-meta,
-    .hero:not(.done) > .hero-privacy,
-    .hero:not(.done) > .preview-note { animation-delay: 1.35s; }
-
-    .hero-concept .wd { animation: word 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: calc(var(--i) * 35ms + 0.45s); }
-    .hero-concept .shimmer {
-      animation: word 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both, shimmer-text 4.5s ease-in-out infinite;
-      animation-delay: calc(var(--i) * 35ms + 0.45s), 1.8s;
-    }
-    .perk { animation: perk-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(var(--i) * 0.12s + 0.95s); }
-    .hero-visual .sparkle { opacity: 0; animation: twinkle 2.6s ease-in-out infinite; animation-delay: var(--d); }
-    .hero-visual.tapped .pass-card { animation: tap-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    .btn-start { animation: btn-glow 2.4s ease-out 2.2s infinite; }
-    .btn-start .btn-shine { animation: shine 3.4s ease-in-out 2s infinite; }
-    .btn-start svg { animation: nudge 1.6s ease-in-out 2s infinite; }
-    .clock-hand { animation: spin 6s linear infinite; }
-    .bean { animation: bean-rise var(--d) linear var(--delay) infinite; }
-    .glow { animation: glow-in 1.4s var(--ease-out) both, drift 16s ease-in-out 1.4s infinite alternate; }
-
-    .screen.enter .option { animation: rise 0.42s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 30ms + 80ms); }
-    .other:not([hidden]) { animation: rise 0.28s var(--ease-out) both; }
-    .error:not(:empty) { animation: fade 0.2s var(--ease-out); }
-    .shake { animation: shake 0.38s var(--ease-out); }
-
-    .option input:checked + .option-card { animation: sel-pop 0.35s var(--ease-out); }
-
-    /* Coffee Pass card */
-    .pass { animation: float 6s ease-in-out infinite; }
-    .hero-pass .pass-in { animation: pass-in 1s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-    .pass-shine { animation: shine 5.5s ease-in-out 1.4s infinite; }
-    .pass-cup { animation: stamp 6s ease-in-out infinite both; animation-delay: calc(var(--i) * 0.28s + 0.6s); }
-
-    /* Thank-you celebration */
-    .done .cup-stage { animation: pop 0.6s var(--ease-out) both; }
-    .done .halo { animation: halo 3s ease-in-out infinite alternate; }
-    .done .ring { animation: ring 3s var(--ease-out) infinite; }
-    .done .ring.r1 { animation-delay: 0.5s; }
-    .done .ring.r2 { animation-delay: 1.5s; }
-    .done .ring.r3 { animation-delay: 2.5s; }
-    .done .coffee { animation: fill-cup 1.2s cubic-bezier(0.3, 0.7, 0.3, 1) 0.35s both; }
-    .done .steam path { opacity: 0; animation: steam 2.6s ease-in-out 1.3s infinite; }
-    .done .steam path:nth-child(2) { animation-delay: 1.75s; }
-    .done .steam path:nth-child(3) { animation-delay: 2.2s; }
-    .done .badge { animation: badge-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.3s both; }
-    .done .badge path { stroke-dasharray: 18; stroke-dashoffset: 18; animation: draw 0.4s var(--ease-out) 1.6s forwards; }
-    .done .sparkle { opacity: 0; animation: twinkle 2.4s ease-in-out infinite; animation-delay: var(--d); }
-    .done .ch { animation: letter 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.3) both; animation-delay: calc(var(--i) * 45ms + 0.5s); }
-    .done .hero-lede { animation: rise 0.6s var(--ease-out) 1s both; }
-    .done-pass .pass-in { animation: flip-in 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) 1.3s both; }
-    .done-actions { animation: rise 0.6s var(--ease-out) 1.6s both; }
-    .cup-stage:active { transform: scale(0.96); transition: transform 0.15s var(--ease-out); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .option-card, .indicator, .indicator svg, .indicator path, .btn, .input, .glow-layer { transition: none; }
-    .beans { display: none; }
-    .btn:active, .option:active .option-card { transform: none; }
-  }
-
-  @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
-  @keyframes fade { from { opacity: 0; } }
-  @keyframes glow-in { from { opacity: 0; transform: translate(-50%, -46%) scale(0.92); } }
-  @keyframes drift { to { transform: translate(-48%, -52%) scale(1.06); } }
-  @keyframes pop { from { opacity: 0; transform: scale(0.6); } }
-  @keyframes sel-pop { 40% { transform: scale(1.015); } }
-  @keyframes word { from { opacity: 0; transform: translateY(0.45em) rotate(2deg); filter: blur(8px); } }
-  @keyframes shimmer-text { 0% { background-position: 100% 0; } 50%, 100% { background-position: -50% 0; } }
-  @keyframes perk-in { from { opacity: 0; transform: translateY(10px) scale(0.6); } }
-  @keyframes tap-pop { 40% { transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(0.93); } }
-  @keyframes btn-glow { 0% { box-shadow: 0 0 0 0 var(--accent-ring); } 70%, 100% { box-shadow: 0 0 0 18px var(--accent-ring-0); } }
-  @keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  @keyframes bean-rise {
-    from { transform: translate(0, 0) rotate(var(--r)); }
-    50% { transform: translate(var(--sway), -55vh) rotate(calc(var(--r) + 180deg)); }
-    to { transform: translate(0, calc(-100vh - 140px)) rotate(calc(var(--r) + 360deg)); }
-  }
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-  @keyframes pass-in { from { opacity: 0; transform: translateY(28px) rotateX(28deg) scale(0.9); } }
-  @keyframes shine { 0% { transform: translateX(-120%); } 35%, 100% { transform: translateX(120%); } }
-  @keyframes stamp {
-    0%, 6%, 86%, 100% { color: rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); transform: scale(1); }
-    10% { color: #4a2c1a; background: #f3dcc0; border-color: transparent; transform: scale(1.25); }
-    14%, 78% { color: #4a2c1a; background: #f3dcc0; border-color: transparent; transform: scale(1); }
-  }
-  @keyframes halo { from { transform: scale(0.92); opacity: 0.7; } to { transform: scale(1.08); opacity: 1; } }
-  @keyframes ring { 0% { opacity: 0.45; transform: scale(0.7); } 100% { opacity: 0; transform: scale(1.55); } }
-  @keyframes fill-cup { from { transform: translateY(62px); } }
-  @keyframes steam { 0% { opacity: 0; transform: translateY(8px); } 35% { opacity: 0.6; } 100% { opacity: 0; transform: translateY(-16px); } }
-  @keyframes badge-pop { from { opacity: 0; transform: scale(0) rotate(-35deg); } }
-  @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
-  @keyframes letter { from { opacity: 0; transform: translateY(0.5em) scale(0.8) rotate(-6deg); filter: blur(6px); } }
-  @keyframes flip-in { from { opacity: 0; transform: rotateY(-100deg) translateY(20px) scale(0.9); } }
-  @keyframes draw { to { stroke-dashoffset: 0; } }
-  @keyframes shake {
-    20% { transform: translateX(-6px); }
-    40% { transform: translateX(5px); }
-    60% { transform: translateX(-3px); }
-    80% { transform: translateX(2px); }
-  }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
 </style>
 </head>
-<body data-view="intro">
-  <div class="glow-layer" aria-hidden="true"><div class="glow"></div><div class="beans" id="beans"></div></div>
-
-
-  <main>
-    <form class="column" id="survey" novalidate>
-      <div class="stage" id="stage"></div>
-      <div class="actions" id="actions" hidden>
-        <button class="btn btn-ghost" id="back" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.5 6l-6 6 6 6"/></svg>
-          Back
-        </button>
-        <span class="kbd-hint" aria-hidden="true">press <kbd>Enter ↵</kbd></span>
-        <button class="btn btn-primary" id="next" type="submit">Next</button>
-      </div>
-    </form>
-  </main>
-
-  <noscript><p>This survey needs JavaScript. Please enable it and reload the page.</p></noscript>
+<body data-theme="light">
+  <main id="app"></main>
+  <noscript><p style="padding:24px">This survey needs JavaScript. Please enable it and reload the page.</p></noscript>
 
 <script>
 (() => {
@@ -906,58 +333,124 @@
     // While it's empty, responses are only kept in this browser (for testing).
     submitUrl: 'https://script.google.com/macros/s/AKfycbzy32QRTh4sZ9IbnHCCtf8ElgTontT9-1siUx0EGbpuIdXwsvc98P_ESGgqS742UjKUEA/exec',
     resumeMaxAgeDays: 30,
-    storageKey: 'coffeepass:survey:v1',
+    storageKey: 'coffeepass:survey:v2',
     outboxKey: 'coffeepass:outbox:v1',
     localResponsesKey: 'coffeepass:responses:v1',
+    qrLib: 'https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js',
   };
 
   /* =========================================================
-     Survey content, from Form/formQuestions.md
+     Survey content (from "Coffee Pass Survey — Screens")
      ========================================================= */
   const STEPS = [
-    { id: 'contact', type: 'contact', title: 'How can we reach you?', sub: 'We need your name, plus a phone number or an email.' },
-    { id: 'age', type: 'single', title: 'What is your age?',
-      options: ['Under 18', '18–24', '25–30', '31–40', 'Over 40'] },
-    { id: 'occupation', type: 'single', title: 'What is your current occupation?',
-      options: ['Student', 'Working professional', 'Business owner', 'Freelancer', 'Other'] },
-    { id: 'area', type: 'single', title: 'In which area of Bengaluru do you spend most of your weekdays?',
-      options: ['Indiranagar', 'Koramangala', 'HSR Layout', 'Whitefield', 'Other'] },
-    { id: 'coffee_frequency', type: 'single', title: 'How often do you drink coffee?',
-      options: ['Daily', 'A few times a week', 'Occasionally', { label: 'I don’t drink coffee', endsSurvey: true }] },
-    { id: 'cafe_frequency', type: 'single', title: 'How often do you buy coffee from a café?',
-      options: ['Daily', 'A few times a week', 'Once a week', 'A few times a month', 'Rarely'] },
-    { id: 'monthly_spend', type: 'single', title: 'Roughly how much do you spend on café coffee each month?',
-      options: ['Under ₹500', '₹500–1,000', '₹1,000–2,000', '₹2,000–3,000', '₹3,000–5,000', 'Over ₹5,000'] },
-    { id: 'interest', type: 'single', title: 'Would you be interested in Coffee Pass?',
-      options: ['Yes', 'Maybe', 'No'] },
-    { id: 'usage', type: 'single', title: 'How would you prefer to use Coffee Pass?',
-      options: ['Visiting partner cafés', 'Delivery to my home or office (at a higher price)'] },
-    { id: 'max_price', type: 'single', title: 'What is the most you would pay per month for Coffee Pass?',
-      options: ['Over ₹5,000', '₹5,000', '₹4,500', '₹4,000', '₹3,000'] },
-    { id: 'waitlist', type: 'consent', eyebrow: 'Optional', title: 'Would you like to join the waitlist?',
-      sub: 'Waitlist members will get an exclusive launch discount.',
-      checkbox: 'I agree to be contacted about Coffee Pass' },
+    { id: 'coffee_frequency', kind: 'list', title: 'How often do you drink coffee?',
+      options: ['Every day', 'A few times a week', 'Now and then', { label: 'I don’t drink coffee', endsSurvey: true }] },
+    { id: 'cafe_frequency', kind: 'list', title: 'How often do you buy coffee at a café?',
+      options: ['Every day', 'A few times a week', 'About once a week', 'A few times a month', 'Rarely'] },
+    { id: 'usual_order', kind: 'list', multi: true, title: 'What do you usually order?', sub: 'Choose all that apply.',
+      options: ['Filter coffee', 'Espresso or Americano', 'Cappuccino, latte or flat white', 'Cold brew or iced coffee', 'Something else'] },
+    { id: 'monthly_spend', kind: 'list', compact: true, size: 27, title: 'Roughly how much do you spend on café coffee a month?',
+      options: ['Under ₹500', '₹500–₹999', '₹1,000–₹1,999', '₹2,000–₹2,999', '₹3,000–₹4,999', '₹5,000 or more'] },
+    { id: 'area', kind: 'chips', multi: true, max: 2, size: 28, title: 'Where do you spend most of your weekdays?', sub: 'Choose up to two.',
+      options: ['Indiranagar', 'Koramangala', 'HSR Layout', 'Whitefield', 'MG Road & CBD', 'Jayanagar & JP Nagar',
+        { label: 'Somewhere else', other: { label: 'Which area?', placeholder: 'Type an area' } }] },
+    { id: 'how_use', kind: 'list', multi: true, title: 'How would you use Coffee Pass?', sub: 'Choose all that apply.',
+      options: ['Sit in at the café', 'Grab a takeaway', 'Delivered to my home or office (costs more)'] },
+    { id: 'coffees_per_month', kind: 'cards', size: 28, title: 'How many coffees a month would you want?',
+      cards: [['8', 'About two a week'], ['12', 'About three a week'], ['20', 'Every workday'], ['30', 'Every day']],
+      extra: 'Not sure yet' },
+    { id: 'price_per_coffee', kind: 'list', compact: true, size: 27, hint: true, title: 'What’s the most you’d pay per coffee on a pass?',
+      options: ['Under ₹120', '₹120–₹149', '₹150–₹179', '₹180–₹219', '₹220 or more'] },
+    { id: 'likelihood', kind: 'list', title: 'How likely are you to sign up?',
+      options: ['Definitely', 'Probably', 'Not sure', 'Probably not', 'Definitely not'] },
+    { id: 'blockers', kind: 'chips', multi: true, title: 'What might stop you?', sub: 'Choose all that apply.',
+      options: ['The price', 'My usual café isn’t a partner', 'Not enough partner cafés near me', 'I’d rather pay per cup',
+        'I don’t like subscriptions', 'Something else', { label: 'Nothing, I’m in', exclusive: true }] },
+    { id: 'cafe_suggestions', kind: 'text', optional: true, eyebrow: 'Optional', title: 'Any cafés you’d love to see on Coffee Pass?',
+      label: 'Your picks', placeholder: 'Up to three café names' },
+    { id: 'about', kind: 'about', title: 'A bit about you',
+      groups: [
+        { id: 'age', label: 'Age', options: ['Under 18', '18–24', '25–30', '31–40', 'Over 40'] },
+        { id: 'occupation', label: 'What do you do?', options: ['Student', 'Working professional', 'Business owner', 'Freelancer', 'Something else'] },
+      ] },
   ];
-  let questionCount = 0;
-  STEPS.forEach((s) => {
-    if (s.options) s.opts = s.options.map((o) => (typeof o === 'string' ? { label: o } : o));
-    if (s.options || s.type === 'consent') s.num = ++questionCount;
+  const norm = (list) => list.map((o) => (typeof o === 'string' ? { label: o } : o));
+  STEPS.forEach((s, i) => {
+    s.blue = i % 3 === 2; // every third screen is blue, as in the design
+    if (s.options) s.opts = norm(s.options);
+    if (s.groups) s.groups.forEach((g) => { g.opts = norm(g.options); });
   });
-  // Shown on the intro screen.
-  const CONCEPT = {
-    highlight: 'Coffee Pass',
-    text: 'Coffee Pass is a monthly subscription that gives you a set number of coffees at 20+ partner cafés across Bengaluru.',
+  const TOTAL = STEPS.length;
+
+  // Rough monthly cost shown under the price question.
+  const PRICE_POINTS = {
+    'Under ₹120': { per: 120, kind: 'under' },
+    '₹120–₹149': { per: 135 },
+    '₹150–₹179': { per: 165 },
+    '₹180–₹219': { per: 200 },
+    '₹220 or more': { per: 220, kind: 'over' },
   };
 
   const MSG = {
     single: 'Please choose an option to continue.',
     multi: 'Please choose at least one option to continue.',
-    other: 'Please tell us a little more to continue.',
+    max: (n) => `You can choose up to ${n === 2 ? 'two' : n}.`,
+    other: 'Please tell us which area.',
+    about: 'Please choose your age and what you do.',
     phone: 'Please enter a valid 10-digit mobile number.',
     email: 'That email doesn’t look quite right. Mind checking it?',
     reach: 'Please enter a phone number or an email.',
     name: 'Please enter your name.',
   };
+
+  /* =========================================================
+     Illustrations (exported from the design file)
+     ========================================================= */
+  const ART = {
+    q1: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 150\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q1-w6\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"9\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q1-w6)\"><ellipse cx=\"120\" cy=\"128\" rx=\"40\" ry=\"7\" transform=\"rotate(-6 120 128)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(100 82) rotate(-8) scale(1 1)\"><path d=\"M-34 -26 C-42 -40 -28 -52 -16 -42 Z\" fill=\"#2340D8\"></path><path d=\"M34 -26 C42 -40 28 -52 16 -42 Z\" fill=\"#2340D8\"></path><path d=\"M-4 -36 L-4 -44 L4 -44 L4 -36\"></path><path d=\"M-20 28 L-28 42 M20 28 L28 42\"></path><circle cx=\"0\" cy=\"0\" r=\"34\" fill=\"#FFFFFE\"></circle><circle cx=\"0\" cy=\"0\" r=\"26\" fill=\"#FFFFFE\"></circle><path d=\"M0 0 L0 -17 M0 0 L12 7\" stroke-width=\"2.6\"></path><circle cx=\"0\" cy=\"0\" r=\"3\" fill=\"#2340D8\" stroke=\"none\"></circle><path d=\"M-26 -2 l4 0 M22 -2 l4 0 M-2 -24 l0 4 M-2 20 l0 4\" stroke-width=\"1.6\"></path></g><g transform=\"translate(48 70) rotate(180) scale(1 1)\"><path d=\"M0 -8 C3 -4 3 4 0 8\"></path><path d=\"M7 -11 C11 -5 11 5 7 11\"></path></g><g transform=\"translate(150 60) rotate(0) scale(1 1)\"><path d=\"M0 -8 C3 -4 3 4 0 8\"></path><path d=\"M7 -11 C11 -5 11 5 7 11\"></path></g><g transform=\"translate(180 54) rotate(0) scale(1 1)\"><path d=\"M0 0 l10 0 l-10 12 l10 0\" stroke-width=\"2.2\"></path><path d=\"M14 -14 l7 0 l-7 9 l7 0\" stroke-width=\"2\"></path></g><g transform=\"translate(260 116) rotate(0) scale(1 1)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g></g></svg>",
+    q2: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 150\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q2-w7\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"10\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q2-w7)\"><ellipse cx=\"130\" cy=\"132\" rx=\"56\" ry=\"7\" transform=\"rotate(-6 130 132)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(108 108) rotate(-6) scale(1 1)\"><path d=\"M-48 -2 C-50 -18 -40 -28 -24 -30 L-6 -30 C4 -16 20 -10 40 -8 C50 -6 54 0 52 8 L-48 8 Z\" fill=\"#FFFFFE\"></path><path d=\"M-52 8 L52 8 C58 8 58 20 50 20 L-48 20 C-56 20 -56 8 -52 8 Z\" fill=\"#FFFFFE\"></path><path d=\"M-28 -8 C-18 -16 -4 -12 6 0 L-10 2 Z\" fill=\"#2340D8\"></path><path d=\"M-14 -24 L-2 -16 M-8 -28 L4 -20 M-20 -18 L-8 -10\" stroke-width=\"2\"></path><path d=\"M-48 14 L50 14\" stroke-width=\"1.4\"></path></g><path d=\"M30 92 L50 92 M24 104 L44 104\" stroke-width=\"2.2\"></path><ellipse cx=\"252\" cy=\"132\" rx=\"26\" ry=\"6\" transform=\"rotate(-6 252 132)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(234 92) rotate(10) scale(1 1)\"><path d=\"M-18 -32 L18 -32 L18 26 l-6 6 l-6 -6 l-6 6 l-6 -6 l-6 6 l-6 -6 Z\" fill=\"#FFFFFE\"></path><path d=\"M-10 -20 L10 -20 M-10 -10 L6 -10 M-10 0 L10 0 M-10 12 L2 12\" stroke-width=\"1.8\"></path><path d=\"M4 12 L10 12\" stroke-width=\"3\"></path></g><g transform=\"translate(300 120) rotate(0) scale(0.6 0.6)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g></g></svg>",
+    q3: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 150\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q3-w8\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"11\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q3-w8)\"><ellipse cx=\"104\" cy=\"136\" rx=\"40\" ry=\"6\" transform=\"rotate(-6 104 136)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(84 86) rotate(0) scale(1 1)\"><path d=\"M-30 46 L-18 -38 M30 46 L18 -38\" stroke-width=\"2.6\"></path><path d=\"M-24 -34 L24 -34 L28 28 L-28 28 Z\" fill=\"#2340D8\"></path><path d=\"M-14 -22 C-8 -26 -2 -18 4 -22 C8 -24 12 -20 14 -22\" stroke-width=\"2\"></path><path d=\"M-16 -8 L12 -8 M-16 2 L6 2 M-16 12 L14 12\" stroke-width=\"1.8\"></path><path d=\"M8 2 L14 2\" stroke-width=\"3\"></path></g><ellipse cx=\"212\" cy=\"130\" rx=\"48\" ry=\"7\" transform=\"rotate(-6 212 130)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(196 106) rotate(-6) scale(1 1)\"><path d=\"M-42 10 C-48 -4 -38 -16 -26 -14 C-22 -28 -6 -32 4 -24 C14 -32 30 -26 30 -12 C42 -14 50 0 42 10 C30 20 -30 20 -42 10 Z\" fill=\"#2340D8\"></path><path d=\"M-26 -14 C-24 -2 -20 8 -16 15 M4 -24 C4 -10 4 4 2 17 M30 -12 C24 0 20 8 16 15\" stroke-width=\"2\"></path><path d=\"M-34 4 C-30 0 -28 6 -32 9 M36 2 C32 -2 30 4 34 7\" stroke-width=\"1.6\"></path></g><path d=\"M190 74 c-7 -7 7 -12 0 -20 c-7 -7 6 -11 1 -18\" stroke-width=\"2.6\"></path><g transform=\"translate(270 52) rotate(0) scale(1 1)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(286 120) rotate(0) scale(0.7 0.7)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g></g></svg>",
+    q4: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 130\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q4-w9\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"12\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q4-w9)\"><ellipse cx=\"122\" cy=\"120\" rx=\"52\" ry=\"7\" transform=\"rotate(-6 122 120)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(100 82) rotate(-4) scale(0.9 0.9)\"><path d=\"M-46 -36 L28 -36 L34 -24\" stroke-width=\"2.2\"></path><path d=\"M-46 -24 L40 -24 C46 -24 48 -20 48 -14 L48 30 C48 36 44 38 38 38 L-46 38 Z\" fill=\"#FFFFFE\"></path><path d=\"M26 2 L48 2 L48 18 L26 18 Z\" fill=\"#2340D8\"></path><circle cx=\"32\" cy=\"10\" r=\"2\" fill=\"#2340D8\" stroke=\"none\"></circle></g><g transform=\"translate(186 40) rotate(14) scale(1 1)\"><path d=\"M0 0 C-14 -18 -28 -8 -18 4 C-26 10 -14 20 0 6 Z\" fill=\"#FFFFFE\"></path><path d=\"M0 0 C14 -18 28 -8 18 4 C26 10 14 20 0 6 Z\" fill=\"#FFFFFE\"></path><ellipse cx=\"0\" cy=\"4\" rx=\"3\" ry=\"9\" fill=\"#2340D8\" stroke=\"none\"></ellipse><path d=\"M-1 -4 C-4 -12 -8 -14 -10 -16 M1 -4 C4 -12 8 -14 10 -16\" stroke-width=\"1.4\"></path></g><path d=\"M120 50 C140 30 150 60 172 46\" stroke-dasharray=\"1 7\" stroke-width=\"2.4\"></path><g transform=\"translate(230 80) rotate(20) scale(0.7 0.7)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#2340D8\" stroke-width=\"1.4\"></path></g><g transform=\"translate(250 108) rotate(0) scale(0.6 0.6)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g></g></svg>",
+    q5: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 150\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q5-w10\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"13\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q5-w10)\"><path d=\"M24 128 C70 120 110 132 150 126\" stroke-dasharray=\"1 9\" stroke-width=\"3\"></path><ellipse cx=\"232\" cy=\"132\" rx=\"50\" ry=\"6\" transform=\"rotate(-6 232 132)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(216 106) rotate(0) scale(1 1)\"><path d=\"M-44 14 C-30 12 30 12 40 14 C48 16 46 24 38 24 L-40 24 C-48 24 -50 16 -44 14 Z\" fill=\"#FFFFFE\"></path><path d=\"M-40 16 C-44 6 -46 0 -48 -6\" fill=\"none\"></path><path d=\"M-48 -6 L-54 -20 M-44 -4 L-42 -20\" stroke-width=\"1.8\"></path><circle cx=\"-54\" cy=\"-21\" r=\"3\" fill=\"#2340D8\" stroke=\"none\"></circle><circle cx=\"-42\" cy=\"-21\" r=\"3\" fill=\"#2340D8\" stroke=\"none\"></circle><circle cx=\"2\" cy=\"-8\" r=\"24\" fill=\"#FFFFFE\"></circle><path d=\"M2 -8 C10 -8 10 4 0 4 C-12 4 -12 -16 4 -18 C20 -20 24 4 8 12\" stroke-width=\"2\"></path><path d=\"M-46 6 C-44 8 -42 8 -40 6\" stroke-width=\"1.6\"></path></g><ellipse cx=\"310\" cy=\"136\" rx=\"26\" ry=\"5\" transform=\"rotate(-6 310 136)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(300 100) rotate(4) scale(0.9 0.9)\"><path d=\"M-24 30 L24 30 L24 37 L-24 37 Z\" fill=\"#FFFFFE\"></path><path d=\"M-14 30 L-4 -28 L4 -28 L14 30 Z\" fill=\"#FFFFFE\"></path><path d=\"M-9 0 L9 0 L11 12 L-11 12 Z\" fill=\"#2340D8\"></path><path d=\"M-6 -16 L6 -16\" stroke-width=\"3\"></path></g><path d=\"M160 98 L172 98 M156 110 L170 110\" stroke-width=\"2\"></path><g transform=\"translate(250 54) rotate(0) scale(0.8 0.8)\"><path d=\"M0 0 l10 0 l-10 12 l10 0\" stroke-width=\"2.2\"></path><path d=\"M14 -14 l7 0 l-7 9 l7 0\" stroke-width=\"2\"></path></g></g></svg>",
+    q6: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 150\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q6-w11\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"14\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q6-w11)\"><ellipse cx=\"138\" cy=\"136\" rx=\"36\" ry=\"6\" transform=\"rotate(-6 138 136)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(120 96) rotate(-6) scale(1 1)\"><path d=\"M-24 -26 L24 -26 L28 26 L-28 26 Z\" fill=\"#2340D8\"></path><path d=\"M-24 -26 l6 -6 l6 6 l6 -6 l6 6 l6 -6 l6 6 l6 -6 l6 6\" stroke-width=\"2\"></path><path d=\"M-10 26 L-16 42 L-26 42 M10 26 L20 40 L28 36\" stroke-width=\"2.6\"></path><circle cx=\"-8\" cy=\"-6\" r=\"2.6\" fill=\"#FFFFFF\" stroke=\"none\"></circle><circle cx=\"10\" cy=\"-6\" r=\"2.6\" fill=\"#FFFFFF\" stroke=\"none\"></circle><path d=\"M-6 4 C-2 9 4 9 8 4\" stroke-width=\"2\"></path><path d=\"M-28 -6 C-40 -2 -44 6 -46 14 M28 -6 C40 -10 46 -18 48 -26\" stroke-width=\"2.4\"></path></g><path d=\"M60 70 L80 70 M54 84 L76 84 M60 98 L78 98\" stroke-width=\"2.2\"></path><g transform=\"translate(170 48) rotate(20) scale(0.8 0.8)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#FFFFFF\" stroke-width=\"1.4\"></path></g><g transform=\"translate(230 110) rotate(0) scale(1 1)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g></g></svg>",
+    q7: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 160\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q7-w12\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"15\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q7-w12)\"><ellipse cx=\"158\" cy=\"140\" rx=\"56\" ry=\"7\" transform=\"rotate(-6 158 140)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(150 100) rotate(-4) scale(1 1)\"><path d=\"M-40 -22 L36 -22 L36 22 L-40 22 Z\" fill=\"#FFFFFE\"></path><path d=\"M36 -8 L44 -8 L44 8 L36 8 Z\" fill=\"#FFFFFE\"></path><path d=\"M-34 -16 L-4 -16 L-4 16 L-34 16 Z\" fill=\"#2340D8\"></path><path d=\"M14 -14 L4 2 L14 2 L6 16\" stroke-width=\"2.6\"></path><path d=\"M-40 0 C-62 0 -60 30 -84 30\"></path><path d=\"M-96 22 L-84 22 L-84 38 L-96 38 Z\" fill=\"#FFFFFE\"></path><path d=\"M-104 26 L-96 26 M-104 34 L-96 34\" stroke-width=\"2\"></path></g><path d=\"M196 64 L204 56 M206 80 L216 78 M200 116 L210 122\" stroke-width=\"2.2\"></path><g transform=\"translate(246 50) rotate(0) scale(0.8 0.8)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g></g></svg>",
+    q8: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 120\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q8-w14\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"17\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q8-w14)\"><ellipse cx=\"130\" cy=\"112\" rx=\"50\" ry=\"7\" transform=\"rotate(-6 130 112)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(108 70) rotate(-4) scale(0.9 0.9)\"><path d=\"M-40 2 C-52 -4 -50 -16 -44 -12 C-40 -8 -48 -2 -56 -6\" stroke-width=\"2\"></path><path d=\"M-22 28 L-22 44 L-12 44 L-12 30 Z\" fill=\"#FFFFFE\"></path><path d=\"M20 30 L20 44 L30 44 L30 28 Z\" fill=\"#FFFFFE\"></path><path d=\"M-40 0 C-40 -26 -16 -36 6 -36 C30 -36 46 -20 46 2 C46 24 28 34 6 34 C-18 34 -40 24 -40 0 Z\" fill=\"#FFFFFE\"></path><path d=\"M44 -8 C56 -10 58 10 46 10 Z\" fill=\"#FFFFFE\"></path><circle cx=\"49\" cy=\"-3\" r=\"1.8\" fill=\"#2340D8\" stroke=\"none\"></circle><circle cx=\"53\" cy=\"3\" r=\"1.8\" fill=\"#2340D8\" stroke=\"none\"></circle><path d=\"M18 -32 L26 -50 L34 -30 Z\" fill=\"#FFFFFE\"></path><path d=\"M-6 -34 L14 -34\" stroke-width=\"3.4\"></path><circle cx=\"28\" cy=\"-12\" r=\"3\" fill=\"#2340D8\" stroke=\"none\"></circle><path d=\"M24 4 C28 8 32 8 34 4\" stroke-width=\"1.8\"></path></g><g transform=\"translate(170 28) rotate(30) scale(0.8 0.8)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#2340D8\" stroke-width=\"1.4\"></path></g><g transform=\"translate(184 42) rotate(50) scale(0.6 0.6)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#2340D8\" stroke-width=\"1.4\"></path></g><circle cx=\"112\" cy=\"16\" r=\"8\" fill=\"#FFFFFE\"></circle><path d=\"M108 11 l8 0 M108 14.5 l8 0 M110 11 c6 0 6 8 -1 8 l6 6\" stroke-width=\"1.8\"></path><g transform=\"translate(240 96) rotate(0) scale(0.7 0.7)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g></g></svg>",
+    q9: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 150\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q9-w15\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"18\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q9-w15)\"><ellipse cx=\"212\" cy=\"132\" rx=\"44\" ry=\"7\" transform=\"rotate(-6 212 132)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(195 92) rotate(0) scale(1 1)\"><path d=\"M-30 24 L30 24 L38 42 L-38 42 Z\" fill=\"#FFFFFF\"></path><circle cx=\"0\" cy=\"-12\" r=\"36\" fill=\"#2340D8\"></circle><path d=\"M-20 -32 C-14 -40 -4 -42 4 -42\" stroke-width=\"2\"></path><path d=\"M-6 -14 L-6 -4 M-11 -9 L-1 -9 M10 -22 L10 -16 M7 -19 L13 -19 M8 0 L8 6 M5 3 L11 3\" stroke-width=\"1.8\"></path><path d=\"M-14 4 C-6 10 6 10 14 4\" stroke-width=\"1.6\"></path></g><g transform=\"translate(130 50) rotate(0) scale(1 1)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(260 40) rotate(0) scale(0.8 0.8)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(276 100) rotate(0) scale(0.6 0.6)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(60 120) rotate(0) scale(0.7 0.7)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g></g></svg>",
+    q10: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 150\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q10-w16\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"19\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q10-w16)\"><ellipse cx=\"152\" cy=\"142\" rx=\"34\" ry=\"6\" transform=\"rotate(-6 152 142)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(130 74) rotate(-8) scale(0.9 0.9)\"><path d=\"M-3 30 L-3 70 L3 70 L3 30\" fill=\"#FFFFFE\"></path><path d=\"M33.3 13.8 L13.8 33.3 L-13.8 33.3 L-33.3 13.8 L-33.3 -13.8 L-13.8 -33.3 L13.8 -33.3 L33.3 -13.8 Z\" fill=\"#FFFFFE\"></path><path d=\"M26.8 11.1 L11.1 26.8 L-11.1 26.8 L-26.8 11.1 L-26.8 -11.1 L-11.1 -26.8 L11.1 -26.8 L26.8 -11.1 Z\" fill=\"#2340D8\" stroke-width=\"1.4\"></path><circle cx=\"-10\" cy=\"-6\" r=\"6\" fill=\"#FFFFFE\" stroke=\"none\"></circle><circle cx=\"10\" cy=\"-6\" r=\"6\" fill=\"#FFFFFE\" stroke=\"none\"></circle><circle cx=\"-9\" cy=\"-5\" r=\"2.6\" fill=\"#0E1330\" stroke=\"none\"></circle><circle cx=\"11\" cy=\"-5\" r=\"2.6\" fill=\"#0E1330\" stroke=\"none\"></circle><path d=\"M-12 12 C-8 8 -4 14 0 10 C4 6 8 12 12 8\" stroke-width=\"2.2\" stroke=\"#FFFFFE\"></path><path d=\"M-16 -16 L-6 -14 M16 -16 L6 -14\" stroke-width=\"2\" stroke=\"#FFFFFE\"></path></g><path d=\"M188 60 L196 52 M192 76 L204 74 M66 52 L74 60\" stroke-width=\"2.2\"></path><g transform=\"translate(84 84) rotate(0) scale(0.8 0.8)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#2340D8\" stroke-width=\"1.4\"></path></g><g transform=\"translate(250 120) rotate(0) scale(0.7 0.7)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g></g></svg>",
+    q11: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 150\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q11-w17\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"20\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q11-w17)\"><ellipse cx=\"136\" cy=\"134\" rx=\"46\" ry=\"6\" transform=\"rotate(-6 136 134)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(120 84) rotate(-10) scale(1 1)\"><path d=\"M-34 -10 C-56 -32 -72 -16 -60 -4 C-72 2 -60 16 -40 4 Z\" fill=\"#FFFFFE\"></path><path d=\"M34 -10 C56 -32 72 -16 60 -4 C72 2 60 16 40 4 Z\" fill=\"#FFFFFE\"></path><path d=\"M-34 -22 L34 -22 L34 24 L-34 24 Z\" fill=\"#FFFFFE\"></path><path d=\"M-34 -22 L0 4 L34 -22\"></path><path d=\"M0 2 C-4 -4 -12 -1 -8 5 L0 12 L8 5 C12 -1 4 -4 0 2 Z\" fill=\"#2340D8\"></path></g><path d=\"M196 70 C210 60 220 76 236 64 M200 92 L218 90\" stroke-width=\"2.2\"></path><g transform=\"translate(262 46) rotate(0) scale(0.8 0.8)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(60 46) rotate(-20) scale(0.7 0.7)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#2340D8\" stroke-width=\"1.4\"></path></g></g></svg>",
+    q12: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 150\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"q12-w18\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"21\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#q12-w18)\"><ellipse cx=\"130\" cy=\"112\" rx=\"52\" ry=\"6\" transform=\"rotate(-6 130 112)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(106 88) rotate(-6) scale(1 1)\"><path d=\"M-48 -12 L-8 -12 C-8 8 -14 18 -28 18 C-44 18 -50 4 -48 -12 Z\" fill=\"#FFFFFF\"></path><path d=\"M48 -12 L8 -12 C8 8 14 18 28 18 C44 18 50 4 48 -12 Z\" fill=\"#FFFFFF\"></path><path d=\"M-8 -8 C-4 -13 4 -13 8 -8\"></path><path d=\"M-48 -10 L-60 -18 M48 -10 L60 -18\"></path><path d=\"M-38 -6 L-28 8 M-32 -6 L-24 4\" stroke-width=\"2\" stroke=\"#2340D8\"></path><path d=\"M18 -6 L28 8 M24 -6 L32 4\" stroke-width=\"2\" stroke=\"#2340D8\"></path></g><ellipse cx=\"238\" cy=\"134\" rx=\"36\" ry=\"5\" transform=\"rotate(-6 238 134)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(222 112) rotate(8) scale(1 1)\"><path d=\"M-34 -20 L34 -20 L34 20 L-34 20 Z\" fill=\"#2340D8\"></path><path d=\"M-34 -20 L34 -20 L34 -4 L-34 -4 Z\" fill=\"#FFFFFF\"></path><path d=\"M-20 10 C-12 4 -4 14 4 7 C8 4 14 10 20 7\" stroke-width=\"2\"></path></g><g transform=\"translate(290 60) rotate(0) scale(0.8 0.8)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(40 130) rotate(0) scale(0.6 0.6)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g></g></svg>",
+    intro2: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 390 230\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"i2-w5\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"8\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#i2-w5)\"><ellipse cx=\"156\" cy=\"206\" rx=\"38\" ry=\"7\" transform=\"rotate(-6 156 206)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(140 140) rotate(-8) scale(1.3 1.3)\"><path d=\"M0 -42 C22 -42 30 -22 24 -8 C20 2 12 6 12 16 L-12 16 C-12 6 -20 2 -24 -8 C-30 -22 -22 -42 0 -42 Z\" fill=\"#2340D8\"></path><path d=\"M-12 16 L12 16 L12 28 L-12 28 Z\" fill=\"#FFFFFF\"></path><path d=\"M-6 32 L6 32\" stroke-width=\"2.4\"></path><path d=\"M-8 6 L-4 -10 L0 0 L4 -10 L8 6\" stroke-width=\"1.8\"></path><path d=\"M-40 -40 L-32 -32 M40 -40 L32 -32 M0 -62 L0 -52 M-48 -12 L-38 -12 M48 -12 L38 -12\" stroke-width=\"2.2\"></path></g><ellipse cx=\"256\" cy=\"206\" rx=\"40\" ry=\"6\" transform=\"rotate(-6 256 206)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(240 150) rotate(8) scale(1.0 1.0)\"><path d=\"M-30 -40 L30 -40 L30 40 L-30 40 Z\" fill=\"#2340D8\"></path><path d=\"M-20 -22 l4 4 l8 -8\" stroke-width=\"2\"></path><path d=\"M-2 -22 L20 -22\" stroke-width=\"1.8\"></path><path d=\"M-20 -2 l4 4 l8 -8\" stroke-width=\"2\"></path><path d=\"M-2 -2 L20 -2\" stroke-width=\"1.8\"></path><path d=\"M-20 18 l4 4 l8 -8\" stroke-width=\"2\"></path><path d=\"M-2 18 L20 18\" stroke-width=\"1.8\"></path></g><g transform=\"translate(300 150) rotate(28) scale(0.9 0.9)\"><path d=\"M-6 -46 L6 -46 L6 30 L0 44 L-6 30 Z\" fill=\"#2340D8\"></path><path d=\"M-6 -46 L6 -46 L6 -36 L-6 -36 Z\" fill=\"#FFFFFF\"></path><path d=\"M-6 30 L6 30\" stroke-width=\"1.6\"></path><path d=\"M-2 38 L2 38 L0 44 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(40 200) rotate(0) scale(0.8 0.8)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g><g transform=\"translate(80 70) rotate(0) scale(1 1)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#FFFFFF\" stroke-width=\"1.4\"></path></g><g transform=\"translate(330 50) rotate(0) scale(0.8 0.8)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g></g></svg>",
+    intro1Hero: "<svg aria-hidden=\"true\" focusable=\"false\" width=\"0\" height=\"0\" style=\"position: absolute\"><filter id=\"i1-st\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.09\" numOctaves=\"2\" seed=\"4\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.6\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></svg><div style=\"position: relative; height: 380px; background: #F3F5FE; border-radius: 0 0 36px 36px; display: flex; align-items: center; justify-content: center; overflow: hidden\"><div style=\"position: absolute; left: 20px; top: 30px\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"i1-w1\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"4\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"2.6\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#i1-w1)\"><path d=\"M10 4 L10 16 M4 10 L16 10\" stroke-width=\"2\"></path></g></svg></div><div style=\"position: absolute; right: 34px; top: 58px\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"i1-w2\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"5\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"2.6\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#i1-w2)\"><path d=\"M10 4 L10 16 M4 10 L16 10\" stroke-width=\"2\"></path></g></svg></div><div style=\"margin-top: -20px\"><div style=\"position: relative; width: 300px; height: 186px; box-sizing: border-box; padding: 22px 22px 20px; border-radius: 24px; background: #2340D8; color: #FFFFFF; display: flex; flex-direction: column; justify-content: space-between; transform: rotate(-4deg); box-shadow: 0 24px 48px -20px rgba(35,64,216,0.55)\"><div style=\"display: flex; justify-content: space-between; align-items: center\"><span style=\"font-size: 20px; font-weight: 600; letter-spacing: -0.02em\">Coffee Pass</span><span style=\"font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.6)\">Bengaluru</span></div><div style=\"display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 2px\"><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><g filter=\"url(#i1-st)\"><path d=\"M12 3.2 C17.2 3 21 7 20.8 12.2 C20.6 17.4 16.6 21 11.6 20.8 C6.6 20.6 3 16.8 3.2 11.8 C3.4 7 7 3.4 12 3.2 Z\" fill=\"#FFFFFF\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M8 10 L9 16 C9.4 17.6 14.6 17.6 15 16 L16 10 Z\" fill=\"#2340D8\" stroke=\"#2340D8\" stroke-width=\"1.4\"></path><path d=\"M16 11.4 C18.4 11.4 18.4 14.6 15.6 14.6\" stroke=\"#2340D8\" stroke-width=\"1.4\"></path></g></svg><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><g filter=\"url(#i1-st)\"><path d=\"M12 3.2 C17.2 3 21 7 20.8 12.2 C20.6 17.4 16.6 21 11.6 20.8 C6.6 20.6 3 16.8 3.2 11.8 C3.4 7 7 3.4 12 3.2 Z\" fill=\"#FFFFFF\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M8 10 L9 16 C9.4 17.6 14.6 17.6 15 16 L16 10 Z\" fill=\"#2340D8\" stroke=\"#2340D8\" stroke-width=\"1.4\"></path><path d=\"M16 11.4 C18.4 11.4 18.4 14.6 15.6 14.6\" stroke=\"#2340D8\" stroke-width=\"1.4\"></path></g></svg><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><g filter=\"url(#i1-st)\"><path d=\"M12 3.2 C17.2 3 21 7 20.8 12.2 C20.6 17.4 16.6 21 11.6 20.8 C6.6 20.6 3 16.8 3.2 11.8 C3.4 7 7 3.4 12 3.2 Z\" fill=\"#FFFFFF\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M8 10 L9 16 C9.4 17.6 14.6 17.6 15 16 L16 10 Z\" fill=\"#2340D8\" stroke=\"#2340D8\" stroke-width=\"1.4\"></path><path d=\"M16 11.4 C18.4 11.4 18.4 14.6 15.6 14.6\" stroke=\"#2340D8\" stroke-width=\"1.4\"></path></g></svg><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><g filter=\"url(#i1-st)\"><path d=\"M12 3.2 C17.2 3 21 7 20.8 12.2 C20.6 17.4 16.6 21 11.6 20.8 C6.6 20.6 3 16.8 3.2 11.8 C3.4 7 7 3.4 12 3.2 Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M8 10 L9 16 C9.4 17.6 14.6 17.6 15 16 L16 10 Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M16 11.4 C18.4 11.4 18.4 14.6 15.6 14.6\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path></g></svg><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><g filter=\"url(#i1-st)\"><path d=\"M12 3.2 C17.2 3 21 7 20.8 12.2 C20.6 17.4 16.6 21 11.6 20.8 C6.6 20.6 3 16.8 3.2 11.8 C3.4 7 7 3.4 12 3.2 Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M8 10 L9 16 C9.4 17.6 14.6 17.6 15 16 L16 10 Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M16 11.4 C18.4 11.4 18.4 14.6 15.6 14.6\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path></g></svg><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><g filter=\"url(#i1-st)\"><path d=\"M12 3.2 C17.2 3 21 7 20.8 12.2 C20.6 17.4 16.6 21 11.6 20.8 C6.6 20.6 3 16.8 3.2 11.8 C3.4 7 7 3.4 12 3.2 Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M8 10 L9 16 C9.4 17.6 14.6 17.6 15 16 L16 10 Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M16 11.4 C18.4 11.4 18.4 14.6 15.6 14.6\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path></g></svg><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><g filter=\"url(#i1-st)\"><path d=\"M12 3.2 C17.2 3 21 7 20.8 12.2 C20.6 17.4 16.6 21 11.6 20.8 C6.6 20.6 3 16.8 3.2 11.8 C3.4 7 7 3.4 12 3.2 Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M8 10 L9 16 C9.4 17.6 14.6 17.6 15 16 L16 10 Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M16 11.4 C18.4 11.4 18.4 14.6 15.6 14.6\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path></g></svg><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><g filter=\"url(#i1-st)\"><path d=\"M12 3.2 C17.2 3 21 7 20.8 12.2 C20.6 17.4 16.6 21 11.6 20.8 C6.6 20.6 3 16.8 3.2 11.8 C3.4 7 7 3.4 12 3.2 Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M8 10 L9 16 C9.4 17.6 14.6 17.6 15 16 L16 10 Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M16 11.4 C18.4 11.4 18.4 14.6 15.6 14.6\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"></path></g></svg></div><div style=\"display: flex; justify-content: space-between; align-items: flex-end\"><div><div style=\"font-size: 11px; font-weight: 600; opacity: 0.8\">Partner cafés</div><div style=\"font-size: 18px; font-weight: 600\">20+</div></div><div style=\"text-align: right\"><div style=\"font-size: 11px; font-weight: 600; opacity: 0.8\">Plan</div><div style=\"font-size: 18px; font-weight: 600\">Monthly</div></div></div></div></div><div style=\"position: absolute; right: 0; bottom: 0\"><svg width=\"120\" height=\"110\" viewBox=\"0 0 120 110\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"i1-w3\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"6\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.6\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#i1-w3)\"><ellipse cx=\"70\" cy=\"98\" rx=\"40\" ry=\"6\" transform=\"rotate(-6 70 98)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(58 76) rotate(-10) scale(0.9 0.9)\"><path d=\"M-42 10 C-48 -4 -38 -16 -26 -14 C-22 -28 -6 -32 4 -24 C14 -32 30 -26 30 -12 C42 -14 50 0 42 10 C30 20 -30 20 -42 10 Z\" fill=\"#FFFFFE\"></path><path d=\"M-26 -14 C-24 -2 -20 8 -16 15 M4 -24 C4 -10 4 4 2 17 M30 -12 C24 0 20 8 16 15\" stroke-width=\"2\"></path><path d=\"M-34 4 C-30 0 -28 6 -32 9 M36 2 C32 -2 30 4 34 7\" stroke-width=\"1.6\"></path></g><g transform=\"translate(100 30) rotate(0) scale(0.6 0.6)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g></g></svg></div></div>",
+    intro1Underline: "<svg aria-hidden=\"true\" focusable=\"false\" width=\"270\" height=\"18\" viewBox=\"0 0 200 14\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"i1u-w4\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"7\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.6\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#i1u-w4)\"><path d=\"M3 9 C40 3 90 13 130 7 C160 3 185 6 197 9\" stroke-width=\"2.4\"></path></g></svg>",
+    thanksConfetti: "<svg aria-hidden=\"true\" focusable=\"false\" class=\"confetti\" width=\"390\" height=\"400\" viewBox=\"0 0 390 400\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"thanksc-w19\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"22\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"2.6\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#thanksc-w19)\"><path d=\"M30 120 l6 -8\" stroke-width=\"2.2\"></path><path d=\"M350 90 l-8 6\" stroke-width=\"2.2\"></path><path d=\"M40 300 l10 2\" stroke-width=\"2.2\"></path><path d=\"M342 260 l-6 -8\" stroke-width=\"2.2\"></path><path d=\"M70 60 C76 66 82 62 86 68\" stroke-width=\"2.2\"></path><path d=\"M300 50 C306 56 312 52 316 58\" stroke-width=\"2.2\"></path></g></svg>",
+    thanks: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 60 390 300\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"thanks-w20\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"23\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#thanks-w20)\"><ellipse cx=\"216\" cy=\"300\" rx=\"50\" ry=\"8\" transform=\"rotate(-6 216 300)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(190 250) rotate(0) scale(1.4 1.4)\"><path d=\"M-24 40 L-6 -18 L22 -6 Z\" fill=\"#2340D8\"></path><path d=\"M-18 20 L10 30 M-12 2 L16 12\" stroke-width=\"2\"></path><path d=\"M-14 32 L-8 18 L6 24 Z\" fill=\"#FFFFFF\" stroke-width=\"1.2\"></path><path d=\"M6 -14 C10 -40 30 -36 26 -56 M14 -10 C40 -20 44 -40 64 -40 M0 -18 C-6 -40 -24 -40 -22 -62\" stroke-width=\"2.2\"></path></g><g transform=\"translate(120 120) rotate(20) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(150 90) rotate(-30) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(250 110) rotate(40) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(290 150) rotate(-10) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(100 180) rotate(60) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(300 210) rotate(15) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(210 80) rotate(0) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(170 150) rotate(45) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(80 120) rotate(0) scale(1 1)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(320 100) rotate(0) scale(0.8 0.8)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(40 320) rotate(0) scale(0.7 0.7)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g><g transform=\"translate(300 330) rotate(0) scale(0.6 0.6)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g><g transform=\"translate(270 250) rotate(0) scale(1 1)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#FFFFFF\" stroke-width=\"1.4\"></path></g></g></svg>",
+    thanksListConfetti: "<svg aria-hidden=\"true\" focusable=\"false\" class=\"confetti\" width=\"390\" height=\"400\" viewBox=\"0 0 390 400\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"thanksListc-w21\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"24\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"2.6\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#thanksListc-w21)\"><path d=\"M30 120 l6 -8\" stroke-width=\"2.2\"></path><path d=\"M350 90 l-8 6\" stroke-width=\"2.2\"></path><path d=\"M40 300 l10 2\" stroke-width=\"2.2\"></path><path d=\"M342 260 l-6 -8\" stroke-width=\"2.2\"></path><path d=\"M70 60 C76 66 82 62 86 68\" stroke-width=\"2.2\"></path><path d=\"M300 50 C306 56 312 52 316 58\" stroke-width=\"2.2\"></path></g></svg>",
+    thanksList: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 40 390 300\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"thanksList-w22\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"25\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#thanksList-w22)\"><ellipse cx=\"220\" cy=\"286\" rx=\"90\" ry=\"10\" transform=\"rotate(-6 220 286)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(195 230) rotate(-10) scale(1.5 1.5)\"><path d=\"M-56 -26 L56 -26 L56 -8 C46 -8 46 8 56 8 L56 26 L-56 26 L-56 8 C-46 8 -46 -8 -56 -8 Z\" fill=\"#2340D8\"></path><path d=\"M26 -24 L26 24\" stroke-dasharray=\"3 5\" stroke-width=\"2\"></path><path d=\"M-18 -12 L-14 -3 L-4 -2 L-12 4 L-9 14 L-18 8 L-27 14 L-24 4 L-32 -2 L-22 -3 Z\" fill=\"#FFFFFF\" stroke-width=\"1.4\"></path><path d=\"M0 -6 L18 -6 M0 4 L14 4\" stroke-width=\"2\"></path><path d=\"M36 -10 L44 -10 M36 0 L46 0 M36 10 L42 10\" stroke-width=\"1.6\"></path></g><g transform=\"translate(90 140) rotate(0) scale(1 1)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(310 130) rotate(0) scale(0.8 0.8)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(120 120) rotate(20) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(270 110) rotate(40) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(300 190) rotate(-10) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(80 200) rotate(60) scale(1 1)\"><path d=\"M-4 -2 L4 -2 L4 2 L-4 2 Z\" fill=\"#FFFFFF\" stroke-width=\"1\"></path></g><g transform=\"translate(40 320) rotate(0) scale(0.7 0.7)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g></g></svg>",
+    exitConfetti: "<svg aria-hidden=\"true\" focusable=\"false\" class=\"confetti\" width=\"390\" height=\"400\" viewBox=\"0 0 390 400\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"exitc-w23\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"26\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"2.6\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#exitc-w23)\"><path d=\"M30 120 l6 -8\" stroke-width=\"2.2\"></path><path d=\"M350 90 l-8 6\" stroke-width=\"2.2\"></path><path d=\"M40 300 l10 2\" stroke-width=\"2.2\"></path><path d=\"M342 260 l-6 -8\" stroke-width=\"2.2\"></path><path d=\"M70 60 C76 66 82 62 86 68\" stroke-width=\"2.2\"></path><path d=\"M300 50 C306 56 312 52 316 58\" stroke-width=\"2.2\"></path></g></svg>",
+    exit: "<svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 40 390 300\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"art\"><defs><filter id=\"exit-w24\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"27\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#exit-w24)\"><ellipse cx=\"222\" cy=\"300\" rx=\"50\" ry=\"8\" transform=\"rotate(-6 222 300)\" fill=\"#2340D9\" stroke=\"none\"></ellipse><g transform=\"translate(195 240) rotate(-6) scale(1.3 1.3)\"><path d=\"M22 -30 L32 -36 L32 34 L22 40 Z\" fill=\"#FFFFFE\"></path><path d=\"M-22 -30 L-12 -36 L32 -36 L22 -30 Z\" fill=\"#FFFFFE\"></path><path d=\"M-22 -30 L22 -30 L22 40 L-22 40 Z\" fill=\"#FFFFFE\"></path><path d=\"M8 -33 L14 -62 L26 -62\" stroke-width=\"2.6\"></path><circle cx=\"0\" cy=\"14\" r=\"10\" fill=\"#2340D8\"></circle><path d=\"M2 4 C6 -2 12 -2 14 2\" stroke-width=\"1.6\"></path><circle cx=\"-8\" cy=\"-14\" r=\"2.6\" fill=\"#2340D8\" stroke=\"none\"></circle><circle cx=\"8\" cy=\"-14\" r=\"2.6\" fill=\"#2340D8\" stroke=\"none\"></circle><path d=\"M-6 -6 C-2 -2 4 -2 8 -6\" stroke-width=\"1.8\"></path></g><path d=\"M262 170 C270 180 270 194 264 202 M276 160 C288 176 288 200 278 212\" stroke-width=\"2.2\"></path><g transform=\"translate(60 300) rotate(0) scale(0.8 0.8)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g><g transform=\"translate(110 150) rotate(0) scale(1 1)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(300 120) rotate(0) scale(1 1)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#2340D8\" stroke-width=\"1.4\"></path></g></g></svg>",
+    deskPhone: "<svg aria-hidden=\"true\" focusable=\"false\" width=\"440\" height=\"520\" viewBox=\"0 0 440 520\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"dp-w27\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"30\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#dp-w27)\"><ellipse cx=\"266\" cy=\"452\" rx=\"120\" ry=\"16\" transform=\"rotate(-8 266 452)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(220 250) rotate(-8) scale(1 1)\"><path d=\"M-85 -150 C-85 -164 -76 -168 -62 -168 L62 -168 C76 -168 85 -164 85 -150 L85 150 C85 164 76 168 62 168 L-62 168 C-76 168 -85 164 -85 150 Z\" fill=\"#2340D8\"></path><path d=\"M-70 -140 L70 -140 L70 140 L-70 140 Z\" stroke-width=\"1.8\"></path><path d=\"M-16 -156 L16 -156\" stroke-width=\"2.4\"></path><g transform=\"translate(0 -10) rotate(-6) scale(0.9 0.9)\"><path d=\"M-56 -40 L56 -40 C62 -40 64 -36 64 -30 L64 34 C64 40 60 42 56 42 L-56 42 C-62 42 -64 38 -64 34 L-64 -30 C-64 -36 -60 -40 -56 -40 Z\" fill=\"#FFFFFF\"></path><circle cx=\"-42\" cy=\"0\" r=\"6\" fill=\"#2340D8\" stroke=\"#2340D8\" stroke-width=\"1.6\"></circle><circle cx=\"-28\" cy=\"0\" r=\"6\" fill=\"#2340D8\" stroke=\"#2340D8\" stroke-width=\"1.6\"></circle><circle cx=\"-14\" cy=\"0\" r=\"6\" fill=\"#2340D8\" stroke=\"#2340D8\" stroke-width=\"1.6\"></circle><circle cx=\"0\" cy=\"0\" r=\"6\" fill=\"#FFFFFF\" stroke=\"#2340D8\" stroke-width=\"1.6\"></circle><circle cx=\"14\" cy=\"0\" r=\"6\" fill=\"#FFFFFF\" stroke=\"#2340D8\" stroke-width=\"1.6\"></circle><circle cx=\"28\" cy=\"0\" r=\"6\" fill=\"#FFFFFF\" stroke=\"#2340D8\" stroke-width=\"1.6\"></circle><circle cx=\"42\" cy=\"0\" r=\"6\" fill=\"#FFFFFF\" stroke=\"#2340D8\" stroke-width=\"1.6\"></circle><path d=\"M-50 -26 L-14 -26\" stroke-width=\"3\" stroke=\"#2340D8\"></path><path d=\"M-50 26 L-30 26 M34 26 L50 26\" stroke-width=\"2\" stroke=\"#2340D8\"></path></g><path d=\"M-44 96 L44 96\" stroke-width=\"2\"></path><path d=\"M-44 96 L0 96\" stroke-width=\"4\"></path></g><ellipse cx=\"376\" cy=\"182\" rx=\"40\" ry=\"6\" transform=\"rotate(-6 376 182)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(362 160) rotate(10) scale(0.8 0.8)\"><path d=\"M-42 10 C-48 -4 -38 -16 -26 -14 C-22 -28 -6 -32 4 -24 C14 -32 30 -26 30 -12 C42 -14 50 0 42 10 C30 20 -30 20 -42 10 Z\" fill=\"#2340D8\"></path><path d=\"M-26 -14 C-24 -2 -20 8 -16 15 M4 -24 C4 -10 4 4 2 17 M30 -12 C24 0 20 8 16 15\" stroke-width=\"2\"></path><path d=\"M-34 4 C-30 0 -28 6 -32 9 M36 2 C32 -2 30 4 34 7\" stroke-width=\"1.6\"></path></g><ellipse cx=\"98\" cy=\"156\" rx=\"40\" ry=\"6\" transform=\"rotate(-6 98 156)\" fill=\"#1830B0\" stroke=\"none\"></ellipse><g transform=\"translate(84 134) rotate(-12) scale(0.7 0.7)\"><path d=\"M-48 -2 C-50 -18 -40 -28 -24 -30 L-6 -30 C4 -16 20 -10 40 -8 C50 -6 54 0 52 8 L-48 8 Z\" fill=\"#2340D8\"></path><path d=\"M-52 8 L52 8 C58 8 58 20 50 20 L-48 20 C-56 20 -56 8 -52 8 Z\" fill=\"#2340D8\"></path><path d=\"M-28 -8 C-18 -16 -4 -12 6 0 L-10 2 Z\" fill=\"#FFFFFF\"></path><path d=\"M-14 -24 L-2 -16 M-8 -28 L4 -20 M-20 -18 L-8 -10\" stroke-width=\"2\"></path><path d=\"M-48 14 L50 14\" stroke-width=\"1.4\"></path></g><g transform=\"translate(40 440) rotate(0) scale(1.1 1.1)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g><g transform=\"translate(330 470) rotate(0) scale(0.8 0.8)\"><path d=\"M0 0 C4 -22 18 -30 26 -10 C30 -24 46 -24 48 -6 C54 -14 66 -10 68 0\"></path></g><g transform=\"translate(380 90) rotate(0) scale(1 1)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#FFFFFF\" stroke-width=\"1.4\"></path></g><g transform=\"translate(396 112) rotate(20) scale(0.7 0.7)\"><path d=\"M0 -8 C4 -2 6 2 6 5 C6 9 3 11 0 11 C-3 11 -6 9 -6 5 C-6 2 -4 -2 0 -8 Z\" fill=\"#FFFFFF\" stroke-width=\"1.4\"></path></g><g transform=\"translate(70 260) rotate(0) scale(1 1)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g><g transform=\"translate(400 300) rotate(0) scale(0.7 0.7)\"><path d=\"M0 -8 L0 8 M-8 0 L8 0\" stroke-width=\"2.2\"></path></g></g></svg>",
+    deskUnderline: "<svg aria-hidden=\"true\" focusable=\"false\" width=\"250\" height=\"17\" viewBox=\"0 0 200 14\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"du-w28\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"31\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"1.6\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#du-w28)\"><path d=\"M3 9 C40 3 90 13 130 7 C160 3 185 6 197 9\" stroke-width=\"2.4\"></path></g></svg>",
+    qrFrame: "<svg aria-hidden=\"true\" focusable=\"false\" width=\"196\" height=\"196\" viewBox=\"0 0 180 180\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"qf-w25\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"28\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"2.8\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#qf-w25)\"><path d=\"M6 8 C60 4 120 6 172 7 C175 60 174 120 172 172 C120 175 60 174 7 171 C4 120 5 60 6 8 Z\" stroke-width=\"2.4\"></path></g></svg>",
+    hint: "<svg aria-hidden=\"true\" focusable=\"false\" width=\"36\" height=\"22\" viewBox=\"0 0 36 22\" fill=\"none\" stroke=\"#2340D8\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display:block;overflow:visible\"><defs><filter id=\"hint-w13\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.04\" numOctaves=\"2\" seed=\"16\" result=\"n\"></feTurbulence><feDisplacementMap in=\"SourceGraphic\" in2=\"n\" scale=\"2.6\" xChannelSelector=\"R\" yChannelSelector=\"G\"></feDisplacementMap></filter></defs><g filter=\"url(#hint-w13)\"><path d=\"M4 14 C8 8 14 8 18 12 C22 16 28 16 32 10\" stroke-width=\"2.4\"></path><path d=\"M26 6 L32 10 L28 16\" stroke-width=\"2.4\"></path></g></svg>"
+  };
+
+  const ICON = {
+    back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg>',
+    arrow: '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+    share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 15V4M7 9l5-5 5 5M5 14v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5"/></svg>',
+    copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>',
+    clock: '<svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    lock: '<svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+    tick: '<svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 12.5 C8.2 14 9.6 15.8 10.6 17.4 C12.8 12.4 15.4 9.2 18.8 6.6"/></svg>',
+  };
+  const CIRCLE = 'M12 3.2 C17.2 3 21 7 20.8 12.2 C20.6 17.4 16.6 21 11.6 20.8 C6.6 20.6 3 16.8 3.2 11.8 C3.4 7 7 3.4 12 3.2 Z';
+  const SQUARE = 'M5 4.2 C9 3.8 15 4 19.6 4.4 C20 9 20.2 15 19.8 19.8 C15 20.2 9 20 4.4 19.6 C4 15 3.8 9 5 4.2 Z';
+  const TICK = 'M6.5 12.5 C8.2 14 9.6 15.8 10.6 17.4 C12.8 12.4 15.4 9.2 18.8 6.6';
+  const markHTML = (shape) => `<span class="mark" aria-hidden="true">
+      <svg class="off" viewBox="0 0 24 24" fill="none"><path d="${shape}" stroke-width="1.6"/></svg>
+      <svg class="on" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path class="bg" d="${shape}" stroke-width="1.6"/><path class="tick" d="${TICK}" stroke-width="2.4"/></svg>
+    </span>`;
+  const PROGRESS_PATH = 'M3 6 C40 3 80 9 120 6 C150 4 180 8 197 6';
 
   /* =========================================================
      Helpers
@@ -969,11 +462,17 @@
   const uid = () => (window.crypto && crypto.randomUUID
     ? crypto.randomUUID()
     : 'r-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10));
+  const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const inr = (n) => '₹' + Math.round(n).toLocaleString('en-IN');
 
   const store = {
     get(key) { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : null; } catch (e) { return null; } },
     set(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) { /* storage unavailable */ } },
     del(key) { try { localStorage.removeItem(key); } catch (e) { /* storage unavailable */ } },
+  };
+  const session = {
+    get(key) { try { return sessionStorage.getItem(key); } catch (e) { return null; } },
+    set(key, val) { try { sessionStorage.setItem(key, val); } catch (e) { /* storage unavailable */ } },
   };
 
   const PHONE_RE = /^[6-9]\d{9}$/;
@@ -989,60 +488,21 @@
   const emailOk = (v) => EMAIL_RE.test(trim(v));
   const fmtPhone = (d) => (d.length === 10 ? d.slice(0, 5) + ' ' + d.slice(5) : d);
 
-  const otherLabel = (s) => (s.opts.find((o) => o.other) || {}).label;
-  function otherSelected(s, v = state.answers[s.id]) {
-    const l = otherLabel(s);
-    return !!l && (Array.isArray(v) ? v.includes(l) : v === l);
-  }
-  function endsSurvey(s) {
-    const v = state.answers[s.id];
-    return !!s.opts && s.opts.some((o) => o.endsSurvey && o.label === v);
-  }
-
   function readSource() {
     const p = new URLSearchParams(location.search);
     return trim(p.get('utm_source') || p.get('src') || p.get('ref')).slice(0, 60);
   }
-
-  const ICON_CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 12.5l3.6 3.6L17.5 8.5"/></svg>';
-  const ICON_CUP = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h11v4a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/></svg>';
-  const ICON_SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15V4"/><path d="M8 8l4-4 4 4"/><path d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>';
-  const SPARKLE = '<svg viewBox="0 0 24 24"><path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5z"/></svg>';
-  const CUP_SVG = `
-    <svg class="cup" viewBox="0 0 132 124" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="coffee-grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#8d5a35"/><stop offset="1" stop-color="#3b2416"/>
-        </linearGradient>
-        <clipPath id="cup-clip"><path d="M14 46H106V68C106 92 86 108 60 108C34 108 14 92 14 68Z"/></clipPath>
-      </defs>
-      <ellipse class="saucer" cx="60" cy="114" rx="54" ry="7"/>
-      <path class="cup-body" d="M14 46H106V68C106 92 86 108 60 108C34 108 14 92 14 68Z"/>
-      <g clip-path="url(#cup-clip)">
-        <g class="coffee">
-          <rect x="8" y="54" width="104" height="60" fill="url(#coffee-grad)"/>
-          <ellipse class="crema" cx="60" cy="54" rx="48" ry="4"/>
-        </g>
-      </g>
-      <path class="cup-line" d="M14 46H106V68C106 92 86 108 60 108C34 108 14 92 14 68Z"/>
-      <path class="cup-line" d="M106 56C124 56 126 84 104 86"/>
-      <g class="steam">
-        <path d="M44 36c-5-6 5-10 0-16s5-10 0-16"/>
-        <path d="M60 38c-5-6 5-10 0-16s5-10 0-16"/>
-        <path d="M76 36c-5-6 5-10 0-16s5-10 0-16"/>
-      </g>
-    </svg>`;
-  const ICON_CLOCK = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"/><path class="clock-hand" d="M12 7.5V12l3 2"/></svg>';
-  const ICON_ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>';
-  const ICON_CALENDAR = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>';
-  const ICON_PIN = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>';
-  const BEAN_SVG = '<svg viewBox="0 0 20 28"><ellipse cx="10" cy="14" rx="9" ry="13" fill="currentColor"/><path class="bean-crease" d="M10 2.5c-4 4-4 7.5 0 11.5s4 7.5 0 11.5"/></svg>';
+  function surveyUrl(src) {
+    const u = location.origin + location.pathname;
+    return src ? u + '?src=' + encodeURIComponent(src) : u;
+  }
 
   /* =========================================================
-     State (saved to this device so people can resume)
+     State (saved on this device so people can pick up where they left off)
      ========================================================= */
+  const VIEWS = ['intro1', 'intro2', 'step', 'waitlist', 'done'];
   function freshState() {
-    return { id: uid(), view: 'intro', step: 0, answers: {}, startedAt: null, updatedAt: null, source: readSource(), done: null };
+    return { id: uid(), view: 'intro1', step: 0, answers: {}, startedAt: null, updatedAt: null, source: readSource(), done: null };
   }
   function loadState() {
     const saved = store.get(CONFIG.storageKey);
@@ -1050,12 +510,15 @@
     const ageDays = (Date.now() - (saved.updatedAt || 0)) / 864e5;
     if (!saved.done && ageDays > CONFIG.resumeMaxAgeDays) return freshState();
     if (!saved.source) saved.source = readSource();
-    saved.step = Math.min(Math.max(0, saved.step | 0), STEPS.length - 1);
+    if (!VIEWS.includes(saved.view)) saved.view = 'intro1';
+    if (saved.view === 'done' && !saved.done) saved.view = 'intro1';
+    saved.step = Math.min(Math.max(0, saved.step | 0), TOTAL - 1);
     return saved;
   }
   let state = loadState();
-  let doneName = ''; // shown on the waitlist card; kept in memory only
+  let view = state.done ? 'done' : state.view; // what's on screen ('desk' is never saved)
   let shareName = ''; // respondent's name, used as ?src= on the share link; memory only
+  let lastPct = 0;
 
   function save() {
     state.updatedAt = Date.now();
@@ -1064,470 +527,448 @@
   let saveTimer;
   function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(save, 250); }
 
-  const hasProgress = () => state.step > 0 || Object.keys(state.answers).length > 0;
-  const currentStep = () => (state.view === 'step' ? STEPS[state.step] : null);
+  const app = $('#app');
+  const currentStep = () => (view === 'step' ? STEPS[state.step] : null);
+  const order = (v, step) => (v === 'desk' ? -1 : v === 'step' ? 2 + step : v === 'intro1' ? 0 : v === 'intro2' ? 1 : v === 'waitlist' ? 2 + TOTAL : 3 + TOTAL);
 
   /* =========================================================
-     Screen templates
+     Rendering
      ========================================================= */
-  function passHTML(cls, o = {}) {
-    const filled = o.filled == null ? 5 : o.filled;
-    const cups = Array.from({ length: 8 }, (_, i) => `<span class="pass-cup${i < filled ? ' on' : ''}" style="--i:${i}">${ICON_CUP}</span>`).join('');
+  function topHTML(n) {
+    const pct = Math.round((n / TOTAL) * 100);
+    return `<div class="top">
+      <button type="button" class="back" data-action="back" aria-label="Back">${ICON.back}</button>
+      <svg class="progress" viewBox="0 0 200 12" preserveAspectRatio="none" role="progressbar" aria-label="Survey progress" aria-valuemin="0" aria-valuemax="${TOTAL}" aria-valuenow="${n}">
+        <path class="track" d="${PROGRESS_PATH}" vector-effect="non-scaling-stroke"/>
+        <path class="fill" d="${PROGRESS_PATH}" vector-effect="non-scaling-stroke" pathLength="100" stroke-dasharray="${lastPct} 100" data-pct="${pct}"/>
+      </svg>
+      <span class="count">${n} of ${TOTAL}</span>
+    </div>`;
+  }
+
+  function isSelected(field, value) {
+    const v = state.answers[field];
+    return Array.isArray(v) ? v.includes(value) : v === value;
+  }
+  function stateAttr(multi, sel) {
+    return multi ? `aria-pressed="${sel}"` : `role="radio" aria-checked="${sel}"`;
+  }
+
+  function listHTML(s) {
+    const shape = s.multi ? SQUARE : CIRCLE;
+    return `<div class="opts list${s.compact ? ' compact' : ''}" data-field="${s.id}" data-multi="${!!s.multi}"
+        role="${s.multi ? 'group' : 'radiogroup'}" aria-labelledby="q-title">
+      ${s.opts.map((o) => `<button type="button" class="opt" data-value="${esc(o.label)}" ${stateAttr(s.multi, isSelected(s.id, o.label))}>
+        <span>${esc(o.label)}</span>${markHTML(shape)}</button>`).join('')}
+    </div>`;
+  }
+
+  function chipsHTML(field, opts, multi, label) {
+    return `<div class="opts chips" data-field="${field}" data-multi="${!!multi}"
+        role="${multi ? 'group' : 'radiogroup'}" ${label ? `aria-label="${esc(label)}"` : 'aria-labelledby="q-title"'}>
+      ${opts.map((o) => `<button type="button" class="opt" data-value="${esc(o.label)}" ${stateAttr(multi, isSelected(field, o.label))}>
+        ${ICON.tick}${esc(o.label)}</button>`).join('')}
+    </div>`;
+  }
+
+  function cardsHTML(s) {
+    return `<div class="opts cards" data-field="${s.id}" data-multi="false" role="radiogroup" aria-labelledby="q-title">
+      ${s.cards.map(([num, lbl]) => `<button type="button" class="opt" data-value="${num}" ${stateAttr(false, isSelected(s.id, num))}
+          aria-label="${num} coffees, ${esc(lbl.toLowerCase())}">
+        <span class="num">${num}</span><span class="lbl">${esc(lbl)}</span></button>`).join('')}
+    </div>
+    <div class="opts list extra" data-field="${s.id}" data-multi="false" role="radiogroup" aria-labelledby="q-title">
+      <button type="button" class="opt" data-value="${esc(s.extra)}" ${stateAttr(false, isSelected(s.id, s.extra))}>
+        <span>${esc(s.extra)}</span>${markHTML(CIRCLE)}</button>
+    </div>`;
+  }
+
+  function otherHTML(s) {
+    const o = s.opts.find((x) => x.other);
+    if (!o) return '';
+    const shown = isSelected(s.id, o.label);
+    return `<div class="other-field" data-other-for="${s.id}" ${shown ? '' : 'hidden'}>
+      <label class="field-label">${esc(o.other.label)}
+        <span class="field"><input type="text" data-text="${s.id}_other" value="${esc(state.answers[s.id + '_other'] || '')}"
+          placeholder="${esc(o.other.placeholder)}" autocomplete="off" maxlength="80" enterkeyhint="next"></span>
+      </label>
+    </div>`;
+  }
+
+  function hintText() {
+    const p = PRICE_POINTS[state.answers.price_per_coffee];
+    if (!p) return '';
+    const n = parseInt(state.answers.coffees_per_month, 10) || 20;
+    const total = p.per * n;
+    const lead = p.kind === 'under' ? 'That’s under ' : p.kind === 'over' ? 'That’s ' : 'That’s about ';
+    const strong = p.kind === 'under' ? inr(total) : p.kind === 'over' ? inr(total) + '+' : inr(Math.round(total / 100) * 100);
+    return `${lead}<strong>${strong} a month</strong> for ${n} coffees.`;
+  }
+  function hintHTML() {
+    const t = hintText();
+    return `<div class="hint" id="hint" ${t ? '' : 'hidden'} aria-live="polite">${ART.hint}<p>${t}</p></div>`;
+  }
+
+  function stepHTML(s, i) {
+    let body = '';
+    if (s.kind === 'list') body = listHTML(s) + (s.hint ? hintHTML() : '');
+    if (s.kind === 'chips') body = chipsHTML(s.id, s.opts, s.multi) + otherHTML(s);
+    if (s.kind === 'cards') body = cardsHTML(s);
+    if (s.kind === 'text') {
+      body = `<div class="opts"><label class="field-label">${esc(s.label)}
+        <textarea data-text="${s.id}" placeholder="${esc(s.placeholder)}" maxlength="300">${esc(state.answers[s.id] || '')}</textarea></label></div>`;
+    }
+    if (s.kind === 'about') {
+      body = `<div class="groups">${s.groups.map((g) => `<div class="group">
+        <p class="group-label" id="g-${g.id}">${esc(g.label)}</p>${chipsHTML(g.id, g.opts, false, g.label)}</div>`).join('')}</div>`;
+    }
     return `
-      <div class="pass ${cls}" aria-hidden="true"><div class="pass-in"><div class="pass-card">
-        <div class="pass-row"><span class="pass-brand">Coffee Pass</span><span class="pass-chip">${esc(o.chip || 'Bengaluru')}</span></div>
-        <div class="pass-cups">${cups}</div>
-        <div class="pass-meta">
-          <span>${esc(o.leftLabel || 'Partner cafés')}<strong>${esc(o.left || '20+')}</strong></span>
-          <span>${esc(o.rightLabel || 'Plan')}<strong>${esc(o.right || 'Monthly')}</strong></span>
+      ${topHTML(i + 1)}
+      <div class="art-wrap">${ART['q' + (i + 1)]}</div>
+      <div class="head" style="--size:${s.size || 30}px">
+        ${s.eyebrow ? `<p class="eyebrow">${esc(s.eyebrow)}</p>` : ''}
+        <h1 class="title" id="q-title" tabindex="-1">${esc(s.title)}</h1>
+        ${s.sub ? `<p class="sub" id="q-sub">${esc(s.sub)}</p>` : ''}
+      </div>
+      ${body}
+      <p class="error" id="err" role="alert"></p>
+      <div class="foot">
+        ${s.optional ? '<button type="button" class="text-btn" data-action="skip">Skip</button>' : ''}
+        <button type="submit" class="btn">Next${ICON.arrow}</button>
+      </div>`;
+  }
+
+  function intro1HTML() {
+    return `
+      <div class="hero">${ART.intro1Hero}</div>
+      <div class="intro-copy">
+        <p class="eyebrow">Introducing Coffee Pass</p>
+        <h1 tabindex="-1">Your favourite cafés.<br><span class="underlined">One monthly pass.<span class="ul">${ART.intro1Underline}</span></span></h1>
+        <p class="lede">A set number of coffees every month, at 20+ independent cafés across Bengaluru.</p>
+      </div>
+      <div class="foot stack">
+        <button type="submit" class="btn">Continue${ICON.arrow}</button>
+        <div class="dots" aria-hidden="true"><span class="on"></span><span></span></div>
+      </div>`;
+  }
+
+  function intro2HTML() {
+    return `
+      <div class="intro2-art">${ART.intro2}</div>
+      <div class="intro2-copy">
+        <h1 tabindex="-1">Help us<br>shape it.</h1>
+        <p class="lede">A few quick questions about how you drink coffee. No sign-up needed.</p>
+        <div class="facts">
+          <div class="fact"><span>${ICON.clock}</span>About 2 minutes</div>
+          <div class="fact"><span>${ICON.lock}</span>Anonymous unless you join the waitlist</div>
         </div>
-        <span class="pass-shine"></span>
-      </div></div></div>`;
+      </div>
+      <div class="foot stack">
+        <button type="submit" class="btn">Start${ICON.arrow}</button>
+        <p class="foot-note">Your answers are only used to design Coffee Pass.</p>
+        ${CONFIG.submitUrl ? '' : '<p class="preview-note">Preview mode: responses stay in this browser until submitUrl is set.</p>'}
+        <div class="dots" aria-hidden="true"><span></span><span class="on"></span></div>
+      </div>`;
   }
 
-  // The concept sentence split into words, so it can be revealed one word at a time.
-  function conceptWordsHTML(s) {
-    const lead = s.highlight && s.text.startsWith(s.highlight) ? s.highlight : '';
-    let i = 0;
-    const words = [];
-    if (lead) words.push(`<span class="wd accent shimmer" style="--i:${i++}">${esc(lead)}</span>`);
-    s.text.slice(lead.length).trim().split(/\s+/).forEach((w) => words.push(`<span class="wd" style="--i:${i++}">${esc(w)}</span>`));
-    return words.join(' ');
-  }
-
-  function introHTML() {
-    const resume = hasProgress();
-    const sparkles = [['0.2s', '-4%', '8%'], ['1.1s', '96%', '-6%'], ['0.7s', '100%', '70%'], ['1.6s', '-6%', '84%']]
-      .map(([d, l, t]) => `<span class="sparkle" style="--d:${d};left:${l};top:${t}">${SPARKLE}</span>`).join('');
+  function waitlistHTML() {
+    const a = state.answers;
+    const on = !!a.waitlist_consent;
     return `
-      <div class="hero-visual" data-action="burst-card" aria-hidden="true">
-        ${passHTML('hero-pass')}
-        ${sparkles}
+      <div class="top">
+        <button type="button" class="back" data-action="back" aria-label="Back">${ICON.back}</button>
+        <span class="top-note">Optional · Last step</span>
       </div>
-      <p class="eyebrow">What is Coffee Pass?</p>
-      <h1 class="hero-concept" tabindex="-1">${conceptWordsHTML(CONCEPT)}</h1>
-      <ul class="perks" role="list">
-        <li class="perk" style="--i:0">${ICON_CALENDAR}Monthly plan</li>
-        <li class="perk" style="--i:1">${ICON_PIN}20+ partner cafés</li>
-        <li class="perk" style="--i:2">${ICON_CUP}A set number of coffees</li>
-      </ul>
-      <p class="hero-lede">Help us shape it. A few quick questions about how you drink your coffee.</p>
-      <div class="hero-cta">
-        <button class="btn btn-primary btn-lg btn-start" type="button" data-action="start"><span>${resume ? 'Continue' : 'Start'}</span>${ICON_ARROW}<span class="btn-shine" aria-hidden="true"></span></button>
-        ${resume ? '<button class="btn btn-link" type="button" data-action="restart">Start over</button>' : ''}
+      <div style="height:28px"></div>
+      <div class="head">
+        <h1 class="title" id="q-title" tabindex="-1">Want early access?</h1>
+        <p class="sub">Join the waitlist and get an exclusive launch discount.</p>
       </div>
-      <p class="hero-meta">${ICON_CLOCK}Takes about 2 minutes</p>
-      <p class="hero-privacy">Your answers are used only for this research.</p>
-      ${CONFIG.submitUrl ? '' : '<p class="preview-note">Preview mode: responses stay in this browser until <code>submitUrl</code> is set.</p>'}`;
+      <div class="opts list" style="padding-top:18px">
+        <button type="button" class="opt" data-action="consent" aria-pressed="${on}">
+          <span>Yes, add me to the waitlist</span>${markHTML(SQUARE)}</button>
+      </div>
+      <div class="fields" id="contact" ${on ? '' : 'hidden'}>
+        <label class="field-label">Name
+          <span class="field"><input id="c-name" type="text" data-text="name" value="${esc(a.name || '')}" placeholder="Your name"
+            autocomplete="name" autocapitalize="words" maxlength="60" aria-describedby="c-name-err" enterkeyhint="next"></span>
+        </label>
+        <p class="field-err" id="c-name-err" role="alert"></p>
+        <label class="field-label">Phone
+          <span class="field"><span class="prefix">+91</span><input id="c-phone" type="tel" data-text="phone" value="${esc(a.phone || '')}"
+            placeholder="XXXXX XXXXX" inputmode="numeric" autocomplete="tel-national" maxlength="16" aria-describedby="c-phone-err" enterkeyhint="next"></span>
+        </label>
+        <p class="field-err" id="c-phone-err" role="alert"></p>
+        <div class="or" aria-hidden="true"><span></span>or<span></span></div>
+        <label class="field-label">Email
+          <span class="field"><input id="c-email" type="email" data-text="email" value="${esc(a.email || '')}" placeholder="you@example.com"
+            inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="100" aria-describedby="c-email-err" enterkeyhint="done"></span>
+        </label>
+        <p class="field-err" id="c-email-err" role="alert"></p>
+        <p class="fine">Phone or email, whichever you prefer. We’ll only message you about Coffee Pass. Unsubscribe anytime.</p>
+      </div>
+      <p class="error" id="err" role="alert"></p>
+      <div class="foot stack">
+        <button type="submit" class="btn" id="submit-btn">${on ? 'Join and submit' : 'Submit'}${ICON.arrow}</button>
+        <button type="button" class="text-btn block" data-action="decline" ${on ? '' : 'hidden'}>No thanks, just submit</button>
+      </div>`;
   }
 
   function doneHTML() {
-    const waitlist = !!(state.done && state.done.waitlist);
-    const title = 'Thank you!';
-    let n = 0;
-    const letters = title.split(' ')
-      .map((w) => `<span class="w">${Array.from(w).map((c) => `<span class="ch" style="--i:${n++}">${esc(c)}</span>`).join('')}</span>`)
-      .join(' ');
-    const sparkles = [
-      ['0s', '4%', '30%'], ['0.6s', '86%', '8%'], ['1.1s', '90%', '62%'], ['1.7s', '10%', '78%'], ['0.9s', '46%', '-4%'],
-    ].map(([d, l, t]) => `<span class="sparkle" style="--d:${d};left:${l};top:${t}">${SPARKLE}</span>`).join('');
+    const d = state.done || {};
+    const exit = d.status === 'screened_out';
+    const key = exit ? 'exit' : d.waitlist ? 'thanksList' : 'thanks';
+    const copy = {
+      thanks: ['Thank you.', 'Your answers will help shape Coffee Pass.'],
+      thanksList: ['You’re on the list.', 'Thanks for your answers. We’ll be in touch before launch with your discount.'],
+      exit: ['Thanks for<br>stopping by.', 'Coffee Pass is made for regular coffee drinkers, so we’ll stop here. Know someone who’d love it?'],
+    }[key];
     return `
-      <button type="button" class="cup-stage" data-action="burst" aria-label="Celebrate again">
-        <span class="halo"></span><span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
-        ${sparkles}
-        ${CUP_SVG}
-        <span class="badge">${ICON_CHECK}</span>
-      </button>
-      <h1 class="done-title" tabindex="-1" aria-label="${title}"><span aria-hidden="true">${letters}</span></h1>
-      <p class="hero-lede">Your answers will help shape Coffee Pass.</p>
-      ${waitlist ? `
-        ${passHTML('done-pass', { chip: 'Waitlist', leftLabel: 'Member', left: doneName || 'You', rightLabel: 'Perk', right: 'Launch discount', filled: 8 })}
-        <p class="hero-lede">You’re on the waitlist. Look out for your exclusive launch discount.</p>` : ''}
-      <div class="done-actions">
-        <button type="button" class="btn btn-primary btn-lg" data-action="share">${ICON_SHARE}Share with a friend</button>
-        <p class="done-note">Know someone who runs on coffee? Send them the survey.</p>
+      ${ART[key + 'Confetti']}
+      <div class="end-art pop">${ART[key]}</div>
+      <div class="end-copy">
+        <h1 tabindex="-1">${copy[0]}</h1>
+        <p>${copy[1]}</p>
+      </div>
+      <div class="end-foot">
+        <button type="button" class="btn" data-action="share">${ICON.share}${exit ? 'Share the survey' : 'Share with a friend'}</button>
+        ${exit ? '' : '<p class="foot-note">Know someone who runs on coffee?<br>Send them the survey.</p>'}
       </div>`;
   }
 
-  function headHTML(s) {
-    const eyebrow = [s.num && `Question ${s.num} of ${questionCount}`, s.eyebrow].filter(Boolean).join(' · ');
-    return `
-      ${eyebrow ? `<p class="eyebrow">${esc(eyebrow)}</p>` : ''}
-      <h1 class="q-title" id="t-${s.id}" tabindex="-1">${esc(s.title)}</h1>
-      ${s.sub ? `<p class="q-sub" id="s-${s.id}">${esc(s.sub)}</p>` : ''}
-      ${s.hint ? `<p class="q-hint" id="h-${s.id}">${esc(s.hint)}</p>` : ''}`;
-  }
-
-  function optionHTML(s, o, i, kind) {
-    const attrs = [o.other && 'data-other', o.exclusive && 'data-exclusive', o.endsSurvey && 'data-ends'].filter(Boolean).join(' ');
-    return `
-      <label class="option" style="--i:${i}">
-        <input type="${kind}" name="${s.id}" id="${s.id}-${i}" value="${esc(o.label)}" ${attrs}>
-        <span class="option-card">
-          <span class="option-label">${esc(o.label)}</span>
-          <span class="indicator ${kind}" aria-hidden="true">${ICON_CHECK}</span>
-        </span>
-      </label>`;
-  }
-
-  function choiceHTML(s) {
-    const multi = s.type === 'multi';
-    const kind = multi ? 'checkbox' : 'radio';
-    const describedBy = [s.hint && `h-${s.id}`, `e-${s.id}`].filter(Boolean).join(' ');
-    const other = otherLabel(s);
-    return `
-      ${headHTML(s)}
-      <div class="options" role="${multi ? 'group' : 'radiogroup'}" aria-labelledby="t-${s.id}" aria-describedby="${describedBy}"${multi ? '' : ' aria-required="true"'}>
-        ${s.opts.map((o, i) => optionHTML(s, o, i, kind)).join('')}
-      </div>
-      ${other ? `
-        <div class="other" id="${s.id}-other-wrap" hidden>
-          <label class="sr-only" for="${s.id}-other">${esc(other)}: please specify</label>
-          <input class="input" type="text" id="${s.id}-other" data-other-text maxlength="120" placeholder="Please specify" autocomplete="off" aria-describedby="e-${s.id}">
-        </div>` : ''}
-      <p class="error" id="e-${s.id}" aria-live="polite"></p>`;
-  }
-
-  function contactFieldsHTML(p) {
-    return `
-      <div class="fields">
-        <div class="field">
-          <label for="${p}-name">Name</label>
-          <input class="input" id="${p}-name" data-field="name" type="text" autocomplete="name" autocapitalize="words" maxlength="80" required aria-describedby="${p}-name-err">
-          <p class="error" id="${p}-name-err" aria-live="polite"></p>
+  function deskHTML() {
+    return `<div class="desk">
+      <div class="desk-art">${ART.deskPhone}</div>
+      <div class="desk-copy">
+        <p class="eyebrow">Coffee Pass</p>
+        <h1 tabindex="-1"><span class="underlined">Made for<span class="ul">${ART.deskUnderline}</span></span><br>your phone.</h1>
+        <p class="lede">This survey works best on mobile. Scan the code to open it there. It takes about 2 minutes.</p>
+        <div class="desk-row">
+          <div class="qr" id="qr" hidden><div class="frame">${ART.qrFrame}</div><div class="code" id="qr-code"></div></div>
+          <div class="desk-actions">
+            <button type="button" class="btn outline" data-action="copy">${ICON.copy}<span>Copy link</span></button>
+            <button type="button" class="text-btn" data-action="continue">Continue on this screen${ICON.arrow.replace('class="arrow"', 'width="18" height="18"')}</button>
+          </div>
         </div>
-        <fieldset class="reach" aria-describedby="${p}-reach-hint e-contact">
-          <legend>Phone number or email</legend>
-          <p class="reach-hint" id="${p}-reach-hint">Fill in at least one. Both is fine too.</p>
-          <div class="field">
-            <label for="${p}-phone">Phone number</label>
-            <div class="phone">
-              <span class="phone-prefix" aria-hidden="true">+91</span>
-              <input class="input" id="${p}-phone" data-field="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="16" placeholder="XXXXX XXXXX" aria-describedby="${p}-phone-err">
-            </div>
-            <p class="error" id="${p}-phone-err" aria-live="polite"></p>
-          </div>
-          <div class="or" aria-hidden="true"><span>or</span></div>
-          <div class="field">
-            <label for="${p}-email">Email</label>
-            <input class="input" id="${p}-email" data-field="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="120" placeholder="you@example.com" aria-describedby="${p}-email-err">
-            <p class="error" id="${p}-email-err" aria-live="polite"></p>
-          </div>
-          <p class="error" id="e-contact" aria-live="polite"></p>
-        </fieldset>
-      </div>`;
-  }
-
-  function consentHTML(s) {
-    return `
-      ${headHTML(s)}
-      <div class="options">
-        <label class="option" style="--i:0">
-          <input type="checkbox" id="waitlist-consent" data-consent aria-describedby="s-${s.id} e-${s.id}">
-          <span class="option-card">
-            <span class="option-label">${esc(s.checkbox)}</span>
-            <span class="indicator checkbox" aria-hidden="true">${ICON_CHECK}</span>
-          </span>
-        </label>
       </div>
-      <p class="error" id="e-${s.id}" aria-live="polite"></p>`;
+    </div>`;
   }
 
-  function buildScreen(target) {
-    const el = document.createElement('section');
-    el.className = 'screen';
-    if (target.view === 'intro') {
-      el.classList.add('hero');
-      el.innerHTML = introHTML();
-      return el;
-    }
-    if (target.view === 'done') {
-      el.classList.add('hero', 'done');
-      el.innerHTML = doneHTML();
-      return el;
-    }
-    const s = STEPS[target.step];
-    el.dataset.step = s.id;
-    el.innerHTML = s.type === 'contact' ? headHTML(s) + contactFieldsHTML('c')
-      : s.type === 'consent' ? consentHTML(s)
-      : choiceHTML(s);
-    hydrate(el, s);
-    return el;
+  function screenTheme() {
+    if (view === 'desk') return 'light';
+    if (view === 'intro2') return 'blue';
+    if (view === 'step') return STEPS[state.step].blue ? 'blue' : 'light';
+    if (view === 'done') return state.done && state.done.status === 'screened_out' ? 'light' : 'blue';
+    return 'light';
   }
 
-  // Put saved answers back into a freshly built screen.
-  function hydrate(el, s) {
-    const a = state.answers;
-    if (s.opts) {
-      const v = a[s.id];
-      $$(`input[name="${s.id}"]`, el).forEach((inp) => {
-        inp.checked = Array.isArray(v) ? v.includes(inp.value) : v === inp.value;
-      });
-      const other = $('[data-other-text]', el);
-      if (other) other.value = a[s.id + '_other'] || '';
-      syncOther(el, s);
-    }
-    $$('[data-field]', el).forEach((inp) => {
-      const v = a[inp.dataset.field] || '';
-      inp.value = inp.dataset.field === 'phone' && phoneOk(v) ? fmtPhone(normPhone(v)) : v;
-    });
-    const consent = $('[data-consent]', el);
-    if (consent) {
-      consent.checked = !!a.waitlist_consent;
-    }
-  }
+  function render(dir = 0) {
+    const theme = screenTheme();
+    document.body.dataset.theme = theme;
+    document.body.dataset.view = view;
+    $('#theme-color').setAttribute('content', theme === 'blue' ? '#2340D8' : '#FFFFFF');
 
-  function syncOther(el, s) {
-    const wrap = $(`#${s.id}-other-wrap`, el);
-    if (wrap) wrap.hidden = !otherSelected(s);
-  }
-
-  /* =========================================================
-     Rendering + transitions
-     ========================================================= */
-  const stage = $('#stage');
-  const actions = $('#actions');
-  const backBtn = $('#back');
-  const nextBtn = $('#next');
-  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const reducedMotion = () => motionQuery.matches;
-
-  let renderToken = 0;
-  let transitioning = false;
-
-  async function render(target, dir) {
-    const token = ++renderToken;
-    state.view = target.view;
-    if (target.view === 'step') state.step = target.step;
-    save();
-
-    const old = stage.firstElementChild;
-    const animate = !!(old && dir && !reducedMotion() && old.animate);
-    transitioning = true;
-    if (animate) {
-      old.style.pointerEvents = 'none';
-      try {
-        await old.animate(
-          [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translateX(${-dir * 16}px)` }],
-          { duration: 160, easing: 'cubic-bezier(0.4, 0, 1, 1)', fill: 'forwards' }
-        ).finished;
-      } catch (e) { /* animation interrupted */ }
-      if (token !== renderToken) return;
+    if (view === 'desk') {
+      app.innerHTML = deskHTML();
+      loadQr();
+    } else {
+      let inner = '';
+      if (view === 'intro1') inner = intro1HTML();
+      if (view === 'intro2') inner = intro2HTML();
+      if (view === 'step') inner = stepHTML(STEPS[state.step], state.step);
+      if (view === 'waitlist') inner = waitlistHTML();
+      if (view === 'done') inner = doneHTML();
+      const cls = `screen ${theme}${dir && !reducedMotion() ? ' anim' + (dir < 0 ? ' rev' : '') : ''}`;
+      app.innerHTML = `<form class="${cls}" id="screen" novalidate>${inner}</form>`;
     }
 
-    const el = buildScreen(target);
-    if (animate) el.classList.add('enter');
-    stage.replaceChildren(el);
     window.scrollTo(0, 0);
-    updateChrome();
-    transitioning = false;
+    const h1 = $('h1', app);
+    if (h1 && dir) h1.focus({ preventScroll: true });
 
-    if (animate) {
-      el.animate(
-        [{ opacity: 0, transform: `translateX(${dir * 24}px)` }, { opacity: 1, transform: 'none' }],
-        { duration: 280, easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)' }
-      );
+    // Let the progress line draw from where it was.
+    const fill = $('.progress .fill', app);
+    if (fill) {
+      const pct = +fill.dataset.pct;
+      requestAnimationFrame(() => requestAnimationFrame(() => fill.setAttribute('stroke-dasharray', `${pct} 100`)));
+      lastPct = pct;
+    } else if (view === 'intro2' || view === 'intro1') {
+      lastPct = 0;
     }
-    if (dir) {
-      const heading = $('h1', el);
-      if (heading) heading.focus({ preventScroll: true });
-    }
-    if (target.view === 'done') {
-      setTimeout(() => { if (token === renderToken) burst($('.cup-stage', el)); }, dir ? 700 : 350);
-    }
-  }
-
-  function updateChrome() {
-    document.body.dataset.view = state.view;
-    actions.hidden = state.view !== 'step';
-    updateNextLabel();
-  }
-
-  function updateNextLabel() {
-    const s = currentStep();
-    if (!s) return;
-    const a = state.answers;
-    let label = 'Next';
-    if (s.type === 'consent') label = 'Submit';
-    else if (endsSurvey(s)) label = 'Finish';
-    if (nextBtn.textContent !== label) nextBtn.textContent = label;
   }
 
   /* =========================================================
-     Navigation (with browser history, so the phone's back
-     gesture goes to the previous question)
+     Navigation (browser back button works too)
      ========================================================= */
-  let navN = 0;
-  function entry(target) { return { cp: 1, n: navN, view: target.view, step: target.step }; }
+  let depth = 0;
+  const entry = () => ({ cp: 2, depth, view, step: state.step });
 
-  function goTo(target, dir, mode = 'push') {
-    if (mode === 'push') { navN += 1; history.pushState(entry(target), ''); }
-    else if (mode === 'replace') history.replaceState(entry(target), '');
-    render(target, dir);
+  function goTo(nextView, step, dir, mode = 'push') {
+    view = nextView;
+    if (nextView !== 'desk') {
+      state.view = nextView;
+      if (typeof step === 'number') state.step = step;
+      save();
+    }
+    if (mode === 'push') { depth += 1; history.pushState(entry(), ''); }
+    else history.replaceState(entry(), '');
+    render(dir);
   }
 
   window.addEventListener('popstate', (e) => {
     const s = e.state;
-    if (!s || !s.cp) return;
-    if (state.view === 'done') {
-      // The survey is submitted: stay on the thank-you screen.
-      navN += 1;
-      history.pushState(entry({ view: 'done' }), '');
+    if (!s || s.cp !== 2) return;
+    if (state.done) { // finished: stay on the thank-you screen
+      view = 'done';
+      history.replaceState(entry(), '');
+      render(0);
       return;
     }
-    const dir = s.n < navN ? -1 : 1;
-    navN = s.n;
-    render({ view: s.view, step: s.step }, dir);
+    const dir = order(s.view, s.step) < order(view, state.step) ? -1 : 1;
+    depth = s.depth || 0;
+    view = s.view;
+    if (view !== 'desk') {
+      state.view = view;
+      state.step = Math.min(Math.max(0, s.step | 0), TOTAL - 1);
+      save();
+    }
+    render(dir);
   });
 
-  function start() {
-    if (!state.startedAt) state.startedAt = Date.now();
-    const target = hasProgress() ? state.step : 0;
-    // When resuming, recreate history for the earlier questions so Back steps through them.
-    for (let i = 0; i < target; i++) {
-      navN += 1;
-      history.pushState(entry({ view: 'step', step: i }), '');
-    }
-    goTo({ view: 'step', step: target }, 1);
-  }
-
-  function restart() {
-    state = freshState();
-    state.startedAt = Date.now();
-    goTo({ view: 'step', step: 0 }, 1);
-  }
-
   function next() {
-    const s = currentStep();
-    if (!s || transitioning) return;
-    if (!validate(s)) return;
-    if (endsSurvey(s)) { finish('screened_out'); return; }
-    if (state.step === STEPS.length - 1) { finish('complete'); return; }
-    goTo({ view: 'step', step: state.step + 1 }, 1);
+    if (view === 'intro1') { goTo('intro2', null, 1); return; }
+    if (view === 'intro2') {
+      if (!state.startedAt) state.startedAt = Date.now();
+      goTo('step', 0, 1);
+      return;
+    }
+    if (view === 'step') {
+      const s = currentStep();
+      if (!validate(s)) return;
+      const ends = s.opts && s.opts.some((o) => o.endsSurvey && o.label === state.answers[s.id]);
+      if (ends) { finish('screened_out'); return; }
+      if (state.step === TOTAL - 1) goTo('waitlist', null, 1);
+      else goTo('step', state.step + 1, 1);
+      return;
+    }
+    if (view === 'waitlist') {
+      if (state.answers.waitlist_consent && !validateContact()) return;
+      finish('complete');
+    }
   }
 
   function back() {
-    if (state.view !== 'step' || transitioning) return;
-    if (navN > 0) { history.back(); return; }
+    if (depth > 0) { history.back(); return; }
     // Resumed session with no history to go back through.
-    const target = state.step === 0 ? { view: 'intro' } : { view: 'step', step: state.step - 1 };
-    goTo(target, -1, 'replace');
+    if (view === 'waitlist') goTo('step', TOTAL - 1, -1, 'replace');
+    else if (view === 'step' && state.step > 0) goTo('step', state.step - 1, -1, 'replace');
+    else if (view === 'step') goTo('intro2', null, -1, 'replace');
   }
 
   /* =========================================================
      Validation
      ========================================================= */
-  function setError(id, msg, input) {
-    const box = document.getElementById(id);
-    if (!box) return;
-    box.textContent = '';
-    requestAnimationFrame(() => { box.textContent = msg; });
-    if (input) input.setAttribute('aria-invalid', 'true');
+  function showError(msg, shakeEl) {
+    const box = $('#err', app);
+    if (box) { box.textContent = ''; requestAnimationFrame(() => { box.textContent = msg; }); }
+    if (shakeEl && !reducedMotion()) {
+      shakeEl.classList.remove('shake');
+      void shakeEl.offsetWidth;
+      shakeEl.classList.add('shake');
+    }
   }
-  function clearError(id, input) {
-    const box = document.getElementById(id);
-    if (box) box.textContent = '';
-    if (input) input.removeAttribute('aria-invalid');
-  }
-  function shake(node) {
-    if (!node || reducedMotion()) return;
-    node.classList.remove('shake');
-    void node.offsetWidth;
-    node.classList.add('shake');
-  }
+  function clearError() { const box = $('#err', app); if (box) box.textContent = ''; }
 
   function validate(s) {
-    const el = stage.firstElementChild;
     const a = state.answers;
-
-    if (s.opts) {
-      const v = a[s.id];
-      const answered = Array.isArray(v) ? v.length > 0 : !!v;
-      if (!answered) {
-        setError(`e-${s.id}`, MSG[s.type]);
-        shake($('.options', el));
-        return false;
-      }
-      if (otherSelected(s) && !trim(a[s.id + '_other'])) {
-        const inp = $('[data-other-text]', el);
-        setError(`e-${s.id}`, MSG.other, inp);
-        inp.focus();
+    if (s.kind === 'text') return true;
+    if (s.kind === 'about') {
+      if (!a.age || !a.occupation) {
+        showError(MSG.about, $('.groups', app));
         return false;
       }
       return true;
     }
-
-    if (s.type === 'contact') {
-      const p = 'c';
-      const phoneInp = $('#c-phone', el);
-      const emailInp = $('#c-email', el);
-      const nameInp = $('#c-name', el);
-      let firstBad = null;
-      if (!trim(a.name)) {
-        setError(`${p}-name-err`, MSG.name, nameInp);
-        firstBad = nameInp;
-      }
-      if (trim(a.phone) && !phoneOk(a.phone)) {
-        setError(`${p}-phone-err`, MSG.phone, phoneInp);
-        firstBad = phoneInp;
-      }
-      if (trim(a.email) && !emailOk(a.email)) {
-        setError(`${p}-email-err`, MSG.email, emailInp);
-        firstBad = firstBad || emailInp;
-      }
-      if (!trim(a.phone) && !trim(a.email)) {
-        setError(`e-${s.id}`, MSG.reach);
-        phoneInp.setAttribute('aria-invalid', 'true');
-        emailInp.setAttribute('aria-invalid', 'true');
-        firstBad = firstBad || phoneInp;
-      }
-      if (firstBad) { firstBad.focus(); return false; }
+    const v = a[s.id];
+    const answered = Array.isArray(v) ? v.length > 0 : !!v;
+    if (!answered) {
+      showError(s.multi ? MSG.multi : MSG.single, $('.opts', app));
+      return false;
     }
+    const other = s.opts && s.opts.find((o) => o.other);
+    if (other && isSelected(s.id, other.label) && !trim(a[s.id + '_other'])) {
+      const inp = $(`[data-text="${s.id}_other"]`, app);
+      inp.setAttribute('aria-invalid', 'true');
+      showError(MSG.other);
+      inp.focus();
+      return false;
+    }
+    return true;
+  }
+
+  function fieldError(id, msg) {
+    const inp = $('#' + id, app);
+    const box = $('#' + id + '-err', app);
+    if (box) box.textContent = msg || '';
+    if (inp) { if (msg) inp.setAttribute('aria-invalid', 'true'); else inp.removeAttribute('aria-invalid'); }
+  }
+
+  function validateContact() {
+    const a = state.answers;
+    let firstBad = null;
+    fieldError('c-name', ''); fieldError('c-phone', ''); fieldError('c-email', ''); clearError();
+    if (!trim(a.name)) { fieldError('c-name', MSG.name); firstBad = firstBad || $('#c-name', app); }
+    if (trim(a.phone) && !phoneOk(a.phone)) { fieldError('c-phone', MSG.phone); firstBad = firstBad || $('#c-phone', app); }
+    if (trim(a.email) && !emailOk(a.email)) { fieldError('c-email', MSG.email); firstBad = firstBad || $('#c-email', app); }
+    if (!trim(a.phone) && !trim(a.email)) {
+      showError(MSG.reach);
+      $('#c-phone', app).setAttribute('aria-invalid', 'true');
+      $('#c-email', app).setAttribute('aria-invalid', 'true');
+      firstBad = firstBad || $('#c-phone', app);
+    }
+    if (firstBad) { firstBad.focus(); return false; }
     return true;
   }
 
   /* =========================================================
      Submitting
      ========================================================= */
-  function buildPayload(status, upto) {
+  function buildPayload(status) {
     const a = state.answers;
-    const phone = phoneOk(a.phone) ? '+91' + normPhone(a.phone) : '';
+    const upto = status === 'screened_out' ? state.step : TOTAL - 1;
+    const joined = status === 'complete' && !!a.waitlist_consent;
     const p = {
       response_id: state.id,
       status,
       submitted_at: new Date().toISOString(),
       started_at: state.startedAt ? new Date(state.startedAt).toISOString() : '',
       source: state.source || '',
-      name: trim(a.name),
-      phone,
-      email: emailOk(a.email) ? trim(a.email) : '',
     };
+    const val = (v) => (Array.isArray(v) ? v.join('; ') : trim(v));
     STEPS.forEach((s, i) => {
       const asked = i <= upto;
-      if (s.opts) {
-        const v = asked ? a[s.id] : null;
-        p[s.id] = Array.isArray(v) ? v.join('; ') : (v || '');
-        if (otherLabel(s)) p[s.id + '_other'] = asked && otherSelected(s, v) ? trim(a[s.id + '_other']) : '';
-      } else if (s.type === 'consent') {
-        p.waitlist_consent = asked ? (a.waitlist_consent ? 'Yes' : 'No') : '';
+      if (s.kind === 'about') {
+        s.groups.forEach((g) => { p[g.id] = asked ? val(a[g.id]) : ''; });
+        return;
       }
+      p[s.id] = asked ? val(a[s.id]) : '';
+      const other = s.opts && s.opts.find((o) => o.other);
+      if (other) p[s.id + '_other'] = asked && isSelected(s.id, other.label) ? trim(a[s.id + '_other']) : '';
     });
+    p.waitlist_consent = status === 'complete' ? (joined ? 'Yes' : 'No') : '';
+    p.name = joined ? trim(a.name) : '';
+    p.phone = joined && phoneOk(a.phone) ? '+91' + normPhone(a.phone) : '';
+    p.email = joined && emailOk(a.email) ? trim(a.email) : '';
     return p;
   }
 
   function finish(status) {
-    const upto = status === 'screened_out' ? state.step : STEPS.length - 1;
-    const payload = buildPayload(status, upto);
+    const payload = buildPayload(status);
     send(payload);
-    state.done = {
-      status,
-      at: Date.now(),
-      waitlist: status === 'complete' && payload.waitlist_consent === 'Yes' && !!(payload.phone || payload.email),
-    };
-    doneName = trim(state.answers.name).split(/\s+/)[0].slice(0, 18);
-    shareName = trim(state.answers.name).replace(/\s+/g, ' ').slice(0, 40);
+    state.done = { status, at: Date.now(), waitlist: payload.waitlist_consent === 'Yes' };
+    shareName = payload.name.replace(/\s+/g, ' ').slice(0, 40);
     state.answers = {}; // don't keep personal details on the device once sent
-    goTo({ view: 'done' }, 1, 'replace');
+    goTo('done', null, 1, 'replace');
   }
 
   function queue(payload) {
@@ -1567,104 +1008,11 @@
   }
 
   /* =========================================================
-     Celebration: confetti, sharing, card tilt
+     Sharing, copy link, QR code
      ========================================================= */
-  const CONFETTI_COLORS = ['#4a2c1a', '#6f4429', '#a8703f', '#d9a46c', '#f3dcc0', '#e8c27a'];
-  let confettiCanvas = null;
-  let confettiParts = [];
-  let confettiRaf = 0;
-
-  function sizeConfetti() {
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
-    confettiCanvas.width = innerWidth * dpr;
-    confettiCanvas.height = innerHeight * dpr;
-    confettiCanvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  function spawn(x, y, angle, speed) {
-    const r = Math.random();
-    confettiParts.push({
-      x, y,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed,
-      size: 6 + Math.random() * 6,
-      rot: Math.random() * Math.PI * 2,
-      vr: (Math.random() - 0.5) * 0.3,
-      shape: r < 0.3 ? 'bean' : r < 0.75 ? 'strip' : 'dot',
-      color: CONFETTI_COLORS[(Math.random() * CONFETTI_COLORS.length) | 0],
-      life: 0,
-      ttl: 150 + Math.random() * 90,
-      flip: Math.random() * 10,
-    });
-    if (!confettiRaf) confettiRaf = requestAnimationFrame(tickConfetti);
-  }
-
-  function burst(origin, power = 1) {
-    if (reducedMotion() || !origin) return;
-    if (!confettiCanvas) {
-      confettiCanvas = document.createElement('canvas');
-      confettiCanvas.className = 'confetti';
-      confettiCanvas.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(confettiCanvas);
-      sizeConfetti();
-    }
-    const r = origin.getBoundingClientRect();
-    const ox = r.left + r.width / 2;
-    const oy = r.top + r.height / 2;
-    const k = 0.6 + Math.min(1, innerWidth / 600) * 0.4; // gentler on phones
-    const speed = k * (0.65 + 0.35 * power);
-    for (let i = 0; i < Math.round(120 * power); i++) spawn(ox, oy, -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.2, (7 + Math.random() * 9) * speed);
-    if (power < 1) return;
-    setTimeout(() => {
-      for (let i = 0; i < 45; i++) spawn(-10, innerHeight * 0.8, -Math.PI / 3 + (Math.random() - 0.5) * 0.7, (11 + Math.random() * 8) * k);
-      for (let i = 0; i < 45; i++) spawn(innerWidth + 10, innerHeight * 0.8, (-2 * Math.PI) / 3 + (Math.random() - 0.5) * 0.7, (11 + Math.random() * 8) * k);
-    }, 260);
-  }
-
-  function tickConfetti() {
-    const ctx = confettiCanvas.getContext('2d');
-    ctx.clearRect(0, 0, innerWidth, innerHeight);
-    confettiParts = confettiParts.filter((p) => p.life < p.ttl && p.y < innerHeight + 40);
-    for (const p of confettiParts) {
-      p.life += 1;
-      p.vy += 0.22;
-      p.vx *= 0.986;
-      p.vy *= 0.986;
-      p.x += p.vx;
-      p.y += p.vy;
-      p.rot += p.vr;
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, Math.min(1, (p.ttl - p.life) / 40));
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot);
-      ctx.fillStyle = p.color;
-      if (p.shape === 'strip') {
-        ctx.scale(1, Math.cos(p.life * 0.18 + p.flip));
-        ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
-      } else if (p.shape === 'dot') {
-        ctx.beginPath();
-        ctx.arc(0, 0, p.size / 3, 0, Math.PI * 2);
-        ctx.fill();
-      } else { // coffee bean
-        ctx.beginPath();
-        ctx.ellipse(0, 0, p.size * 0.42, p.size * 0.6, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(0, 0, 0, 0.35)';
-        ctx.lineWidth = 1.2;
-        ctx.beginPath();
-        ctx.moveTo(0, -p.size * 0.5);
-        ctx.quadraticCurveTo(p.size * 0.22, 0, 0, p.size * 0.5);
-        ctx.stroke();
-      }
-      ctx.restore();
-    }
-    confettiRaf = confettiParts.length ? requestAnimationFrame(tickConfetti) : 0;
-  }
-  window.addEventListener('resize', () => { if (confettiCanvas) sizeConfetti(); });
-
   async function share() {
     // The sharer's name becomes the new respondent's `source`, so referrals are traceable.
-    const url = location.origin + location.pathname + '?src=' + encodeURIComponent(shareName || 'share');
+    const url = surveyUrl(shareName || 'share');
     const text = 'I just took a 2-minute survey about Coffee Pass, a coffee subscription for Bengaluru’s independent cafés. Take it too:';
     if (navigator.share) {
       try {
@@ -1677,135 +1025,164 @@
     window.open('https://wa.me/?text=' + encodeURIComponent(text + ' ' + url), '_blank', 'noopener');
   }
 
-  // On desktop, the Coffee Pass card leans gently towards the pointer.
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  let tiltFrame = 0;
-  document.addEventListener('pointermove', (e) => {
-    if (!finePointer.matches || reducedMotion() || tiltFrame) return;
-    const { clientX, clientY } = e;
-    tiltFrame = requestAnimationFrame(() => {
-      tiltFrame = 0;
-      const beans = $('#beans');
-      if (beans) {
-        beans.style.setProperty('--px', (clientX / innerWidth - 0.5).toFixed(3));
-        beans.style.setProperty('--py', (clientY / innerHeight - 0.5).toFixed(3));
-      }
-      const card = $('#stage .pass-card');
-      if (!card) return;
-      const r = card.getBoundingClientRect();
-      const dx = (clientX - (r.left + r.width / 2)) / innerWidth;
-      const dy = (clientY - (r.top + r.height / 2)) / innerHeight;
-      card.style.setProperty('--ry', (dx * 18).toFixed(2) + 'deg');
-      card.style.setProperty('--rx', (-dy * 14).toFixed(2) + 'deg');
-    });
-  });
+  async function copyLink(btn) {
+    const url = surveyUrl(state.source);
+    let ok = false;
+    try { await navigator.clipboard.writeText(url); ok = true; } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = url; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+      ta.remove();
+    }
+    const label = $('span', btn);
+    label.textContent = ok ? 'Link copied' : url;
+    setTimeout(() => { if (label.isConnected) label.textContent = 'Copy link'; }, 2200);
+  }
+
+  function drawQr() {
+    const box = $('#qr-code', app);
+    if (!box || typeof window.qrcode !== 'function') return;
+    const qr = window.qrcode(0, 'M');
+    qr.addData(surveyUrl(state.source));
+    qr.make();
+    const n = qr.getModuleCount();
+    let d = '';
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (qr.isDark(r, c)) d += `M${c} ${r}h1v1h-1z`;
+    box.innerHTML = `<svg viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges" role="img" aria-label="QR code that opens the survey on your phone"><path d="${d}" fill="#0E1330"/></svg>`;
+    $('#qr', app).hidden = false;
+  }
+  let qrLoading = false;
+  function loadQr() {
+    if (typeof window.qrcode === 'function') { drawQr(); return; }
+    if (qrLoading) return;
+    qrLoading = true;
+    const sc = document.createElement('script');
+    sc.src = CONFIG.qrLib;
+    sc.async = true;
+    sc.onload = drawQr; // if it fails, the Copy link button still works
+    document.head.appendChild(sc);
+  }
 
   /* =========================================================
      Events
      ========================================================= */
-  // Arrow keys move through radio buttons and select them; that
-  // shouldn't jump to the next question.
-  let arrowNav = false;
-  document.addEventListener('keydown', (e) => { arrowNav = e.key.startsWith('Arrow'); }, true);
-  document.addEventListener('pointerdown', () => { arrowNav = false; }, true);
+  function syncField(field) {
+    $$(`[data-field="${field}"] .opt`, app).forEach((b) => {
+      const sel = String(isSelected(field, b.dataset.value));
+      b.setAttribute(b.hasAttribute('aria-pressed') ? 'aria-pressed' : 'aria-checked', sel);
+    });
+  }
 
-  document.getElementById('survey').addEventListener('submit', (e) => {
+  function pick(btn) {
+    const group = btn.closest('[data-field]');
+    const field = group.dataset.field;
+    const multi = group.dataset.multi === 'true';
+    const value = btn.dataset.value;
+    const s = currentStep();
+    const a = state.answers;
+    clearError();
+
+    if (!multi) {
+      a[field] = value;
+    } else {
+      const opts = s.opts || [];
+      let list = Array.isArray(a[field]) ? a[field].slice() : [];
+      const opt = opts.find((o) => o.label === value) || {};
+      if (list.includes(value)) {
+        list = list.filter((x) => x !== value);
+      } else {
+        if (opt.exclusive) list = [];
+        else list = list.filter((x) => !(opts.find((o) => o.label === x) || {}).exclusive);
+        if (s.max && list.length >= s.max) {
+          showError(MSG.max(s.max), group);
+          return;
+        }
+        list.push(value);
+      }
+      a[field] = list;
+    }
+    syncField(field);
+
+    if (s) {
+      const other = s.opts && s.opts.find((o) => o.other);
+      if (other) {
+        const wrap = $(`[data-other-for="${s.id}"]`, app);
+        const show = isSelected(s.id, other.label);
+        if (wrap) {
+          wrap.hidden = !show;
+          if (show && value === other.label) $('input', wrap).focus();
+        }
+      }
+      if (s.hint) {
+        const h = $('#hint', app);
+        const t = hintText();
+        h.hidden = !t;
+        $('p', h).innerHTML = t;
+      }
+    }
+    save();
+  }
+
+  app.addEventListener('submit', (e) => {
     e.preventDefault();
     next();
   });
-  backBtn.addEventListener('click', back);
 
-  stage.addEventListener('click', (e) => {
+  app.addEventListener('click', (e) => {
     const action = e.target.closest('[data-action]');
     if (action) {
-      if (action.dataset.action === 'start') start();
-      if (action.dataset.action === 'restart') restart();
-      if (action.dataset.action === 'share') share();
-      if (action.dataset.action === 'burst') burst(action);
-      if (action.dataset.action === 'burst-card') {
-        action.classList.remove('tapped');
-        void action.offsetWidth;
-        action.classList.add('tapped');
+      const act = action.dataset.action;
+      if (act === 'back') back();
+      if (act === 'skip') { delete state.answers.cafe_suggestions; goTo('step', state.step + 1, 1); }
+      if (act === 'share') share();
+      if (act === 'copy') copyLink(action);
+      if (act === 'continue') { session.set('coffeepass:desk-seen', '1'); goTo('intro1', null, 1); }
+      if (act === 'consent') {
+        const on = !state.answers.waitlist_consent;
+        state.answers.waitlist_consent = on;
+        action.setAttribute('aria-pressed', String(on));
+        $('#contact', app).hidden = !on;
+        $('[data-action="decline"]', app).hidden = !on;
+        $('#submit-btn', app).innerHTML = (on ? 'Join and submit' : 'Submit') + ICON.arrow;
+        clearError();
+        save();
+        if (on && !trim(state.answers.name)) $('#c-name', app).focus();
+      }
+      if (act === 'decline') { state.answers.waitlist_consent = false; finish('complete'); }
+      return;
+    }
+    const opt = e.target.closest('.opt[data-value]');
+    if (opt) pick(opt);
+  });
+
+  app.addEventListener('input', (e) => {
+    const t = e.target;
+    const key = t.dataset && t.dataset.text;
+    if (!key) return;
+    state.answers[key] = t.value;
+    if (t.getAttribute('aria-invalid') === 'true') {
+      const fixed = key === 'name' ? !!trim(t.value)
+        : key === 'phone' ? !trim(t.value) || phoneOk(t.value)
+        : key === 'email' ? !trim(t.value) || emailOk(t.value)
+        : !!trim(t.value);
+      if (fixed) {
+        t.removeAttribute('aria-invalid');
+        const box = $('#' + t.id + '-err', app);
+        if (box) box.textContent = '';
       }
     }
-  });
-
-  stage.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && e.target.matches('input[type="radio"], input[type="checkbox"]')) {
-      e.preventDefault();
-      next();
+    if ((key === 'phone' || key === 'email') && trim(t.value)) {
+      clearError();
+      $$('#c-phone, #c-email', app).forEach((inp) => { if (!trim(inp.value) || inp === t) inp.removeAttribute('aria-invalid'); });
     }
-  });
-
-  stage.addEventListener('change', (e) => {
-    const t = e.target;
-    const s = currentStep();
-    if (!s) return;
-    const el = stage.firstElementChild;
-
-    if (t.matches('[data-consent]')) {
-      state.answers.waitlist_consent = t.checked;
-      clearError(`e-${s.id}`);
-      save();
-      return;
-    }
-
-    if (t.type === 'radio' && s.type === 'single') {
-      state.answers[s.id] = t.value;
-      syncOther(el, s);
-      clearError(`e-${s.id}`, $('[data-other-text]', el));
-      save();
-      updateNextLabel();
-      if (t.hasAttribute('data-other') && !arrowNav) $('[data-other-text]', el).focus();
-      return;
-    }
-
-    if (t.type === 'checkbox' && s.type === 'multi') {
-      const boxes = $$(`input[name="${s.id}"]`, el);
-      if (t.checked && t.hasAttribute('data-exclusive')) boxes.forEach((b) => { if (b !== t) b.checked = false; });
-      else if (t.checked) boxes.forEach((b) => { if (b.hasAttribute('data-exclusive')) b.checked = false; });
-      state.answers[s.id] = boxes.filter((b) => b.checked).map((b) => b.value);
-      syncOther(el, s);
-      clearError(`e-${s.id}`, $('[data-other-text]', el));
-      save();
-      if (t.checked && t.hasAttribute('data-other') && !arrowNav) $('[data-other-text]', el).focus();
-    }
-  });
-
-  stage.addEventListener('input', (e) => {
-    const t = e.target;
-    const s = currentStep();
-    if (!s) return;
-
-    if (t.matches('[data-other-text]')) {
-      state.answers[s.id + '_other'] = t.value;
-      if (trim(t.value)) clearError(`e-${s.id}`, t);
-      saveSoon();
-      return;
-    }
-
-    const field = t.dataset.field;
-    if (!field) return;
-    state.answers[field] = t.value;
-    const errId = t.getAttribute('aria-describedby');
-    if (t.getAttribute('aria-invalid') === 'true') {
-      const fixed = field === 'name' ? !!trim(t.value)
-        : !trim(t.value) || (field === 'phone' ? phoneOk(t.value) : emailOk(t.value));
-      if (fixed) clearError(errId, t);
-    }
-    if (s.type === 'contact' && (field === 'phone' || field === 'email') && trim(t.value)) {
-      clearError(`e-${s.id}`);
-      $$('#c-phone, #c-email', stage).forEach((inp) => {
-        if (!trim(inp.value) || inp === t) inp.removeAttribute('aria-invalid');
-      });
-    }
-    updateNextLabel();
+    if (key.endsWith('_other') && trim(t.value)) clearError();
     saveSoon();
   });
 
-  stage.addEventListener('focusout', (e) => {
+  app.addEventListener('focusout', (e) => {
     const t = e.target;
-    if (t.dataset && t.dataset.field === 'phone' && phoneOk(t.value)) {
+    if (t.dataset && t.dataset.text === 'phone' && phoneOk(t.value)) {
       t.value = fmtPhone(normPhone(t.value));
       state.answers.phone = t.value;
       saveSoon();
@@ -1823,22 +1200,16 @@
     params.delete('reset');
     store.del(CONFIG.storageKey);
     state = freshState();
+    view = 'intro1';
     const qs = params.toString();
     history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
   }
 
-  // Scatter the drifting beans (negative delays so they're already mid-air on load).
-  const beanBox = $('#beans');
-  if (beanBox) {
-    beanBox.innerHTML = Array.from({ length: 16 }, () => {
-      const size = 14 + Math.random() * 22;
-      return `<span class="bean" style="--x:${(Math.random() * 100).toFixed(1)}%;--s:${size.toFixed(0)}px;--d:${(16 + Math.random() * 14).toFixed(1)}s;--delay:${(-Math.random() * 30).toFixed(1)}s;--r:${Math.floor(Math.random() * 360)}deg;--o:${(0.1 + Math.random() * 0.2).toFixed(2)};--sway:${Math.round((Math.random() - 0.5) * 70)}px">${BEAN_SVG}</span>`;
-    }).join('');
-  }
+  const desktop = window.matchMedia('(min-width: 900px) and (hover: hover) and (pointer: fine)').matches;
+  if (view === 'intro1' && desktop && !session.get('coffeepass:desk-seen') && !params.has('mobile')) view = 'desk';
 
-  const initial = state.done ? { view: 'done' } : { view: 'intro' };
-  history.replaceState(entry(initial), '');
-  render(initial, 0);
+  history.replaceState(entry(), '');
+  render(0);
   flushOutbox();
 })();
 </script>

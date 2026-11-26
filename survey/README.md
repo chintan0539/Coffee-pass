@@ -1,6 +1,9 @@
 # Coffee Pass survey
 
-A single-page survey built from `../Form/formQuestions.md`.
+A single-page survey built from the "Coffee Pass Survey — Screens" design (two intro screens, 12 questions,
+an optional waitlist step and thank-you screens).
+On a desktop browser it first shows a "Made for your phone" page with a QR code; **Continue on this screen** runs
+the survey in the browser instead. Add `?mobile` to the URL to skip that page.
 
 - `site/index.html` is the whole website (HTML, CSS and JS in one file). Deploy the `site` folder.
 - `google-apps-script.gs` saves responses to a Google Sheet.
@@ -24,7 +27,8 @@ Add `?reset` to the URL to clear saved progress and start fresh.
 If you edit the script later, use **Deploy → Manage deployments → Edit → New version** so the same URL keeps working.
 
 Each row has `status`: `complete`, or `screened_out` for people who answered "I don't drink coffee"
-(their answers up to that question are saved). `waitlist_consent` is `Yes`/`No`.
+(their answers up to that question are saved). `waitlist_consent` is `Yes`/`No`. `name`, `phone` and `email`
+are only filled in for people who join the waitlist.
 
 ## Publish
 
@@ -40,5 +44,5 @@ Add `?src=` to the link you share, e.g. `…/?src=whatsapp` or `…/?src=instagr
 
 ## How progress is saved
 
-Answers are saved on the respondent's device as they go. If they close the page, they can come back and
-tap **Continue**. Saved progress expires after 30 days, and personal details are removed from the device once the survey is submitted.
+Answers are saved on the respondent's device as they go. If they close the page and come back, they land on
+the question they were on. Saved progress expires after 30 days, and personal details are removed from the device once the survey is submitted.
