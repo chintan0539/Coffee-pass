@@ -905,7 +905,6 @@
     // Paste your Google Apps Script web app URL here (see ../README.md).
     // While it's empty, responses are only kept in this browser (for testing).
     submitUrl: 'https://script.google.com/macros/s/AKfycbzy32QRTh4sZ9IbnHCCtf8ElgTontT9-1siUx0EGbpuIdXwsvc98P_ESGgqS742UjKUEA/exec',
-    autoAdvanceDelay: 450,
     resumeMaxAgeDays: 30,
     storageKey: 'coffeepass:survey:v1',
     outboxKey: 'coffeepass:outbox:v1',
@@ -934,7 +933,7 @@
     { id: 'usage', type: 'single', title: 'How would you prefer to use Coffee Pass?',
       options: ['Visiting partner cafés', 'Delivery to my home or office (at a higher price)'] },
     { id: 'max_price', type: 'single', title: 'What is the most you would pay per month for Coffee Pass?',
-      options: ['₹3,000', '₹4,000', '₹4,500', '₹5,000', 'Over ₹5,000'] },
+      options: ['Over ₹5,000', '₹5,000', '₹4,500', '₹4,000', '₹3,000'] },
     { id: 'waitlist', type: 'consent', eyebrow: 'Optional', title: 'Would you like to join the waitlist?',
       sub: 'Waitlist members will get an exclusive launch discount.',
       checkbox: 'I agree to be contacted about Coffee Pass' },
@@ -1295,11 +1294,9 @@
 
   let renderToken = 0;
   let transitioning = false;
-  let advanceTimer = null;
 
   async function render(target, dir) {
     const token = ++renderToken;
-    clearTimeout(advanceTimer);
     state.view = target.view;
     if (target.view === 'step') state.step = target.step;
     save();
@@ -1403,7 +1400,6 @@
   function next() {
     const s = currentStep();
     if (!s || transitioning) return;
-    clearTimeout(advanceTimer);
     if (!validate(s)) return;
     if (endsSurvey(s)) { finish('screened_out'); return; }
     if (state.step === STEPS.length - 1) { finish('complete'); return; }
@@ -1412,19 +1408,10 @@
 
   function back() {
     if (state.view !== 'step' || transitioning) return;
-    clearTimeout(advanceTimer);
     if (navN > 0) { history.back(); return; }
     // Resumed session with no history to go back through.
     const target = state.step === 0 ? { view: 'intro' } : { view: 'step', step: state.step - 1 };
     goTo(target, -1, 'replace');
-  }
-
-  function scheduleAdvance() {
-    clearTimeout(advanceTimer);
-    const at = state.step;
-    advanceTimer = setTimeout(() => {
-      if (state.view === 'step' && state.step === at) next();
-    }, CONFIG.autoAdvanceDelay);
   }
 
   /* =========================================================
@@ -1743,22 +1730,6 @@
     }
   });
 
-  // Tapping an answer that's already selected (e.g. after going Back) moves on too.
-  let tapRadio = null;
-  let tapWasChecked = false;
-  stage.addEventListener('pointerdown', (e) => {
-    const opt = e.target.closest('.option');
-    tapRadio = opt ? $('input[type="radio"]', opt) : null;
-    tapWasChecked = !!(tapRadio && tapRadio.checked);
-  });
-  stage.addEventListener('click', (e) => {
-    const t = e.target;
-    if (t === tapRadio && tapWasChecked && t.checked && !t.hasAttribute('data-other') && !t.hasAttribute('data-ends')) {
-      scheduleAdvance();
-    }
-    if (t === tapRadio) tapRadio = null;
-  });
-
   stage.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && e.target.matches('input[type="radio"], input[type="checkbox"]')) {
       e.preventDefault();
@@ -1785,11 +1756,7 @@
       clearError(`e-${s.id}`, $('[data-other-text]', el));
       save();
       updateNextLabel();
-      if (t.hasAttribute('data-other')) {
-        if (!arrowNav) $('[data-other-text]', el).focus();
-        return;
-      }
-      if (!t.hasAttribute('data-ends') && !arrowNav) scheduleAdvance();
+      if (t.hasAttribute('data-other') && !arrowNav) $('[data-other-text]', el).focus();
       return;
     }
 
