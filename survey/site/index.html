@@ -59,15 +59,17 @@ h1:focus { outline: none; }
   position: relative;
   width: 100%;
   max-width: 440px;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   margin: 0 auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   color: var(--fg);
-  overflow-x: hidden;
-  overflow-x: clip;
 }
+.screen > * { flex-shrink: 0; }
+html, body { overscroll-behavior: none; }
+body:not([data-view="desk"]) { height: 100vh; height: 100dvh; overflow: hidden; }
 .screen.blue {
   --fg: var(--white);
   --fg-muted: rgba(255, 255, 255, .82);
@@ -260,7 +262,7 @@ h1.title { margin: 0; font-size: var(--size, 30px); line-height: 1.12; font-weig
 .preview-note { margin: 10px 0 0; font-size: 12px; text-align: center; color: var(--fg-muted); }
 
 /* ---------- End screens ---------- */
-.confetti { position: absolute; top: 0; left: 50%; width: 390px; height: 400px; transform: translateX(-50%); pointer-events: none; overflow: visible; }
+.confetti { position: absolute; top: 0; left: 50%; width: 100%; max-width: 390px; height: auto; transform: translateX(-50%); pointer-events: none; overflow: visible; }
 .end-art { padding-top: 60px; overflow: hidden; position: relative; }
 .end-art .art { margin: 0 auto; }
 .end-copy { padding: 34px 32px 0; text-align: center; position: relative; }
@@ -292,22 +294,122 @@ h1.title { margin: 0; font-size: var(--size, 30px); line-height: 1.12; font-weig
 .desk-actions .text-btn { height: 44px; color: var(--blue); }
 body[data-view="desk"] { background: var(--white); }
 
-/* ---------- Small and short screens ---------- */
-@media (max-height: 760px) {
-  .foot { position: sticky; bottom: 0; z-index: 2; background: linear-gradient(to bottom, transparent, var(--bg) 18px); }
-  .art-wrap .art { height: 120px; width: auto; }
-  .hero > div { height: 320px !important; }
-}
-@media (max-height: 680px) {
-  .art-wrap .art { height: 96px; }
-  .hero > div { height: 280px !important; }
-  .intro2-art { padding-top: 16px; }
-  .end-art { padding-top: 24px; }
-}
+/* ---------- Fitting every screen on one phone screen ----------
+   fit() adds .fit1 … .fit4 (cumulative) until the content fits the screen height. */
+.spacer { height: 28px; }
 @media (max-width: 360px) {
+  .screen { --cap: 26px; }
   h1.title { font-size: min(var(--size, 30px), 26px); }
   .intro-copy h1 { font-size: 32px; }
 }
+/* Level 1: smaller illustrations */
+.fit1 .art-wrap { margin: 6px 0 6px; }
+.fit1 .art-wrap .art { height: 116px; width: auto; }
+.fit1 .hero > div { height: 320px !important; }
+.fit1 .intro2-art { padding-top: 20px; }
+.fit1 .intro2-art .art { height: 180px; width: auto; margin: 0 auto; }
+.fit1 .end-art { padding-top: 36px; }
+.fit1 .end-art .art { height: 230px; width: auto; }
+.fit1 .spacer { height: 18px; }
+/* Level 2: tighter spacing */
+.fit2 .top { padding-top: 14px; }
+.fit2 .art-wrap .art { height: 84px; }
+.fit2 h1.title { font-size: min(calc(var(--size, 30px) - 2px), var(--cap, 99px)); }
+.fit2 .sub { margin-top: 6px; }
+.fit2 .opts { padding-top: 16px; }
+.fit2 .opts.list, .fit2 .opts.list.compact { gap: 8px; }
+.fit2 .list .opt, .fit2 .list.compact .opt { min-height: 48px; padding-top: 6px; padding-bottom: 6px; }
+.fit2 .chips .opt { min-height: 42px; }
+.fit2 .cards .opt { height: 88px; }
+.fit2 .cards .num { font-size: 30px; }
+.fit2 .groups { gap: 16px; padding-top: 18px; }
+.fit2 .hint { margin-top: 10px; padding: 10px 14px; }
+.fit2 .other-field { padding-top: 12px; }
+.fit2 .error { padding-top: 8px; }
+.fit2 .foot { padding-top: 12px; padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+.fit2 .btn { height: 52px; }
+.fit2 .hero > div { height: 270px !important; }
+.fit2 .pass-float { zoom: .88; }
+.fit2 .intro-copy { padding-top: 22px; }
+.fit2 .intro-copy h1 { font-size: 32px; }
+.fit2 .lede { margin-top: 14px; }
+.fit2 .intro2-art .art { height: 140px; }
+.fit2 .intro2-copy { padding-top: 22px; }
+.fit2 .intro2-copy h1 { font-size: 34px; }
+.fit2 .facts { margin-top: 18px; }
+.fit2 .foot-note { margin-top: 10px; }
+.fit2 .dots { padding-top: 12px; }
+.fit2 .end-art { padding-top: 24px; }
+.fit2 .end-art .art { height: 180px; }
+.fit2 .end-copy { padding-top: 20px; }
+.fit2 .end-copy h1 { font-size: 32px; }
+.fit2 .end-foot { padding-bottom: max(22px, env(safe-area-inset-bottom)); }
+.fit2 .spacer { height: 8px; }
+.fit2 .fields { gap: 10px; padding-top: 12px; }
+.fit2 .field { height: 48px; }
+.fit2 .field-label textarea { height: 96px; }
+/* Level 3: drop the question illustration, smaller controls */
+.fit3 .art-wrap { display: none; }
+.fit3 .head { padding-top: 18px; }
+.fit3 h1.title { font-size: min(calc(var(--size, 30px) - 4px), var(--cap, 99px)); }
+.fit3 .sub { font-size: 14px; }
+.fit3 .opts { padding-top: 14px; }
+.fit3 .opts.list, .fit3 .opts.list.compact { gap: 6px; }
+.fit3 .list .opt, .fit3 .list.compact .opt { min-height: 44px; font-size: 15px; }
+.fit3 .chips { gap: 6px; }
+.fit3 .chips .opt { min-height: 38px; font-size: 14px; padding: 4px 14px; }
+.fit3 .cards .opt { height: 76px; padding: 10px 14px; }
+.fit3 .cards .num { font-size: 26px; }
+.fit3 .groups { gap: 12px; padding-top: 14px; }
+.fit3 .group-label { margin-bottom: 6px; }
+.fit3 .hint p { font-size: 14px; }
+.fit3 .hero > div { height: 220px !important; }
+.fit3 .pass-float { zoom: .74; }
+.fit3 .intro-copy h1 { font-size: 30px; }
+.fit3 .lede { font-size: 16px; }
+.fit3 .intro2-art .art { height: 104px; }
+.fit3 .intro2-copy h1 { font-size: 30px; }
+.fit3 .facts { gap: 8px; margin-top: 14px; }
+.fit3 .end-art .art { height: 140px; }
+.fit3 .end-copy h1 { font-size: 30px; }
+.fit3 .end-copy p { font-size: 16px; }
+.fit3 .fields { gap: 8px; }
+.fit3 .field { height: 44px; }
+.fit3 .field-label { gap: 4px; }
+.fit3 .fine { font-size: 12px; }
+.fit3 .field-label textarea { height: 80px; }
+.fit3 .text-btn.block { margin-top: 4px; padding: 8px 0; }
+/* Level 4: smallest */
+.fit4 .top { padding: 10px 16px 0; }
+.fit4 .back { width: 38px; height: 38px; }
+.fit4 .head, .fit4 .opts, .fit4 .group, .fit4 .fields, .fit4 .other-field, .fit4 .error { padding-left: 20px; padding-right: 20px; }
+.fit4 .head { padding-top: 12px; }
+.fit4 .group .opts { padding-left: 0; padding-right: 0; }
+.fit4 h1.title { font-size: 22px; }
+.fit4 .opts { padding-top: 10px; }
+.fit4 .list .opt, .fit4 .list.compact .opt { min-height: 40px; padding: 4px 14px; }
+.fit4 .chips .opt { min-height: 36px; }
+.fit4 .cards .opt { height: 64px; }
+.fit4 .cards .num { font-size: 22px; }
+.fit4 .cards .lbl { font-size: 13px; }
+.fit4 .hint { margin: 8px 20px 0; padding: 8px 12px; }
+.fit4 .foot { padding: 10px 20px max(14px, env(safe-area-inset-bottom)); }
+.fit4 .btn { height: 48px; font-size: 16px; }
+.fit4 .hero > div { height: 180px !important; }
+.fit4 .pass-float { zoom: .6; }
+.fit4 .intro-copy { padding-top: 16px; }
+.fit4 .intro-copy h1 { font-size: 27px; }
+.fit4 .lede { font-size: 15px; margin-top: 10px; }
+.fit4 .intro2-art .art { height: 80px; }
+.fit4 .intro2-copy { padding-top: 14px; }
+.fit4 .intro2-copy h1 { font-size: 27px; }
+.fit4 .fact span { width: 32px; height: 32px; }
+.fit4 .end-art .art { height: 110px; }
+.fit4 .end-copy h1 { font-size: 27px; }
+.fit4 .spacer { height: 0; }
+.fit4 .field { height: 42px; }
+.fit4 .fields { gap: 6px; padding-top: 8px; }
+.fit4 .or { font-size: 11px; }
 
 .shake { animation: shake .4s ease; }
 @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
@@ -798,7 +900,7 @@ body[data-view="desk"] { background: var(--white); }
         <button type="button" class="back" data-action="back" aria-label="Back">${ICON.back}</button>
         <span class="top-note">Optional · Last step</span>
       </div>
-      <div style="height:28px"></div>
+      <div class="spacer"></div>
       <div class="head">
         <h1 class="title" id="q-title" tabindex="-1">Want early access?</h1>
         <p class="sub">Join the waitlist and get an exclusive launch discount.</p>
@@ -881,6 +983,50 @@ body[data-view="desk"] { background: var(--white); }
     return 'light';
   }
 
+  /* =========================================================
+     Fit each screen on one phone screen, without scrolling
+     ========================================================= */
+  const FIT_LEVELS = 4;
+  // Height the content needs, ignoring animation transforms and the footer's auto margin.
+  function neededHeight(el) {
+    const cs = getComputedStyle(el);
+    let h = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    for (const c of el.children) {
+      const s = getComputedStyle(c);
+      if (s.position === 'absolute' || s.position === 'fixed' || s.display === 'none') continue;
+      const autoTop = c.classList.contains('foot') || c.classList.contains('end-foot');
+      h += c.offsetHeight + (autoTop ? 0 : parseFloat(s.marginTop) || 0) + (parseFloat(s.marginBottom) || 0);
+    }
+    return h;
+  }
+  function fit() {
+    const el = $('#screen', app);
+    if (!el) return;
+    el.style.zoom = '';
+    el.style.height = '';
+    el.style.width = '';
+    el.style.maxWidth = '';
+    for (let i = 1; i <= FIT_LEVELS; i++) el.classList.remove('fit' + i);
+    let level = 0;
+    while (neededHeight(el) > el.clientHeight + 1 && level < FIT_LEVELS) el.classList.add('fit' + ++level);
+    // Last resort on very short screens: shrink the whole screen until it fits.
+    // Browsers differ in how zoom treats % and viewport units, so size it by measuring.
+    for (let tries = 0; tries < 3 && neededHeight(el) > el.clientHeight + 1; tries++) {
+      const z = Math.floor((parseFloat(el.style.zoom || 1) * el.clientHeight / neededHeight(el)) * 100) / 100;
+      el.style.zoom = z;
+      el.style.maxWidth = 'none';
+      const wantW = Math.min(app.clientWidth, 440);
+      const wantH = window.innerHeight;
+      for (let k = 0; k < 2; k++) {
+        const r = el.getBoundingClientRect();
+        const cs = getComputedStyle(el);
+        if (Math.abs(r.width - wantW) > 0.5) el.style.width = (parseFloat(cs.width) * wantW / r.width) + 'px';
+        if (Math.abs(r.height - wantH) > 0.5) el.style.height = (parseFloat(cs.height) * wantH / r.height) + 'px';
+      }
+    }
+  }
+  const refit = () => requestAnimationFrame(fit);
+
   let renderToken = 0;
   function render(dir = 0) {
     const token = ++renderToken;
@@ -903,6 +1049,7 @@ body[data-view="desk"] { background: var(--white); }
       app.innerHTML = `<form class="${cls}" id="screen" novalidate>${inner}</form>`;
     }
 
+    fit();
     window.scrollTo(0, 0);
     if (view === 'done' && state.done && state.done.status !== 'screened_out') {
       setTimeout(() => { if (token === renderToken) burst($('.end-art', app)); }, dir ? 650 : 400);
@@ -994,14 +1141,14 @@ body[data-view="desk"] { background: var(--white); }
      ========================================================= */
   function showError(msg, shakeEl) {
     const box = $('#err', app);
-    if (box) { box.textContent = ''; requestAnimationFrame(() => { box.textContent = msg; }); }
+    if (box) { box.textContent = ''; requestAnimationFrame(() => { box.textContent = msg; fit(); }); }
     if (shakeEl && !reducedMotion()) {
       shakeEl.classList.remove('shake');
       void shakeEl.offsetWidth;
       shakeEl.classList.add('shake');
     }
   }
-  function clearError() { const box = $('#err', app); if (box) box.textContent = ''; }
+  function clearError() { const box = $('#err', app); if (box && box.textContent) { box.textContent = ''; refit(); } }
 
   function validate(s) {
     const a = state.answers;
@@ -1035,6 +1182,7 @@ body[data-view="desk"] { background: var(--white); }
     const box = $('#' + id + '-err', app);
     if (box) box.textContent = msg || '';
     if (inp) { if (msg) inp.setAttribute('aria-invalid', 'true'); else inp.removeAttribute('aria-invalid'); }
+    refit();
   }
 
   function validateContact() {
@@ -1346,6 +1494,7 @@ body[data-view="desk"] { background: var(--white); }
         h.hidden = !t;
         $('p', h).innerHTML = t;
       }
+      refit();
     }
     save();
   }
@@ -1378,6 +1527,7 @@ body[data-view="desk"] { background: var(--white); }
         $('[data-action="decline"]', app).hidden = !on;
         $('#submit-btn', app).innerHTML = (on ? 'Join and submit' : 'Submit') + ICON.arrow;
         clearError();
+        fit();
         save();
         if (on && !trim(state.answers.name)) $('#c-name', app).focus();
       }
@@ -1401,7 +1551,7 @@ body[data-view="desk"] { background: var(--white); }
       if (fixed) {
         t.removeAttribute('aria-invalid');
         const box = $('#' + t.id + '-err', app);
-        if (box) box.textContent = '';
+        if (box && box.textContent) { box.textContent = ''; refit(); }
       }
     }
     if ((key === 'phone' || key === 'email') && trim(t.value)) {
@@ -1422,6 +1572,13 @@ body[data-view="desk"] { background: var(--white); }
   });
 
   window.addEventListener('pagehide', save);
+  // Re-fit on rotation or window resize, but not while the keyboard is open for typing.
+  window.addEventListener('resize', () => {
+    const a = document.activeElement;
+    if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA')) return;
+    refit();
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
   window.addEventListener('online', flushOutbox);
 
   /* =========================================================
