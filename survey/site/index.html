@@ -310,7 +310,6 @@ body[data-view="desk"] { background: var(--white); }
 .fit1 .art-wrap.ticket .art { height: 150px; }
 .fit2 .art-wrap.ticket .art { height: 110px; }
 /* Keyboard open: the screen follows the visible area above the keyboard. */
-.screen.kb { position: fixed; top: 0; left: 0; right: 0; z-index: 5; }
 .kb .art-wrap { display: none; }
 .kb .head { padding-top: 14px; }
 .kb .field-label textarea { height: 104px; }
@@ -583,8 +582,8 @@ body[data-view="desk"] { background: var(--white); }
     { id: 'likelihood', kind: 'list', title: 'How likely are you to sign up?',
       options: ['Definitely', 'Probably', 'Not sure', 'Probably not', 'Definitely not'] },
     { id: 'blockers', kind: 'chips', multi: true, title: 'What might stop you?', sub: 'Choose all that apply.',
-      options: ['The price', 'My usual café isn’t a partner', 'Not enough partner cafés near me', 'I’d rather pay per cup',
-        'I don’t like subscriptions', 'Something else', { label: 'Nothing, I’m in', exclusive: true }] },
+      options: [{ label: 'Nothing, I’m in', exclusive: true }, 'The price', 'My usual café isn’t a partner', 'Not enough partner cafés near me',
+        'I’d rather pay per cup', 'I don’t like subscriptions', 'Something else'] },
     { id: 'cafe_suggestions', kind: 'text', optional: true, eyebrow: 'Optional', title: 'Any cafés you’d love to see on Coffee Pass?',
       label: 'Your picks', placeholder: 'Up to three café names' },
     { id: 'about', kind: 'about', title: 'A bit about you',
@@ -1031,13 +1030,11 @@ body[data-view="desk"] { background: var(--white); }
     el.style.height = '';
     el.style.width = '';
     el.style.maxWidth = '';
-    el.style.top = '';
     el.style.overflowY = '';
     el.style.removeProperty('--text-scale');
     el.classList.toggle('kb', kbOn);
     if (kbOn) {
       el.style.height = viewH() + 'px';
-      el.style.top = (vv ? vv.offsetTop : 0) + 'px';
     }
     for (let i = 1; i <= FIT_LEVELS; i++) el.classList.remove('fit' + i);
     let level = 0;
@@ -1146,38 +1143,49 @@ body[data-view="desk"] { background: var(--white); }
     else if (ar.top < er.top + 12) el.scrollTop -= er.top + 12 - ar.top;
   }
   let kbFrame = 0;
-  function kbUpdate() {
+  let kbFittedH = 0; // visible height the screen was last fitted to
+  function kbUpdate(force) {
     if (kbFrame) return;
     kbFrame = requestAnimationFrame(() => {
       kbFrame = 0;
-      fitAnimated();
+      const h = viewH();
+      // Only re-layout when the keyboard actually changes the visible height, never while typing.
+      if (force || Math.abs(h - kbFittedH) > 2) {
+        kbFittedH = h;
+        fitAnimated();
+      }
       keepFocusedVisible();
-      if (kbOn && window.scrollY && !vv) window.scrollTo(0, 0);
+      pinTop();
     });
   }
+  // The screen already fits above the keyboard, so undo the page shift phones add on focus.
+  function pinTop() { if (kbOn && (window.scrollY || document.documentElement.scrollTop)) window.scrollTo(0, 0); }
+  window.addEventListener('scroll', pinTop, { passive: true });
   app.addEventListener('focusin', (e) => {
     if (!isTextField(e.target)) return;
+    if (kbOn) { keepFocusedVisible(); return; } // moving between fields: nothing to re-layout
     kbOn = true;
     kbUpdate();
-    setTimeout(kbUpdate, 350); // after the keyboard has finished opening
+    setTimeout(() => kbUpdate(), 350); // after the keyboard has finished opening
   });
   app.addEventListener('focusout', () => {
     setTimeout(() => {
       if (isTextField(document.activeElement) && app.contains(document.activeElement)) return;
       if (!kbOn) return;
       kbOn = false;
-      kbUpdate();
+      kbUpdate(true);
     }, 60);
   });
   if (vv) {
     vv.addEventListener('resize', () => { if (kbOn) kbUpdate(); });
-    vv.addEventListener('scroll', () => { if (kbOn) kbUpdate(); });
+    vv.addEventListener('scroll', () => { if (kbOn) pinTop(); });
   }
 
   let renderToken = 0;
   function render(dir = 0) {
     const token = ++renderToken;
     kbOn = false;
+    kbFittedH = window.innerHeight;
     const theme = screenTheme();
     document.body.dataset.theme = theme;
     document.body.dataset.view = view;
