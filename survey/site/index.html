@@ -39,6 +39,7 @@ body[data-theme="blue"] { background: var(--blue); }
 button, input, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 h1:focus { outline: none; }
+[hidden] { display: none !important; }
 
 /* ---------- Screen shell ---------- */
 .screen {
@@ -306,6 +307,10 @@ body[data-view="desk"] { background: var(--white); }
 /* ---------- Fitting every screen on one phone screen ----------
    fit() adds .fit1 … .fit4 (cumulative) until the content fits the screen height. */
 .spacer { height: 28px; }
+.art-wrap.ticket { margin: 6px 0 4px; }
+.art-wrap.ticket .art { height: 200px; width: auto; margin: 0 auto; }
+.fit1 .art-wrap.ticket .art { height: 150px; }
+.fit2 .art-wrap.ticket .art { height: 110px; }
 /* Keyboard open: the screen follows the visible area above the keyboard. */
 .screen.kb { position: fixed; top: 0; left: 0; right: 0; z-index: 5; }
 .kb .art-wrap { display: none; }
@@ -733,7 +738,7 @@ body[data-view="desk"] { background: var(--white); }
   /* =========================================================
      State (saved on this device so people can pick up where they left off)
      ========================================================= */
-  const VIEWS = ['intro1', 'intro2', 'step', 'waitlist', 'done'];
+  const VIEWS = ['intro1', 'intro2', 'step', 'waitlist', 'contact', 'done'];
   function freshState() {
     return { id: uid(), view: 'intro1', step: 0, answers: {}, startedAt: null, updatedAt: null, source: readSource(), done: null };
   }
@@ -762,7 +767,7 @@ body[data-view="desk"] { background: var(--white); }
 
   const app = $('#app');
   const currentStep = () => (view === 'step' ? STEPS[state.step] : null);
-  const order = (v, step) => (v === 'desk' ? -1 : v === 'step' ? 2 + step : v === 'intro1' ? 0 : v === 'intro2' ? 1 : v === 'waitlist' ? 2 + TOTAL : 3 + TOTAL);
+  const order = (v, step) => (v === 'desk' ? -1 : v === 'step' ? 2 + step : v === 'intro1' ? 0 : v === 'intro2' ? 1 : v === 'waitlist' ? 2 + TOTAL : v === 'contact' ? 3 + TOTAL : 4 + TOTAL);
 
   /* =========================================================
      Rendering
@@ -904,15 +909,21 @@ body[data-view="desk"] { background: var(--white); }
       </div>`;
   }
 
+  // The "You're on the list" ticket, recoloured blue-on-white for the waitlist question.
+  function ticketArt() {
+    return ART.thanksList
+      .replace(/#FFFFFF/g, '__W').replace(/#2340D8/g, '#FFFFFF').replace(/__W/g, '#2340D8').replace(/#1830B0/g, '#2340D8')
+      .replace(/thanksList-/g, 'wl-');
+  }
+
   function waitlistHTML() {
-    const a = state.answers;
-    const on = !!a.waitlist_consent;
+    const on = !!state.answers.waitlist_consent;
     return `
       <div class="top">
         <button type="button" class="back" data-action="back" aria-label="Back">${ICON.back}</button>
         <span class="top-note">Optional · Last step</span>
       </div>
-      <div class="spacer"></div>
+      <div class="art-wrap ticket">${ticketArt()}</div>
       <div class="head">
         <h1 class="title" id="q-title" tabindex="-1">Want early access?</h1>
         <p class="sub">Join the waitlist and get an exclusive launch discount.</p>
@@ -921,7 +932,26 @@ body[data-view="desk"] { background: var(--white); }
         <button type="button" class="opt" data-action="consent" aria-pressed="${on}">
           <span>Yes, add me to the waitlist</span>${markHTML(SQUARE)}</button>
       </div>
-      <div class="fields" id="contact" ${on ? '' : 'hidden'}>
+      <p class="error" id="err" role="alert"></p>
+      <div class="foot stack">
+        <button type="submit" class="btn" id="submit-btn">${on ? 'Next' : 'Submit'}${ICON.arrow}</button>
+        <button type="button" class="text-btn block" data-action="decline" ${on ? '' : 'hidden'}>No thanks, just submit</button>
+      </div>`;
+  }
+
+  function contactHTML() {
+    const a = state.answers;
+    return `
+      <div class="top">
+        <button type="button" class="back" data-action="back" aria-label="Back">${ICON.back}</button>
+        <span class="top-note">Last step</span>
+      </div>
+      <div class="spacer"></div>
+      <div class="head">
+        <h1 class="title" id="q-title" tabindex="-1">Your details</h1>
+        <p class="sub">So we can let you know when Coffee Pass launches.</p>
+      </div>
+      <div class="fields" id="contact">
         <label class="field-label">Name
           <span class="field"><input id="c-name" type="text" data-text="name" value="${esc(a.name || '')}" placeholder="Your name"
             autocomplete="name" autocapitalize="words" maxlength="60" aria-describedby="c-name-err" enterkeyhint="next"></span>
@@ -942,8 +972,7 @@ body[data-view="desk"] { background: var(--white); }
       </div>
       <p class="error" id="err" role="alert"></p>
       <div class="foot stack">
-        <button type="submit" class="btn" id="submit-btn">${on ? 'Join and submit' : 'Submit'}${ICON.arrow}</button>
-        <button type="button" class="text-btn block" data-action="decline" ${on ? '' : 'hidden'}>No thanks, just submit</button>
+        <button type="submit" class="btn">Join and submit${ICON.arrow}</button>
       </div>`;
   }
 
@@ -1054,6 +1083,68 @@ body[data-view="desk"] { background: var(--white); }
   }
   const refit = () => requestAnimationFrame(fit);
 
+  // Same as fit(), but things glide to their new place instead of jumping
+  // (used when the keyboard opens or closes). Illustrations that get hidden fade out.
+  const GLIDE = 'transform .42s cubic-bezier(.2, .8, .2, 1)';
+  function fitAnimated() {
+    const el = $('#screen', app);
+    if (!el || reducedMotion()) { fit(); return; }
+    const kids = [...el.children].filter((k) => !k.matches('svg.confetti'));
+    const before = new Map(kids.map((k) => [k, k.getBoundingClientRect()]));
+    const art = $('.art-wrap', el);
+    const artBefore = art && art.offsetHeight ? art.getBoundingClientRect() : null;
+    let ghost = null;
+    if (artBefore) {
+      ghost = art.cloneNode(true);
+      ghost.setAttribute('aria-hidden', 'true');
+      Object.assign(ghost.style, {
+        position: 'fixed', left: artBefore.left + 'px', top: artBefore.top + 'px', width: artBefore.width + 'px',
+        height: artBefore.height + 'px', margin: '0', pointerEvents: 'none', zIndex: '6', transition: 'none',
+      });
+      $$('[id]', ghost).forEach((n) => n.setAttribute('id', 'g-' + n.id));
+      $$('[filter]', ghost).forEach((n) => n.setAttribute('filter', n.getAttribute('filter').replace('url(#', 'url(#g-')));
+    }
+    kids.forEach((k) => { k.style.transition = 'none'; k.style.transform = ''; });
+
+    fit();
+
+    // Illustration: fade the old one out if it moved, shrank or was hidden.
+    if (ghost) {
+      const a = art.offsetHeight ? art.getBoundingClientRect() : null;
+      const changed = !a || Math.abs(a.top - artBefore.top) > 1 || Math.abs(a.height - artBefore.height) > 1;
+      if (changed) {
+        document.body.appendChild(ghost);
+        if (a) art.style.opacity = '0';
+        requestAnimationFrame(() => {
+          ghost.style.transition = 'opacity .16s ease, transform .3s cubic-bezier(.2, .8, .2, 1)';
+          ghost.style.opacity = '0';
+          ghost.style.transform = 'translateY(-16px) scale(.96)';
+          if (a) { art.style.transition = 'opacity .3s ease .12s'; art.style.opacity = ''; }
+        });
+        setTimeout(() => ghost.parentNode && ghost.parentNode.removeChild(ghost), 480);
+      }
+    }
+    // Everything else: start at the old position, then glide to the new one.
+    const moved = [];
+    kids.forEach((k) => {
+      if (k === art) return;
+      const b = before.get(k);
+      const a = k.getBoundingClientRect();
+      if (!a.height || !b.height) return;
+      const dy = b.top - a.top;
+      if (Math.abs(dy) < 1) return;
+      k.style.transform = `translateY(${dy}px)`;
+      moved.push(k);
+    });
+    if (!moved.length) return;
+    void el.offsetHeight;
+    requestAnimationFrame(() => moved.forEach((k) => {
+      k.style.transition = GLIDE;
+      k.style.transform = '';
+      k.addEventListener('transitionend', () => { k.style.transition = ''; }, { once: true });
+    }));
+  }
+
   /* ---------- On-screen keyboard ---------- */
   const vv = window.visualViewport;
   let kbOn = false;
@@ -1075,7 +1166,7 @@ body[data-view="desk"] { background: var(--white); }
     if (kbFrame) return;
     kbFrame = requestAnimationFrame(() => {
       kbFrame = 0;
-      fit();
+      fitAnimated();
       keepFocusedVisible();
       if (kbOn && window.scrollY && !vv) window.scrollTo(0, 0);
     });
@@ -1117,6 +1208,7 @@ body[data-view="desk"] { background: var(--white); }
       if (view === 'intro2') inner = intro2HTML();
       if (view === 'step') inner = stepHTML(STEPS[state.step], state.step);
       if (view === 'waitlist') inner = waitlistHTML();
+      if (view === 'contact') inner = contactHTML();
       if (view === 'done') inner = doneHTML();
       const cls = `screen ${theme}${dir && !reducedMotion() ? ' anim' + (dir < 0 ? ' rev' : '') : ''}`;
       app.innerHTML = `<form class="${cls}" id="screen" novalidate>${inner}</form>`;
@@ -1196,7 +1288,13 @@ body[data-view="desk"] { background: var(--white); }
       return;
     }
     if (view === 'waitlist') {
-      if (state.answers.waitlist_consent && !validateContact()) return;
+      if (state.answers.waitlist_consent) goTo('contact', null, 1);
+      else finish('complete');
+      return;
+    }
+    if (view === 'contact') {
+      if (!validateContact()) return;
+      state.answers.waitlist_consent = true;
       finish('complete');
     }
   }
@@ -1204,7 +1302,8 @@ body[data-view="desk"] { background: var(--white); }
   function back() {
     if (depth > 0) { history.back(); return; }
     // Resumed session with no history to go back through.
-    if (view === 'waitlist') goTo('step', TOTAL - 1, -1, 'replace');
+    if (view === 'contact') goTo('waitlist', null, -1, 'replace');
+    else if (view === 'waitlist') goTo('step', TOTAL - 1, -1, 'replace');
     else if (view === 'step' && state.step > 0) goTo('step', state.step - 1, -1, 'replace');
     else if (view === 'step') goTo('intro2', null, -1, 'replace');
   }
@@ -1596,13 +1695,12 @@ body[data-view="desk"] { background: var(--white); }
         const on = !state.answers.waitlist_consent;
         state.answers.waitlist_consent = on;
         action.setAttribute('aria-pressed', String(on));
-        $('#contact', app).hidden = !on;
         $('[data-action="decline"]', app).hidden = !on;
-        $('#submit-btn', app).innerHTML = (on ? 'Join and submit' : 'Submit') + ICON.arrow;
+        $('#submit-btn', app).innerHTML = (on ? 'Next' : 'Submit') + ICON.arrow;
+        if (on) { action.classList.toggle('pop', false); void action.offsetWidth; action.classList.add('pop'); }
         clearError();
-        fit();
+        fitAnimated();
         save();
-        if (on && !trim(state.answers.name)) $('#c-name', app).focus();
       }
       if (act === 'decline') { state.answers.waitlist_consent = false; finish('complete'); }
       return;
