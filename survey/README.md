@@ -28,7 +28,7 @@ If you edit the script later, use **Deploy → Manage deployments → Edit → N
 
 Each row has `status`: `complete`, or `screened_out` for people who answered "I don't drink coffee"
 (their answers up to that question are saved). `waitlist_consent` is `Yes`/`No`. Everyone who finishes gives a
-`phone` and `email` (both required); `name` is optional.
+`phone` or an `email` (at least one is required); `name` is optional.
 
 ## Publish
 

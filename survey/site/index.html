@@ -616,7 +616,7 @@ body[data-view="desk"] { background: var(--white); }
     about: 'Please choose your age and what you do.',
     phone: 'Please enter a valid 10-digit mobile number.',
     email: 'That email doesn’t look quite right. Mind checking it?',
-    emailReq: 'Please enter your email.',
+    reach: 'Please enter a phone number or an email.',
   };
 
   /* =========================================================
@@ -944,12 +944,13 @@ body[data-view="desk"] { background: var(--white); }
             placeholder="XXXXX XXXXX" inputmode="numeric" autocomplete="tel-national" maxlength="16" aria-describedby="c-phone-err" enterkeyhint="next"></span>
         </label>
         <p class="field-err" id="c-phone-err" role="alert"></p>
+        <div class="or" aria-hidden="true"><span></span>or<span></span></div>
         <label class="field-label">Email
           <span class="field"><input id="c-email" type="email" data-text="email" value="${esc(a.email || '')}" placeholder="you@example.com"
             inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="100" aria-describedby="c-email-err" enterkeyhint="done"></span>
         </label>
         <p class="field-err" id="c-email-err" role="alert"></p>
-        <p class="fine">We’ll only message you about Coffee Pass. Unsubscribe anytime.</p>
+        <p class="fine">Phone or email, whichever you prefer. We’ll only message you about Coffee Pass. Unsubscribe anytime.</p>
       </div>
       <p class="error" id="err" role="alert"></p>
       <div class="foot stack">
@@ -1341,8 +1342,14 @@ body[data-view="desk"] { background: var(--white); }
     const a = state.answers;
     let firstBad = null;
     fieldError('c-name', ''); fieldError('c-phone', ''); fieldError('c-email', ''); clearError();
-    if (!phoneOk(a.phone)) { fieldError('c-phone', MSG.phone); firstBad = firstBad || $('#c-phone', app); }
-    if (!emailOk(a.email)) { fieldError('c-email', trim(a.email) ? MSG.email : MSG.emailReq); firstBad = firstBad || $('#c-email', app); }
+    if (trim(a.phone) && !phoneOk(a.phone)) { fieldError('c-phone', MSG.phone); firstBad = firstBad || $('#c-phone', app); }
+    if (trim(a.email) && !emailOk(a.email)) { fieldError('c-email', MSG.email); firstBad = firstBad || $('#c-email', app); }
+    if (!trim(a.phone) && !trim(a.email)) {
+      showError(MSG.reach);
+      $('#c-phone', app).setAttribute('aria-invalid', 'true');
+      $('#c-email', app).setAttribute('aria-invalid', 'true');
+      firstBad = firstBad || $('#c-phone', app);
+    }
     if (firstBad) { firstBad.focus(); return false; }
     return true;
   }
