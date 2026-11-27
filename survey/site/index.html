@@ -616,8 +616,7 @@ body[data-view="desk"] { background: var(--white); }
     about: 'Please choose your age and what you do.',
     phone: 'Please enter a valid 10-digit mobile number.',
     email: 'That email doesn’t look quite right. Mind checking it?',
-    reach: 'Please enter a phone number or an email.',
-    name: 'Please enter your name.',
+    emailReq: 'Please enter your email.',
   };
 
   /* =========================================================
@@ -878,10 +877,10 @@ body[data-view="desk"] { background: var(--white); }
       <div class="intro2-art">${ART.intro2}</div>
       <div class="intro2-copy">
         <h1 tabindex="-1" style="--base:.2s">${words('Help us')}<br>${words('shape it.', 2)}</h1>
-        <p class="lede rise" style="--d:.55s">A few quick questions about how you drink coffee. No sign-up needed.</p>
+        <p class="lede rise" style="--d:.55s">A few quick questions about how you drink coffee.</p>
         <div class="facts">
           <div class="fact" style="--i:0"><span>${ICON.clock}</span>About 2 minutes</div>
-          <div class="fact" style="--i:1"><span>${ICON.lock}</span>Anonymous unless you join the waitlist</div>
+          <div class="fact" style="--i:1"><span>${ICON.lock}</span>Your details are never shared</div>
         </div>
       </div>
       <div class="foot stack">
@@ -900,11 +899,12 @@ body[data-view="desk"] { background: var(--white); }
   }
 
   function waitlistHTML() {
+    if (state.answers.waitlist_consent === undefined) state.answers.waitlist_consent = true;
     const on = !!state.answers.waitlist_consent;
     return `
       <div class="top">
         <button type="button" class="back" data-action="back" aria-label="Back">${ICON.back}</button>
-        <span class="top-note">Optional · Last step</span>
+        <span class="top-note">Almost done</span>
       </div>
       <div class="art-wrap ticket">${ticketArt()}</div>
       <div class="head">
@@ -917,8 +917,7 @@ body[data-view="desk"] { background: var(--white); }
       </div>
       <p class="error" id="err" role="alert"></p>
       <div class="foot stack">
-        <button type="submit" class="btn" id="submit-btn">${on ? 'Next' : 'Submit'}${ICON.arrow}</button>
-        <button type="button" class="text-btn block" data-action="decline" ${on ? '' : 'hidden'}>No thanks, just submit</button>
+        <button type="submit" class="btn" id="submit-btn">Next${ICON.arrow}</button>
       </div>`;
   }
 
@@ -932,10 +931,10 @@ body[data-view="desk"] { background: var(--white); }
       <div class="spacer"></div>
       <div class="head">
         <h1 class="title" id="q-title" tabindex="-1">Your details</h1>
-        <p class="sub">So we can let you know when Coffee Pass launches.</p>
+        <p class="sub">So we can reach you about Coffee Pass.</p>
       </div>
       <div class="fields" id="contact">
-        <label class="field-label">Name
+        <label class="field-label">Name (optional)
           <span class="field"><input id="c-name" type="text" data-text="name" value="${esc(a.name || '')}" placeholder="Your name"
             autocomplete="name" autocapitalize="words" maxlength="60" aria-describedby="c-name-err" enterkeyhint="next"></span>
         </label>
@@ -945,17 +944,16 @@ body[data-view="desk"] { background: var(--white); }
             placeholder="XXXXX XXXXX" inputmode="numeric" autocomplete="tel-national" maxlength="16" aria-describedby="c-phone-err" enterkeyhint="next"></span>
         </label>
         <p class="field-err" id="c-phone-err" role="alert"></p>
-        <div class="or" aria-hidden="true"><span></span>or<span></span></div>
         <label class="field-label">Email
           <span class="field"><input id="c-email" type="email" data-text="email" value="${esc(a.email || '')}" placeholder="you@example.com"
             inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="100" aria-describedby="c-email-err" enterkeyhint="done"></span>
         </label>
         <p class="field-err" id="c-email-err" role="alert"></p>
-        <p class="fine">Phone or email, whichever you prefer. We’ll only message you about Coffee Pass. Unsubscribe anytime.</p>
+        <p class="fine">We’ll only message you about Coffee Pass. Unsubscribe anytime.</p>
       </div>
       <p class="error" id="err" role="alert"></p>
       <div class="foot stack">
-        <button type="submit" class="btn">Join and submit${ICON.arrow}</button>
+        <button type="submit" class="btn">Submit${ICON.arrow}</button>
       </div>`;
   }
 
@@ -1280,13 +1278,11 @@ body[data-view="desk"] { background: var(--white); }
       return;
     }
     if (view === 'waitlist') {
-      if (state.answers.waitlist_consent) goTo('contact', null, 1);
-      else finish('complete');
+      goTo('contact', null, 1);
       return;
     }
     if (view === 'contact') {
       if (!validateContact()) return;
-      state.answers.waitlist_consent = true;
       finish('complete');
     }
   }
@@ -1345,15 +1341,8 @@ body[data-view="desk"] { background: var(--white); }
     const a = state.answers;
     let firstBad = null;
     fieldError('c-name', ''); fieldError('c-phone', ''); fieldError('c-email', ''); clearError();
-    if (!trim(a.name)) { fieldError('c-name', MSG.name); firstBad = firstBad || $('#c-name', app); }
-    if (trim(a.phone) && !phoneOk(a.phone)) { fieldError('c-phone', MSG.phone); firstBad = firstBad || $('#c-phone', app); }
-    if (trim(a.email) && !emailOk(a.email)) { fieldError('c-email', MSG.email); firstBad = firstBad || $('#c-email', app); }
-    if (!trim(a.phone) && !trim(a.email)) {
-      showError(MSG.reach);
-      $('#c-phone', app).setAttribute('aria-invalid', 'true');
-      $('#c-email', app).setAttribute('aria-invalid', 'true');
-      firstBad = firstBad || $('#c-phone', app);
-    }
+    if (!phoneOk(a.phone)) { fieldError('c-phone', MSG.phone); firstBad = firstBad || $('#c-phone', app); }
+    if (!emailOk(a.email)) { fieldError('c-email', trim(a.email) ? MSG.email : MSG.emailReq); firstBad = firstBad || $('#c-email', app); }
     if (firstBad) { firstBad.focus(); return false; }
     return true;
   }
@@ -1382,9 +1371,10 @@ body[data-view="desk"] { background: var(--white); }
       p[s.id] = asked ? val(a[s.id]) : '';
     });
     p.waitlist_consent = status === 'complete' ? (joined ? 'Yes' : 'No') : '';
-    p.name = joined ? trim(a.name) : '';
-    p.phone = joined && phoneOk(a.phone) ? '+91' + normPhone(a.phone) : '';
-    p.email = joined && emailOk(a.email) ? trim(a.email) : '';
+    const done = status === 'complete';
+    p.name = done ? trim(a.name) : '';
+    p.phone = done && phoneOk(a.phone) ? '+91' + normPhone(a.phone) : '';
+    p.email = done && emailOk(a.email) ? trim(a.email) : '';
     return p;
   }
 
@@ -1668,14 +1658,11 @@ body[data-view="desk"] { background: var(--white); }
         const on = !state.answers.waitlist_consent;
         state.answers.waitlist_consent = on;
         action.setAttribute('aria-pressed', String(on));
-        $('[data-action="decline"]', app).hidden = !on;
-        $('#submit-btn', app).innerHTML = (on ? 'Next' : 'Submit') + ICON.arrow;
         if (on) { action.classList.toggle('pop', false); void action.offsetWidth; action.classList.add('pop'); }
         clearError();
         fitAnimated();
         save();
       }
-      if (act === 'decline') { state.answers.waitlist_consent = false; finish('complete'); }
       return;
     }
     const opt = e.target.closest('.opt[data-value]');

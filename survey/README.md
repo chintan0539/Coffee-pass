@@ -1,7 +1,7 @@
 # Coffee Pass survey
 
 A single-page survey built from the "Coffee Pass Survey — Screens" design (two intro screens, 12 questions,
-an optional waitlist step and thank-you screens).
+a waitlist step (ticked by default), a contact details page and thank-you screens).
 On a desktop browser it first shows a "Made for your phone" page with a QR code; **Continue on this screen** runs
 the survey in the browser instead. Add `?mobile` to the URL to skip that page.
 
@@ -27,8 +27,8 @@ Add `?reset` to the URL to clear saved progress and start fresh.
 If you edit the script later, use **Deploy → Manage deployments → Edit → New version** so the same URL keeps working.
 
 Each row has `status`: `complete`, or `screened_out` for people who answered "I don't drink coffee"
-(their answers up to that question are saved). `waitlist_consent` is `Yes`/`No`. `name`, `phone` and `email`
-are only filled in for people who join the waitlist.
+(their answers up to that question are saved). `waitlist_consent` is `Yes`/`No`. Everyone who finishes gives a
+`phone` and `email` (both required); `name` is optional.
 
 ## Publish
 
