@@ -1538,7 +1538,7 @@ body[data-view="desk"] { background: var(--white); }
     const text = 'I just took a 2-minute survey about Coffee Pass, a coffee subscription for Bengaluru’s independent cafés. Take it too:';
     if (navigator.share) {
       try {
-        await navigator.share({ title: 'Coffee Pass survey', text, url });
+        await navigator.share({ title: 'Coffee Pass survey', text: text + ' ' + url }); // one string, so the link always comes after the message
         return;
       } catch (err) {
         if (err && err.name === 'AbortError') return;
